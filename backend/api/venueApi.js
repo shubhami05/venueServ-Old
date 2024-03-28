@@ -5,7 +5,7 @@ async function venueApi(req,res){
         const db = await connectDB();
         const collection = db.collection("venuedata");
         const {name,type,city,address,price,foodFacility,outsideFood,carParking,peopleCapacity,halls,rooms,ownerName,email,mobile} = req.body;
-        const photos = req.files;
+        const photos = req.file;
 
         await collection.insertOne({
             name,
@@ -28,7 +28,7 @@ async function venueApi(req,res){
     }
     catch(err)
     {
-        return res.status(500).json({message:err.message});
+        return res.status(500).json("VenueApi error:",  {message:err.message});
     }
 }
 module.exports = {venueApi}

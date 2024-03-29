@@ -41,9 +41,14 @@ function AddVenue() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(venueData); // Process form data here
+        const form = new FormData();
+        for(const data in venueData)
+        {
+            form.append(data,venueData[data]);
+        }
         try {
             
-            const response = await axios.post("http://localhost:8000/addNewVenue", venueData);
+            const response = await axios.post("http://localhost:8000/addNewVenue", form);
             console.log(response);
             alert("Venue add successfully!");
             navigate('/myvenues');

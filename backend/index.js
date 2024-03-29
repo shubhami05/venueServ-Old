@@ -19,7 +19,7 @@ app.use(cors({
     methods:['GET','POST','PUT','DELETE'],
 }));
 
-app.post('/addNewVenue',venuePicUpload.single('venuePic'),venueApi);
+app.post('/addNewVenue',venuePicUpload.single('photos'),venueApi);
 app.post('/myvenues',showVenuesApi);
 app.post("/signup",SignupApi);
 

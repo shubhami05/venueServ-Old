@@ -2,7 +2,7 @@ const multer =  require("multer");
 
 const venuePicStorage = multer.diskStorage({
     destination:(req,file,cb) => {
-        cb(null,"../frontend/images/venuePics");
+        cb(null,"../frontend/ownerpanel/src/images/venuePics");
     },
     filename:(req,file,cb)=>{
         cb(null,`${Date.now()}-${file.originalname}`);

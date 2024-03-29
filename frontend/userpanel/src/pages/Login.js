@@ -54,10 +54,10 @@ const handleSubmit = async (e) =>{
               <form action onSubmit={handleSubmit}>
 
                 <div>
-                  <input type="text" placeholder="Email address or Mobile number" onChange={handleInputChange} value={loginData.email}required />
+                  <input type="text" name='email' placeholder="Email address or Mobile number" onChange={handleInputChange} value={loginData.email} required />
                 </div>
                 <div className='d-flex justify-content-end'>
-                  <input type="password" placeholder="Password" onChange={handleInputChange} value={loginData.password} required />
+                  <input type="password" name='password' placeholder="Password" onChange={handleInputChange} value={loginData.password} required />
                 </div>
                 <p className=' text-dark d-flex'>Don't have an account? &nbsp;
                   <div className='d-flex flex-column'>

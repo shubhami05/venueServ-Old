@@ -32,7 +32,7 @@ function SignupOwner() {
             }
             
         } catch (err) {
-            console.log("Error in submitting signup : ",err)
+            console.log("Error in submitting signup : ");
         }
     }
 

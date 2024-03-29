@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function LoginOwner() {
+function LoginFinder() {
+
+
+
   return (
     <section className="contact_section  long_section">
     <div className="container">
@@ -13,9 +16,9 @@ function LoginOwner() {
           <div className="form_container">
             <div className="heading_container text-uppercase">
               <h2>
-                Login & Grow your business!
+                Login & Book suitable venue!
               </h2>
-              <h6 className='text-secondary'> as a venue-owner</h6>
+              <h6 className='text-secondary'> as a venue-finder</h6>
             </div>
             <form action >
             
@@ -25,7 +28,7 @@ function LoginOwner() {
               <div className='d-flex justify-content-end'>
                 <input type="password" placeholder="Password" required />
               </div>
-              <p className=' text-dark'>Don't have an account?<Link to="/SignupOwner"> Signup now!</Link></p>
+              <p className=' text-dark'>Don't have an account?<Link to="/SignupFinder"> Signup as a Finder!</Link> <Link to="/SignupOwner"> Signup as a Owner!</Link></p>
               <div className="btn_box">
                 <button type='submit'>
                   Login
@@ -40,4 +43,4 @@ function LoginOwner() {
   )
 }
 
-export default LoginOwner
+export default LoginFinder

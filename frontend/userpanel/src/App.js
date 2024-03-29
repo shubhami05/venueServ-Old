@@ -12,10 +12,9 @@ import Reviews from './pages/Reviews';
 import Venuecard from './pages/Venue-card';
 import Venue from './pages/Venue';
 import Notfound from './pages/Notfound';
-import LoginOwner from './pages/LoginOwner';
-import LoginFinder from './pages/LoginFinder';
 import SignupFinder from './pages/SignupFinder';
 import SignupOwner from './pages/SignupOwner';
+import LoginFinder from './pages/Login';
 
 function App() {
   return (
@@ -27,8 +26,7 @@ function App() {
       <Route path="/About" element={<About/>}/>
       <Route path="/Banquethalls" element={<Banquethalls/>}/>
       <Route path="/Contact" element={<Contact/>}/>
-      <Route path='/LoginOwner' element={<LoginOwner/>}/>
-      <Route path='/LoginFinder' element={<LoginFinder/>}/>
+      <Route path='/Login' element={}/>
       <Route path='/SignupFinder' element={<SignupFinder/>}/>
       <Route path='/SignupOwner' element={<SignupOwner/>}/>
       <Route path="/Mybooking" element={<Mybooking/>}/>

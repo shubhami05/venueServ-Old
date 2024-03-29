@@ -31,8 +31,8 @@ function NavbarMenu() {
                 <i className="fa fa-user" aria-hidden="true" />
               </button>
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <Link to="/LoginOwner" className='dropdown-item mt-0 text-center'>Venue Owner</Link>
-                <Link to='/LoginFinder' className='dropdown-item mt-0 text-center'>Venue Finder</Link>
+                <Link to="/Login" className='dropdown-item mt-0 text-center'>Venue Owner</Link>
+                <Link to='/Login' className='dropdown-item mt-0 text-center'>Venue Finder</Link>
               </ul>
             </div>
 

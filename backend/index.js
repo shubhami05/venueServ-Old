@@ -22,6 +22,7 @@ app.use(cors({
 app.post('/addNewVenue',venuePicUpload.single('photos'),venueApi);
 app.post('/myvenues',showVenuesApi);
 app.post("/signup",SignupApi);
+app.post("/login",SignupApi);
 
 
 

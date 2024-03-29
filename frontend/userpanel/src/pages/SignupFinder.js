@@ -26,7 +26,7 @@ function SignupFinder() {
             const response = await axios.post("http://localhost:8000/signup",signupData);
             console.log(response);
             if (response.status === 200) {
-                navigate("/LoginFinder");
+                navigate("/Login");
             } else {
                 console.log("Signup finder error!");
             }
@@ -61,7 +61,7 @@ function SignupFinder() {
                                     <input type="password" placeholder="Password" name='password' value={signupData.password} onChange={handleInputChange} required />
                                     <i className='bx bx-low-vision '></i>
                                 </div>
-                                <p className=' text-dark'>Already have an account?<Link to="/LoginFinder"> Login now!</Link></p>
+                                <p className=' text-dark'>Already have an account?<Link to="/Login"> Login now!</Link></p>
                                 <div className="btn_box">
                                     <button type='submit'>
                                         Signup

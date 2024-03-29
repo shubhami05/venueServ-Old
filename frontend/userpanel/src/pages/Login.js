@@ -1,46 +1,81 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-function LoginFinder() {
+function LoginUser() {
 
+  const navigate = useNavigate();
+  const [loginData,setLogindata] = useState({
+    email:'',
+    password:''
+  });
 
+const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLogindata((prevData) => ({
+        ...prevData,
+        [name]: value,
+    }))
+}
+const handleSubmit = async (e) =>{
+    e.preventDefault();
+    console.log(loginData);
+    try {
+        const response = await axios.post("http://localhost:8000/login",loginData);
+        console.log(response);
+        if (response.status === 200) {
+            alert("LOGIN SUCCESSFULLY!");
+            navigate("/");
+
+        } else {
+            alert("user not found!!");
+        }
+        
+    } catch (err) {
+        console.log("Error in submitting signup : ",err)
+    }
+}
 
   return (
     <section className="contact_section  long_section">
-    <div className="container">
-      <div className="row ">
-        <div className="d-flex justify-content-center align-items-center col-md-6 my-5 object-fit-cover">
-          <img src="images/about-img.png" width="100%"/>
-        </div>
-        <div className="col-md-6">
-          <div className="form_container">
-            <div className="heading_container text-uppercase">
-              <h2>
-                Login & Book suitable venue!
-              </h2>
-              <h6 className='text-secondary'> as a venue-finder</h6>
+      <div className="container">
+        <div className="row ">
+          <div className="d-flex justify-content-center align-items-center col-md-6 my-5 object-fit-cover">
+            <img src="images/about-img.png" width="100%" />
+          </div>
+          <div className="col-md-6">
+            <div className="form_container">
+              <div className="heading_container text-uppercase">
+                <h2>
+                  Login & Book suitable venue!
+                </h2>
+                <h6 className='text-secondary'> as a venue-finder</h6>
+              </div>
+              <form action onSubmit={handleSubmit}>
+
+                <div>
+                  <input type="text" placeholder="Email address or Mobile number" onChange={handleInputChange} value={loginData.email}required />
+                </div>
+                <div className='d-flex justify-content-end'>
+                  <input type="password" placeholder="Password" onChange={handleInputChange} value={loginData.password} required />
+                </div>
+                <p className=' text-dark d-flex'>Don't have an account? &nbsp;
+                  <div className='d-flex flex-column'>
+                    <Link to="/SignupFinder"> Signup as a Finder!</Link><Link to="/SignupOwner"> Signup as a Owner!</Link>
+                  </div>
+                </p>
+                <div className="btn_box">
+                  <button type='submit'>
+                    Login
+                  </button>
+                </div>
+              </form>
             </div>
-            <form action >
-            
-              <div>
-                <input type="text" placeholder="Email address or Mobile number" required />
-              </div>
-              <div className='d-flex justify-content-end'>
-                <input type="password" placeholder="Password" required />
-              </div>
-              <p className=' text-dark'>Don't have an account?<Link to="/SignupFinder"> Signup as a Finder!</Link> <Link to="/SignupOwner"> Signup as a Owner!</Link></p>
-              <div className="btn_box">
-                <button type='submit'>
-                  Login
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
   )
 }
 
-export default LoginFinder
+export default LoginUser

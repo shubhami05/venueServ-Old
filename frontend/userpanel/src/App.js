@@ -15,6 +15,7 @@ import Notfound from './pages/Notfound';
 import SignupFinder from './pages/SignupFinder';
 import SignupOwner from './pages/SignupOwner';
 import LoginFinder from './pages/Login';
+import LoginUser from './pages/Login';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
       <Route path="/About" element={<About/>}/>
       <Route path="/Banquethalls" element={<Banquethalls/>}/>
       <Route path="/Contact" element={<Contact/>}/>
-      <Route path='/Login' element={}/>
+      <Route path='/Login' element={<LoginUser/>}/>
       <Route path='/SignupFinder' element={<SignupFinder/>}/>
       <Route path='/SignupOwner' element={<SignupOwner/>}/>
       <Route path="/Mybooking" element={<Mybooking/>}/>

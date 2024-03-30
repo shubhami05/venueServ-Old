@@ -8,7 +8,7 @@ function SignupOwner() {
         email:'',
         mobile:'',
         password:'',
-        role:'owner'
+        role:''
     });
 
     const handleInputChange = (e) => {
@@ -58,8 +58,14 @@ function SignupOwner() {
                                     <input type="number" placeholder="Mobile number" name='mobile' value={signupData.mobile} onChange={handleInputChange} required />
                                 </div>
                                 <div className='d-flex justify-content-end'>
-                                    <input type="password" placeholder="Password" name='password' value={signupData.password} onChange={handleInputChange} required />
-                                    <i className='bx bx-low-vision '></i>
+                                    <input type="
+                                    " placeholder="Password" name='password' value={signupData.password} onChange={handleInputChange} required />
+                                </div>
+                                <div className='d-flex justify-content-end'>
+                                    <select  placeholder="Select your identity" name='role' value={signupData.role} onChange={handleInputChange}>
+                                        <option value="finder">Venue Finder</option>
+                                        <option value="owner">Venue Owner</option>
+                                    </select>
                                 </div>
                                 <p className=' text-dark'>Already have an account?<Link to="/Login"> Login now!</Link></p>
                                 <div className="btn_box">

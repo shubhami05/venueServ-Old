@@ -25,16 +25,11 @@ function NavbarMenu() {
             <li className="nav-item">
               <Link to='/Contact' className='nav-link'>Contact</Link>
             </li>
-            <div className="quote_btn-container dropdown ">
-              <button className="btn btn-secondery text-uppercase dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Login &nbsp;
-                <i className="fa fa-user" aria-hidden="true" />
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <Link to="/Login" className='dropdown-item mt-0 text-center'>Venue Owner</Link>
-                <Link to='/Login' className='dropdown-item mt-0 text-center'>Venue Finder</Link>
-              </ul>
-            </div>
+            <li className='nav-item'>
+              <Link to='/Login' className='nav-link'>Login&nbsp;
+                <i className="fa fa-user" aria-hidden="true" /></Link>
+            </li>
+           
 
             {/* <li className='nav-item'>
 

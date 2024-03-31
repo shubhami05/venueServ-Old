@@ -16,28 +16,32 @@ import SignupFinder from './pages/SignupFinder';
 import SignupOwner from './pages/SignupOwner';
 import LoginFinder from './pages/Login';
 import LoginUser from './pages/Login';
+import axios from 'axios';
+import HelloPage from './pages/HelloPage';
 
 function App() {
   return (
+    axios.defaults.withCredentials = true,
     <>
-    <BrowserRouter>
-    <Navbar/>
-    <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/About" element={<About/>}/>
-      <Route path="/Banquethalls" element={<Banquethalls/>}/>
-      <Route path="/Contact" element={<Contact/>}/>
-      <Route path='/Login' element={<LoginUser/>}/>
-      <Route path='/SignupFinder' element={<SignupFinder/>}/>
-      <Route path='/SignupOwner' element={<SignupOwner/>}/>
-      <Route path="/Mybooking" element={<Mybooking/>}/>
-      <Route path="/Reviews" element={<Reviews/>}/>
-      <Route path="/Venuecard" element={<Venuecard/>}/>
-      <Route path="/Venue" element={<Venue/>}/>
-      <Route path="/*" element={<Notfound/>}/>
-    </Routes>
-    <Footer/>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/About" element={<About />} />
+          <Route path="/Banquethalls" element={<Banquethalls />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path='/Login' element={<LoginUser />} />
+          <Route path='/SignupFinder' element={<SignupFinder />} />
+          <Route path='/SignupOwner' element={<SignupOwner />} />
+          <Route path="/Mybooking" element={<Mybooking />} />
+          <Route path="/Reviews" element={<Reviews />} />
+          <Route path="/Venuecard" element={<Venuecard />} />
+          <Route path="/Venue" element={<Venue />} />
+          <Route path='/HelloPage' element={<HelloPage/>}/>
+          <Route path="/*" element={<Notfound />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
     </>
   );
 }

@@ -21,18 +21,18 @@ const handleSubmit = async (e) =>{
     e.preventDefault();
     console.log(loginData);
     try {
-        const response = await axios.post("http://localhost:8000/login",loginData);
+      const response = await axios.post("http://localhost:8000/login",loginData);
         console.log(response);
         if (response.status === 200) {
             alert("LOGIN SUCCESSFULLY!");
-            navigate("/");
+            navigate("/HelloPage");
 
         } else {
             alert("user not found!!");
         }
         
     } catch (err) {
-        console.log("Error in submitting signup : ",err)
+        console.log("Error in submitting login form : ",err)
     }
 }
 
@@ -47,9 +47,8 @@ const handleSubmit = async (e) =>{
             <div className="form_container">
               <div className="heading_container text-uppercase">
                 <h2>
-                  Login & Book suitable venue!
+                  Login Now!
                 </h2>
-                <h6 className='text-secondary'> as a venue-finder</h6>
               </div>
               <form action onSubmit={handleSubmit}>
 

@@ -1,11 +1,14 @@
 const express = require("express");
 const connectDB = require("./db/dbConnect")
 const cors = require("cors");
+const session = require("express-session");
 
 const { venuePicUpload} = require("./multer/multerUpload");
 const {venueApi} = require("./api/venueApi");
 const {showVenuesApi} = require("./api/showVenues");
 const { SignupApi } = require("./api/signupApi");
+const SessionApi = require("./api/sessionApi");
+const { LoginApi } = require("./api/loginApi");
 
 const app = express();
 const PORT = 8000;
@@ -14,15 +17,21 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cors({
-    origin:'*',
+    origin:'http://localhost:3000',
     credentials:true,
     methods:['GET','POST','PUT','DELETE'],
 }));
 
+app.use(session({
+    secret : 'your-secret-key',
+    resave:false,
+    saveUninitialized:true
+}))
 app.post('/addNewVenue',venuePicUpload.single('photos'),venueApi);
 app.post('/myvenues',showVenuesApi);
 app.post("/signup",SignupApi);
-app.post("/login",SignupApi);
+app.post("/login",LoginApi);
+app.post("/session",SessionApi);
 
 
 

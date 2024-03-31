@@ -4,11 +4,11 @@ import axios from 'axios'
 
 function SignupOwner() {
     const navigate = useNavigate();
-    const [signupData,setSignupData] = useState({
-        email:'',
-        mobile:'',
-        password:'',
-        role:''
+    const [signupData, setSignupData] = useState({
+        email: '',
+        mobile: '',
+        password: '',
+        role: ''
     });
 
     const handleInputChange = (e) => {
@@ -16,23 +16,23 @@ function SignupOwner() {
         setSignupData((prevData) => ({
             ...prevData,
             [name]: value,
-        
+
         }))
     }
-    const handleSubmit = async (e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(signupData);
         try {
-            const response = await axios.post("http://localhost:8000/signup",signupData);
+            const response = await axios.post("http://localhost:8000/signup", signupData);
             console.log(response);
             if (response.status === 200) {
                 navigate("/Login");
             } else {
                 console.log("Signup owner error!");
             }
-            
+
         } catch (err) {
-            console.log("Error in submitting signup : ");
+            console.log("Error in submitting signup : ",err);
         }
     }
 
@@ -43,7 +43,7 @@ function SignupOwner() {
                 <div className="row ">
                     <div className="col-md-6">
                         <div className="form_container">
-                        <div className="heading_container text-uppercase">
+                            <div className="heading_container text-uppercase">
                                 <h2>
                                     signup & LIST YOUR VENUES!
                                 </h2>
@@ -61,8 +61,8 @@ function SignupOwner() {
                                     <input type="
                                     " placeholder="Password" name='password' value={signupData.password} onChange={handleInputChange} required />
                                 </div>
-                                <div className='d-flex justify-content-end'>
-                                    <select  placeholder="Select your identity" name='role' value={signupData.role} onChange={handleInputChange}>
+                                <div >
+                                    <select className='dropdownMenu' placeholder="Select your identity" name='role' value={signupData.role} onChange={handleInputChange}>
                                         <option value="finder">Venue Finder</option>
                                         <option value="owner">Venue Owner</option>
                                     </select>
@@ -77,7 +77,7 @@ function SignupOwner() {
                         </div>
                     </div>
                     <div className="d-flex justify-content-center align-items-center col-md-6 my-5 object-fit-cover">
-                        <img src="images/about-img.png" width="100%" alt='image'/>
+                        <img src="images/about-img.png" width="100%" alt='image' />
                     </div>
                 </div>
             </div>

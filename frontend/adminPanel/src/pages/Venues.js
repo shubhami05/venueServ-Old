@@ -64,14 +64,14 @@ function Venues() {
                     <td><span className="badge bg-label-success me-1">Available</span></td>
                     <td className='text-center'>
                       {
-                        (venue.outsideFood == 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
+                        (venue.outsideFood === 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
                       }
                     </td>
                     <td  className='text-center'>{venue.foodFacility}</td>
                     <td  className='text-center'>{venue.peopleCapacity}</td>
                     <td  className='text-center'>
                       {
-                        (venue.carParking == 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
+                        (venue.carParking === 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
                       }
                     </td>
                     <td className='text-center'>{venue.rooms}</td>
@@ -82,8 +82,8 @@ function Venues() {
                           <i className="bx bx-dots-vertical-rounded" />
                         </button>
                         <div className="dropdown-menu">
-                          <a className="dropdown-item" href="venue-form.html"><i className="bx bx-edit-alt me-1" />Edit</a>
-                          <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-trash me-1" /> Delete</a>
+                          <a className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Edit</a>
+                          <a className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</a>
                         </div>
                       </div>
                     </td>

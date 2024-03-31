@@ -9,6 +9,7 @@ const {showVenuesApi} = require("./api/showVenues");
 const { SignupApi } = require("./api/signupApi");
 const SessionApi = require("./api/sessionApi");
 const { LoginApi } = require("./api/loginApi");
+const { showUsersApi } = require("./api/showUsers");
 
 const app = express();
 const PORT = 8000;
@@ -32,7 +33,7 @@ app.post('/myvenues',showVenuesApi);
 app.post("/signup",SignupApi);
 app.post("/login",LoginApi);
 app.post("/session",SessionApi);
-
+app.post("/showUsers",showUsersApi);
 
 
 app.listen(PORT,()=>{

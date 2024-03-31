@@ -49,8 +49,8 @@ function Booking() {
                     <i className="bx bx-dots-vertical-rounded" />
                   </button>
                   <div className="dropdown-menu">
-                    <Link className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Edit</Link>
-                    <Link className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</Link>
+                    <a className="dropdown-item"><i className="bx bx-edit-alt me-1" />Edit</a>
+                    <a className="dropdown-item"><i className="bx bx-trash me-1" /> Delete</a>
                   </div>
                 </div>
               </td>
@@ -73,8 +73,8 @@ function Booking() {
                     <i className="bx bx-dots-vertical-rounded" />
                   </button>
                   <div className="dropdown-menu">
-                    <Link className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Edit</Link>
-                    <Link className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</Link>
+                    <a className="dropdown-item" ><i className="bx bx-edit-alt me-1" />Edit</a>
+                    <a className="dropdown-item" ><i className="bx bx-trash me-1" /> Delete</a>
                   </div>
                 </div>
               </td>

@@ -5,9 +5,9 @@ function Sidebar() {
  
   let location = useLocation();
   
-  useEffect(()=>{
-    console.log(location);
-  },[location]);
+  // useEffect(()=>{
+  //   console.log(location);
+  // },[location]);
 
 
 
@@ -15,7 +15,7 @@ function Sidebar() {
     <>
       <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
         <div className="app-brand demo">
-          <Link to='/' className={`app-brand-link ${location.pathname === "/" ? "active" : ""}`} >
+          <Link to='/'  >
             <div>
               <div className="app-brand-text demo menu-text fw-bolder  text-capitalize d-flex justify-content-center ms-2">VenueServ</div>
               <div className="text-primary app-brand-text text-bold menu-text d-flex justify-content-center text-capitalize ms-2">Admin Panel</div>

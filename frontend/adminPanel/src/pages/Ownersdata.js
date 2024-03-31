@@ -1,7 +1,19 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function Ownersdata() {
+
+  const [userdata,setUserdata] = useState([]);
+
+  useEffect(()=>{
+    axios.post("http://localhost:8000/showUsers")
+    .then((resp)=>{
+      setUserdata(resp.data.OwnersData);
+    })
+  },[])
+  
+
   return (
     <div className="content-wrapper">
 
@@ -16,105 +28,40 @@ function Ownersdata() {
             <table className="table table-striped">
               <thead>
                 <tr>
-                  <th>Full Name</th>
+                  {/* <th>Full Name</th> */}
                   <th>Email</th>
                   <th>Mobile No</th>
                   <th>Password</th>
-                  <th>Venues</th>
+                  {/* <th>Venues</th> */}
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>abc@gmail.com</td>
-                  <td>9898989898</td>
-                  <td><span className=" me-1">Not Available</span></td>
-                  <td><span className>5</span></td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
-                      </button>
-                      <div className="dropdown-menu">
-                        <Link className="dropdown-item" ><i className="bx bx-edit-alt me-1" />Edit</Link>
-                        <Link className="dropdown-item" ><i className="bx bx-trash me-1" /> Delete</Link>
+                {
+                  userdata.map((user)=>{
+                    return <tr key={user._id}>
+                    {/* <td><strong>John Abraham</strong></td> */}
+                    <td>{user.email}</td>
+                    <td>{user.mobile}</td>
+                    <td><span className="me-1">{user.password}</span></td>
+                    {/* <td><span className>5</span></td> */}
+                    <td>
+                      <div className="dropdown">
+                        <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                          <i className="bx bx-dots-vertical-rounded" />
+                        </button>
+                        <div className="dropdown-menu">
+                          <Link className="dropdown-item" ><i className="bx bx-edit-alt me-1" />Edit</Link>
+                          <Link className="dropdown-item" ><i className="bx bx-trash me-1" /> Delete</Link>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>abc@gmail.com</td>
-                  <td>9898989898</td>
-                  <td><span className=" me-1">Not Available</span></td>
-                  <td><span className>5</span></td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
-                      </button>
-                      <div className="dropdown-menu">
-                        <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-edit-alt me-1" />Edit</a>
-                        <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-trash me-1" /> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>abc@gmail.com</td>
-                  <td>9898989898</td>
-                  <td><span className=" me-1">Not Available</span></td>
-                  <td><span className>5</span></td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
-                      </button>
-                      <div className="dropdown-menu">
-                        <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-edit-alt me-1" />Edit</a>
-                        <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-trash me-1" /> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>abc@gmail.com</td>
-                  <td>9898989898</td>
-                  <td><span className=" me-1">Not Available</span></td>
-                  <td><span className>5</span></td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
-                      </button>
-                      <div className="dropdown-menu">
-                        <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-edit-alt me-1" />Edit</a>
-                        <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-trash me-1" /> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>abc@gmail.com</td>
-                  <td>9898989898</td>
-                  <td><span className=" me-1">Not Available</span></td>
-                  <td><span className>5</span></td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
-                      </button>
-                      <div className="dropdown-menu">
-                        <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-edit-alt me-1" />Edit</a>
-                        <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-trash me-1" /> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
+                  })
+                }
+
+          
+               
               </tbody>
             </table>
           </div>

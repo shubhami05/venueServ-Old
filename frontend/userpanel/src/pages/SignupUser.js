@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-function SignupFinder() {
+function SignupUser() {
     const navigate = useNavigate();
-    const [signupData,setSignupData] = useState({
-        email:'',
-        mobile:'',
-        password:'',
-        role:'finder'
+    const [signupData, setSignupData] = useState({
+        email: '',
+        mobile: '',
+        password: '',
+        role: ''
     });
 
     const handleInputChange = (e) => {
@@ -16,23 +16,23 @@ function SignupFinder() {
         setSignupData((prevData) => ({
             ...prevData,
             [name]: value,
-        
+
         }))
     }
-    const handleSubmit = async (e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(signupData);
         try {
-            const response = await axios.post("http://localhost:8000/signup",signupData);
+            const response = await axios.post("http://localhost:8000/signup", signupData);
             console.log(response);
             if (response.status === 200) {
                 navigate("/Login");
             } else {
-                console.log("Signup finder error!");
+                console.log("Signup owner error!");
             }
-            
+
         } catch (err) {
-            console.log("Error in submitting signup : ",err)
+            console.log("Error in submitting signup : ", err);
         }
     }
 
@@ -45,9 +45,9 @@ function SignupFinder() {
                         <div className="form_container">
                             <div className="heading_container text-uppercase">
                                 <h2>
-                                    signup & BOOK best venues!
+                                    signup & LIST YOUR VENUES!
                                 </h2>
-                                <h6 className='text-secondary'> as a venue-finder</h6>
+                                <h6 className='text-secondary'> as a venue-OWNER</h6>
                             </div>
                             <form onSubmit={handleSubmit} action>
 
@@ -59,7 +59,13 @@ function SignupFinder() {
                                 </div>
                                 <div className='d-flex justify-content-end'>
                                     <input type="password" placeholder="Password" name='password' value={signupData.password} onChange={handleInputChange} required />
-                                    <i className='bx bx-low-vision '></i>
+                                </div>
+                                <div >
+                                    <select className='dropdownMenu' name='role' value={signupData.role} onChange={handleInputChange} required>
+                                        <option value="">Select your role</option>
+                                        <option value="finder" >Venue Finder</option>
+                                        <option value="owner">Venue Owner</option>
+                                    </select>
                                 </div>
                                 <p className=' text-dark'>Already have an account?<Link to="/Login"> Login now!</Link></p>
                                 <div className="btn_box">
@@ -71,7 +77,7 @@ function SignupFinder() {
                         </div>
                     </div>
                     <div className="d-flex justify-content-center align-items-center col-md-6 my-5 object-fit-cover">
-                        <img src="images/about-img.png" width="100%" alt='image'/>
+                        <img src="images/about-img.png" width="100%" alt='image' />
                     </div>
                 </div>
             </div>
@@ -79,4 +85,4 @@ function SignupFinder() {
     )
 }
 
-export default SignupFinder
+export default SignupUser

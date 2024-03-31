@@ -12,9 +12,7 @@ import Reviews from './pages/Reviews';
 import Venuecard from './pages/Venue-card';
 import Venue from './pages/Venue';
 import Notfound from './pages/Notfound';
-import SignupFinder from './pages/SignupFinder';
-import SignupOwner from './pages/SignupOwner';
-import LoginFinder from './pages/Login';
+import SignupUser from './pages/SignupUser';
 import LoginUser from './pages/Login';
 import axios from 'axios';
 import HelloPage from './pages/HelloPage';
@@ -31,8 +29,7 @@ function App() {
           <Route path="/Banquethalls" element={<Banquethalls />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path='/Login' element={<LoginUser />} />
-          <Route path='/SignupFinder' element={<SignupFinder />} />
-          <Route path='/SignupOwner' element={<SignupOwner />} />
+          <Route path='/SignupUser' element={<SignupUser />} />
           <Route path="/Mybooking" element={<Mybooking />} />
           <Route path="/Reviews" element={<Reviews />} />
           <Route path="/Venuecard" element={<Venuecard />} />

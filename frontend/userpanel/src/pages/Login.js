@@ -60,7 +60,7 @@ const handleSubmit = async (e) =>{
                 </div>
                 <p className=' text-dark d-flex'>Don't have an account? &nbsp;
                   <div className='d-flex flex-column'>
-                    <Link to="/SignupFinder"> Signup as a Finder!</Link><Link to="/SignupOwner"> Signup as a Owner!</Link>
+                    <Link to="/SignupUser">Signup now!</Link>
                   </div>
                 </p>
                 <div className="btn_box">

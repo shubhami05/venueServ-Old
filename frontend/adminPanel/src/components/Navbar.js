@@ -27,10 +27,10 @@ function Navbar() {
             {/* User */}
             <li className="nav-item navbar-dropdown dropdown-user dropdown">
             </li><li>
-              <a className="dropdown-item" onClick={handleLogout}>{/*Link to user panel*/}
+              <span className="dropdown-item pointer-event" onClick={handleLogout}>{/*Link to user panel*/}
                 <i className="bx bx-power-off me-2" />
                 <span className="align-middle" >Log Out</span>
-              </a>
+              </span>
             </li>
             {/*/ User */}
           </ul>

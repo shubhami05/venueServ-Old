@@ -1,6 +1,10 @@
 import React from 'react'
 
 function Navbar() {
+  const handleLogout = () => {
+    window.location.href = "http://localhost:3000";
+    
+}
   return (
     <>
       {/* Navbar */}
@@ -23,9 +27,9 @@ function Navbar() {
             {/* User */}
             <li className="nav-item navbar-dropdown dropdown-user dropdown">
             </li><li>
-              <a className="dropdown-item" href="#">{/*Link to user panel*/}
+              <a className="dropdown-item" onClick={handleLogout}>{/*Link to user panel*/}
                 <i className="bx bx-power-off me-2" />
-                <span className="align-middle">Log Out</span>
+                <span className="align-middle" >Log Out</span>
               </a>
             </li>
             {/*/ User */}

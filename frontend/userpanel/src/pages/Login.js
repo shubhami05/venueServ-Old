@@ -25,7 +25,18 @@ const handleSubmit = async (e) =>{
         console.log(response);
         if (response.status === 200) {
             alert("LOGIN SUCCESSFULLY!");
-            navigate("/HelloPage");
+            const userRole = response.data.userData.session.role;
+            if (userRole === 'finder') {
+              // Navigate to finder app dashboard
+              navigate('/HelloPage');
+              // window.location.href = "http://yourfinderapp.com/dashboard";
+          } else if (userRole === 'owner') {
+              // Navigate to owner app dashboard
+              window.location.href = "http://localhost:3001/";
+          } else if (userRole === 'admin') {
+              // Navigate to admin app dashboard
+              window.location.href = "http://localhost:3002/";
+          }
 
         } else {
             alert("user not found!!");

@@ -83,8 +83,8 @@ function Venues() {
                             <i className="bx bx-dots-vertical-rounded" />
                           </button>
                           <div className="dropdown-menu">
-                            <a className="dropdown-item" href="venue-form.html"><i className="bx bx-edit-alt me-1" />Edit</a>
-                            <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-trash me-1" /> Delete</a>
+                            <span className="dropdown-item mouse-hover-pointer"><i className="bx bx-edit-alt me-1" />Edit</span>
+                            <span className="dropdown-item mouse-hover-pointer"><i className="bx bx-trash me-1" /> Delete</span>
                           </div>
                         </div>
                       </td>

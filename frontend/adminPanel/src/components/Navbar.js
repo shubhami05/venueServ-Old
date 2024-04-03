@@ -27,7 +27,7 @@ function Navbar() {
             {/* User */}
             <li className="nav-item navbar-dropdown dropdown-user dropdown">
             </li><li>
-              <span className="dropdown-item pointer-event" onClick={handleLogout}>{/*Link to user panel*/}
+              <span className="dropdown-item mouse-hover-pointer" onClick={handleLogout}>{/*Link to user panel*/}
                 <i className="bx bx-power-off me-2" />
                 <span className="align-middle" >Log Out</span>
               </span>

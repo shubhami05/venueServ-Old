@@ -3,14 +3,13 @@ import React from 'react'
 function Bookings() {
   return (
     <div className='h-100'>
-
-      {/* / Navbar */}
-      {/* Content wrapper */}
+      {/*/ Navbar*/}
+      {/*Content wrapper*/}
       <div className="content-wrapper">
         {/* Content */}
         <div className="container-xxl flex-grow-1 container-p-y">
           <h4 className="fw-bold py-3 mb-4">Bookings</h4>
-          {/* Striped Rows */}
+          {/*Striped Rows*/}
           <div className="card">
             <h5 className="card-header">Manage Bookings</h5>
             <div className="table-responsive text-nowrap">
@@ -46,31 +45,8 @@ function Bookings() {
                           <i className="bx bx-dots-vertical-rounded" />
                         </button>
                         <div className="dropdown-menu">
-                          <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-check me-1" />Accept</a>
-                          <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-x me-1" />Reject</a>
-                          
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><strong>1</strong></td>
-                    <td><strong>Mansi Kathiriya</strong></td>
-                    <td>9978803551</td>
-                    <td>Birthday</td>
-                    <td>20/02/2024</td>
-                    <td>Morning-Lunch</td>
-                    <td>Only Veg</td>
-                    <td>250</td>
-                    <td><span className="badge bg-label-warning me-1">Pending</span></td>
-                    <td>
-                      <div className="dropdown">
-                        <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                          <i className="bx bx-dots-vertical-rounded" />
-                        </button>
-                        <div className="dropdown-menu">
-                          <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-check me-1" />Accept</a>
-                          <a className="dropdown-item" href="javascript:void(0);"><i className="bx bx-x me-1" />Reject</a>
+                          <span className="dropdown-item mouse-hover-pointer"><i className="bx bx-check me-1" />Accept</span>
+                          <span className="dropdown-item mouse-hover-pointer"><i className="bx bx-x me-1" />Reject</span>
                           
                         </div>
                       </div>

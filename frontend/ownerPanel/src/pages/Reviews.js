@@ -33,7 +33,7 @@ function Reviews() {
                                         <td>4</td>
                                         <td>
                                             <div className="btn btn-primary">
-                                                <a className='text-white' href="javascript:void(0);"><i className="bx bx-book-reader me-1" />Read now</a>
+                                                <span className='text-white mouse-hover-pointer' ><i className="bx bx-book-reader me-1" />Read now</span>
                                             </div>
                                         </td>
                                     </tr>

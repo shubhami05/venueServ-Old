@@ -6,14 +6,39 @@ import { Link } from 'react-router-dom'
 
 function Venues() {
 
-  const [venues,setVenues] = useState([]);
+  const [venues, setVenues] = useState([]);
 
-  useEffect(()=>{
-    axios.post('http://localhost:8000/myvenues').then((response)=>{
-      setVenues(response.data.venueData);
-      console.log(response.data.venueData);
-    })
-  },[]);
+  const fetchVenues = () => {
+    try {
+      axios.post('http://localhost:8000/myvenues').then((response) => {
+        setVenues(response.data.venueData);
+        console.log(response.data.venueData);
+      })
+    }
+    catch (error) {
+      console.log("error in fetching venues data: ", error)
+
+    }
+  }
+  useEffect(() => {
+    fetchVenues();
+  }, []);
+
+  const handleDeleteVenue = async (e, vId) => {
+    e.preventDefault();
+    console.log(vId);
+    try {
+      const response = await axios.post("http://localhost:8000/deleteVenue", { vId });
+      console.log(response.data.message);
+      // alert()
+      fetchVenues();
+    }
+    catch (err) {
+      console.log("Error in deleting venue", err)
+    }
+  }
+
+
 
   return (
     <div className="h-100">
@@ -37,7 +62,8 @@ function Venues() {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th>V-id</th>
+
+                    <th>Actions</th>
                     <th>Venue Name</th>
                     <th>Owner Name</th>
                     <th>Contact no.</th>
@@ -51,13 +77,18 @@ function Venues() {
                     <th>Car parking</th>
                     <th>Rooms</th>
                     <th>Halls</th>
-                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody className="table-border-bottom-0">
-                  {venues.map((venue)=>{
+                  {venues.map((venue) => {
                     return <tr key={venue._id}>
-                      <td><strong>{1}</strong></td>
+                      
+                      <td>
+                        
+                            <span className="mouse-hover-pointer"><i className="bx bx-edit-alt me-1" /></span>
+                            <span className="mouse-hover-pointer" onClick={(e) => { handleDeleteVenue(e, venue._id) }}><i className="bx bx-trash me-1" /> </span>
+                        
+                      </td>
                       <td> <strong>{venue.name}</strong></td>
                       <td>{venue.ownerName}</td>
                       <td>{venue.mobile}</td>
@@ -77,20 +108,10 @@ function Venues() {
                       <td>{venue.carParking}</td>
                       <td>{venue.rooms}</td>
                       <td>{venue.halls}</td>
-                      <td>
-                        <div className="dropdown">
-                          <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i className="bx bx-dots-vertical-rounded" />
-                          </button>
-                          <div className="dropdown-menu">
-                            <span className="dropdown-item mouse-hover-pointer"><i className="bx bx-edit-alt me-1" />Edit</span>
-                            <span className="dropdown-item mouse-hover-pointer"><i className="bx bx-trash me-1" /> Delete</span>
-                          </div>
-                        </div>
-                      </td>
+                     
                     </tr>
                   })}
-                  
+
                 </tbody>
               </table>
             </div>

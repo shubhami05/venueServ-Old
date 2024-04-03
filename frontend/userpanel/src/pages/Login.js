@@ -32,10 +32,10 @@ const handleSubmit = async (e) =>{
               // window.location.href = "http://yourfinderapp.com/dashboard";
           } else if (userRole === 'owner') {
               // Navigate to owner app dashboard
-              window.location.href = "http://localhost:3001/";
+              window.location.href = "http://localhost:4000/";
           } else if (userRole === 'admin') {
               // Navigate to admin app dashboard
-              window.location.href = "http://localhost:3002/";
+              window.location.href = "http://localhost:5000/";
           }
 
         } else {

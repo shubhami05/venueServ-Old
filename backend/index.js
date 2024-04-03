@@ -10,6 +10,7 @@ const { SignupApi } = require("./api/signupApi");
 const SessionApi = require("./api/sessionApi");
 const { LoginApi } = require("./api/loginApi");
 const { showUsersApi } = require("./api/showUsers");
+const { DeleteVenue } = require("./api/deleteVenueApi");
 
 const app = express();
 const PORT = 8000;
@@ -28,12 +29,17 @@ app.use(session({
     resave:false,
     saveUninitialized:true
 }))
-app.post('/addNewVenue',venuePicUpload.single('photos'),venueApi);
-app.post('/myvenues',showVenuesApi);
+
+
+app.post("/session",SessionApi);
+
 app.post("/signup",SignupApi);
 app.post("/login",LoginApi);
-app.post("/session",SessionApi);
 app.post("/showUsers",showUsersApi);
+
+app.post('/addNewVenue',venuePicUpload.single('photos'),venueApi);
+app.post('/myvenues',showVenuesApi);
+app.post("/deleteVenue",DeleteVenue);
 
 
 app.listen(PORT,()=>{

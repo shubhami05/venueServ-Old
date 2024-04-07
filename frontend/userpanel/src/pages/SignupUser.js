@@ -49,7 +49,7 @@ function SignupUser() {
                                 </h2>
                                 <h6 className='text-secondary'> as a venue-OWNER</h6>
                             </div>
-                            <form onSubmit={handleSubmit} action>
+                            <form onSubmit={handleSubmit} >
 
                                 <div>
                                     <input type="email" placeholder="Email address" name='email' value={signupData.email} onChange={handleInputChange} required />

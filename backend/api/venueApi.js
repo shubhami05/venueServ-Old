@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const connectDB = require("../db/dbConnect");
 
 async function venueApi(req,res){
@@ -6,8 +7,11 @@ async function venueApi(req,res){
         const collection = db.collection("venuedata");
         const {name,type,city,address,price,foodFacility,outsideFood,carParking,peopleCapacity,halls,rooms,ownerName,email,mobile} = req.body;
         const photos = req.file;
-
+        const userId = req.session.user.session._id;
+        console.log(userId);
+        
         await collection.insertOne({
+            userId: ObjectId.createFromHexString(userId),
             name,
             type,
             city,

@@ -23,27 +23,27 @@ function Banquethalls() {
                 <div className="city-list">
                   <div className="text-theme2">
                     <i className="fa-solid fa-location-dot " />
-                    <a href="#" className="text-theme2">Ahemdabad</a>
+                    <p  className="text-theme2">Ahemdabad</p>
                   </div>
                   <div className="text-theme2">
                     <i className="fa-solid fa-location-dot " />
-                    <a href="#" className="text-theme2">Surat</a>
+                    <p  className="text-theme2">Surat</p>
                   </div>
                   <div className="text-theme2">
                     <i className="fa-solid fa-location-dot " />
-                    <a href="#" className="text-theme2">Mumbai</a>
+                    <p className="text-theme2">Mumbai</p>
                   </div>
                   <div className="text-theme2">
                     <i className="fa-solid fa-location-dot " />
-                    <a href="#" className="text-theme2">Hydrabad</a>
+                    <p className="text-theme2">Hydrabad</p>
                   </div>
                   <div className="text-theme2">
                     <i className="fa-solid fa-location-dot " />
-                    <a href="#" className="text-theme2">Banglore</a>
+                    <p className="text-theme2">Banglore</p>
                   </div>
                   <div className="text-theme2">
                     <i className="fa-solid fa-location-dot " />
-                    <a href="#" className="text-theme2">Pune</a>
+                    <p className="text-theme2">Pune</p>
                   </div>
                 </div>
               </div>
@@ -70,7 +70,7 @@ function Banquethalls() {
                         <h4>$ 555</h4>
                       </div>
                       <Link to='/Venuecard'>
-                        <a href="Venue-cards.html" className="btn bg-theme2 text-white">Check Now</a>
+                        <p className="btn bg-theme2 text-white">Check Now</p>
                       </Link>
                     </div>
                   </div>
@@ -96,7 +96,7 @@ function Banquethalls() {
                         <span className="text-muted text-small">Menu starts with</span>
                         <h4>$ 555</h4>
                       </div>
-                      <a href="Venue-cards.htm" className="btn bg-theme2 text-white"><Link to='/Venuecard'>Check Now</Link></a>
+                      <Link to='/Venuecard'><p className="btn bg-theme2 text-white">Check Now</p></Link>
                     </div>
                   </div>
                 </div>

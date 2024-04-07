@@ -9,9 +9,13 @@ import Notfound from './pages/Notfound';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import axios from 'axios';
+import EditVenue from './pages/EditVenue';
 
 function App() {
+  
   return (
+    axios.defaults.withCredentials = true,
     <BrowserRouter>
 
       <div className='layout-wrapper layout-content-navbar'>
@@ -26,6 +30,7 @@ function App() {
               <Route path='/myvenues' element={<Venues />} />
               <Route path='/reviews' element={<Reviews />} />
               <Route path='/addnewvenue' element={<AddVenue />} />
+              <Route path='/editvenue/:id' element={<EditVenue />} />
               <Route path='/*' element={<Notfound />} />
             </Routes>
             <Footer />

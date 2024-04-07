@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 function AddVenue() {
     const navigate = useNavigate();
-
+    const [userId, setUserId] = useState('');
+    // const [userName, setUserName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [userMobile, setUserMobile] = useState('');
     const [venueData, setVenueData] = useState({
+        userId: '',
         name: '',
         type: '',
         city: '',
@@ -23,6 +26,40 @@ function AddVenue() {
         email: '',
         mobile: ''
     });
+
+    useEffect(() => {
+        setVenueData(prevVenueData => ({
+            ...prevVenueData,
+            userId: userId,
+            email: userEmail,
+            mobile: userMobile
+        }));
+    }, [userId, userEmail, userMobile]);
+
+
+    useEffect(() => {
+        const fetchSessionData = async () => {
+            try {
+                // const loggedInUser = sessionStorage.getItem('loggedInUser');
+                const response = await axios.post("http://localhost:8000/session");
+                console.log(response);
+                if (response.data) {
+                    setUserId(response.data.sessionData.session._id);
+                    // setUserName(response.data.sessionData.session.name);
+                    setUserEmail(response.data.sessionData.session.email);
+                    console.log(userEmail)
+                    setUserMobile(response.data.sessionData.session.mobile);
+                    // console.log(response.data.sessionData.session._id);
+                }
+            }
+            catch (error) {
+                console.log("SESSION ERROR IN ADD VENUE PAGE: ", error);
+            }
+        };
+        fetchSessionData();
+    }, []);
+    // console.log(userId);    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -42,12 +79,11 @@ function AddVenue() {
         e.preventDefault();
         console.log(venueData); // Process form data here
         const form = new FormData();
-        for(const data in venueData)
-        {
-            form.append(data,venueData[data]);
+        for (const data in venueData) {
+            form.append(data, venueData[data]);
         }
         try {
-            
+
             const response = await axios.post("http://localhost:8000/addNewVenue", form);
             console.log(response);
             alert("Venue add successfully!");
@@ -58,26 +94,10 @@ function AddVenue() {
             console.log("external error:::" + err);
         }
         // Clear input fields after form submission
-        setVenueData({
-            name: '',
-            type: '',
-            city: '',
-            address: '',
-            price: '',
-            photos: '',
-            foodFacility: '',
-            outsideFood: '',
-            carParking: '',
-            peopleCapacity: '',
-            halls: '',
-            rooms: '',
-            ownerName: '',
-            email: '',
-            mobile: ''
-        });
+        handleReset();
     }
-    const handleReset = async (e) => {
-        e.preventDefault();
+    const handleReset = async () => {
+        // e.preventDefault(); 
         setVenueData({
             name: '',
             type: '',
@@ -106,7 +126,7 @@ function AddVenue() {
                     <h4 className="fw-bold py-3 mb-4"><span className="text-muted fw-light"> </span> Add New Venue</h4>
                     <div className="row">
                         <div className="col-md-12">
-                            <form method="post" encType="multipart/form-data" onReset={handleReset} onSubmit={handleSubmit} className="card mb-6">
+                            <form encType="multipart/form-data" onReset={handleReset} onSubmit={handleSubmit} className="card mb-6">
                                 <h5 className="card-header">
                                     Enter Venue's Details
                                 </h5>
@@ -188,7 +208,7 @@ function AddVenue() {
                                     <div className="row">
                                         <div className="col-lg-4 col-md-4 col-sm-12 mt-3">
                                             <label className="form-label fw-semibold">Food Facility</label>
-                                            
+
                                             <div className="form-check">
                                                 <input required
                                                     name="foodFacility"
@@ -230,7 +250,7 @@ function AddVenue() {
                                                 <label className="form-check-label" htmlFor="defaultRadio1">Allowed </label>
                                             </div>
                                             <div className="form-check">
-                                                <input  required
+                                                <input required
                                                     name="outsideFood"
                                                     value='no'
                                                     onChange={handleInputChange} className="form-check-input" type="radio" id="outsideFood2" />

@@ -3,7 +3,7 @@ const connectDB = require('../db/dbConnect');
 async function showUsersApi(req, res) {
     try {
         const db = await connectDB();
-        const collection = await db.collection("signupdata");
+        const collection =  db.collection("signupdata");
         const Users = await collection.find({}).toArray();
         const Owners = await collection.find({ role: "owner" }).toArray();
         const Finders = await collection.find({ role: "finder" }).toArray();

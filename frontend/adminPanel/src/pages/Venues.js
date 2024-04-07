@@ -6,15 +6,39 @@ import { useState } from 'react'
 
 function Venues() {
 
+
   const [venues, setVenues] = useState([]);
 
+  const fetchVenues = () => {
+    try {
+      axios.post('http://localhost:8000/myvenues').then((response) => {
+        setVenues(response.data.venueData);
+        console.log(response.data.venueData);
+      })
+    }
+    catch (error) {
+      console.log("error in fetching venues data: ", error)
+
+    }
+  }
   useEffect(() => {
-    axios.post('http://localhost:8000/myvenues')
-    .then((response) => {
-      setVenues(response.data.venueData);
-      console.log(response.data.venueData);
-    })
+    fetchVenues();
   }, []);
+
+  const handleDeleteVenue = async (e, vId) => {
+    e.preventDefault();
+    console.log(vId);
+    try {
+      const response = await axios.post("http://localhost:8000/deleteVenue", { vId });
+      console.log(response.data.message);
+      // alert()
+      fetchVenues();
+    }
+    catch (err) {
+      console.log("Error in deleting venue", err)
+    }
+  }
+
 
   return (
     <div className="content-wrapper">
@@ -28,7 +52,7 @@ function Venues() {
             <table className="table table-striped">
               <thead>
                 <tr>
-                  <th>V-id</th>
+                  <th className='text-center'>Actions</th>
                   <th>Venue Name</th>
                   <th>Owner Name</th>
                   <th>Contact no.</th>
@@ -42,13 +66,20 @@ function Venues() {
                   <th>Car parking</th>
                   <th>Rooms</th>
                   <th>Halls</th>
-                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
                 {venues.map((venue) => {
                   return <tr key={venue._id}>
-                    <td><strong>{1}</strong></td>
+                    <td>
+                      <button type='button' className="btn btn-icon btn-outline-primary mx-1">
+                        <i className="bx bxs-edit" />
+                      </button>
+
+                      <button type="button" className="btn btn-icon btn-outline-danger mx-1" onClick={(e)=>handleDeleteVenue(e,venue._id)} >
+                        <i className="bx bx-trash-alt"></i>
+                      </button>
+                    </td>
                     <td> <strong>{venue.name}</strong></td>
                     <td>{venue.ownerName}</td>
                     <td>{venue.mobile}</td>
@@ -67,26 +98,16 @@ function Venues() {
                         (venue.outsideFood === 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
                       }
                     </td>
-                    <td  className='text-center'>{venue.foodFacility}</td>
-                    <td  className='text-center'>{venue.peopleCapacity}</td>
-                    <td  className='text-center'>
+                    <td className='text-center'>{venue.foodFacility}</td>
+                    <td className='text-center'>{venue.peopleCapacity}</td>
+                    <td className='text-center'>
                       {
                         (venue.carParking === 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
                       }
                     </td>
                     <td className='text-center'>{venue.rooms}</td>
                     <td className='text-center'>{venue.halls}</td>
-                    <td className='text-center'>
-                      <div className="dropdown">
-                        <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                          <i className="bx bx-dots-vertical-rounded" />
-                        </button>
-                        <div className="dropdown-menu">
-                          <a className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Edit</a>
-                          <a className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</a>
-                        </div>
-                      </div>
-                    </td>
+
                   </tr>
                 })}
 

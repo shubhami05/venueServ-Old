@@ -8,7 +8,7 @@ async function showVenuesApi(req,res){
         
         if(venues.length == 0)
         {
-            return res.status(400).json({message:"No any venues founded!"});
+            return res.status(400).json({message:"No any venues founded!",venueData:null});
         }
         else
         {

@@ -22,9 +22,10 @@ const handleSubmit = async (e) =>{
     console.log(loginData);
     try {
       const response = await axios.post("http://localhost:8000/login",loginData);
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
             alert("LOGIN SUCCESSFULLY!");
+            
             const userRole = response.data.userData.session.role;
             if (userRole === 'finder') {
               // Navigate to finder app dashboard
@@ -61,7 +62,7 @@ const handleSubmit = async (e) =>{
                   Login Now!
                 </h2>
               </div>
-              <form action onSubmit={handleSubmit}>
+              <form  onSubmit={handleSubmit}>
 
                 <div>
                   <input type="text" name='email' placeholder="Email address or Mobile number" onChange={handleInputChange} value={loginData.email} required />
@@ -69,11 +70,11 @@ const handleSubmit = async (e) =>{
                 <div className='d-flex justify-content-end'>
                   <input type="password" name='password' placeholder="Password" onChange={handleInputChange} value={loginData.password} required />
                 </div>
-                <p className=' text-dark d-flex'>Don't have an account? &nbsp;
+                <div className='text-dark d-flex'>Don't have an account? &nbsp;
                   <div className='d-flex flex-column'>
                     <Link to="/SignupUser">Signup now!</Link>
                   </div>
-                </p>
+                </div>
                 <div className="btn_box">
                   <button type='submit'>
                     Login

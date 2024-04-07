@@ -6,6 +6,7 @@ async function DeleteVenue(req,res){
         const db = await connectDB();
         const collection = db.collection("venuedata");
         const {vId} = req.body;
+        console.log(vId)
         
         const result = await collection.deleteOne({_id:ObjectId.createFromHexString(vId)});
 
@@ -19,7 +20,7 @@ async function DeleteVenue(req,res){
         }
     } 
     catch (error) {
-        res.status(500).json("Backend delete venue error:",{message:error.message})
+        res.status(500).json("Backend delete venue error:",{message:error.message});
     }
 }
 

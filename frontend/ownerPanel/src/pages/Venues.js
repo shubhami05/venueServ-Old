@@ -7,22 +7,53 @@ import { Link } from 'react-router-dom'
 function Venues() {
 
   const [venues, setVenues] = useState([]);
+  const [userId,setUserId] = useState('');
 
-  const fetchVenues = () => {
+  useEffect(() => {
+    fetchSessionData()
+  }, []);
+
+  
+  const fetchVenues = async (userId) => {
+
+    // fetchSessionData();
     try {
-      axios.post('http://localhost:8000/myvenues').then((response) => {
-        setVenues(response.data.venueData);
-        console.log(response.data.venueData);
-      })
+      // console.log(uId)
+
+      axios.post('http://localhost:8000/showMyVenues', { userId })
+        .then((response) => {
+          if (response.status === 200) {
+            setVenues(response.data.venueData);
+          } else {
+            alert("No any venues listed by you!");
+          }
+          // console.log(response.data.venueData);
+        })
     }
     catch (error) {
       console.log("error in fetching venues data: ", error)
 
     }
   }
-  useEffect(() => {
-    fetchVenues();
-  }, []);
+
+  const fetchSessionData = async () => {
+    try {
+      // const loggedInUser = sessionStorage.getItem('loggedInUser');
+      const response = await axios.post("http://localhost:8000/session");
+      console.log(response);
+      if (response.data) {
+        setUserId(response.data.sessionData.session._id);
+        fetchVenues(response.data.sessionData.session._id);
+        // console.log(response.data.sessionData.session._id);
+      }
+    }
+    catch (error) {
+      console.log("SESSION ERROR IN ADD VENUE PAGE: ", error);
+    }
+  };
+
+
+
 
   const handleDeleteVenue = async (e, vId) => {
     e.preventDefault();
@@ -31,7 +62,7 @@ function Venues() {
       const response = await axios.post("http://localhost:8000/deleteVenue", { vId });
       console.log(response.data.message);
       // alert()
-      fetchVenues();
+      fetchVenues(userId);
     }
     catch (err) {
       console.log("Error in deleting venue", err)
@@ -63,7 +94,7 @@ function Venues() {
                 <thead>
                   <tr>
 
-                    <th>Actions</th>
+                    <th className='text-center'>Actions</th>
                     <th>Venue Name</th>
                     <th>Owner Name</th>
                     <th>Contact no.</th>
@@ -82,12 +113,18 @@ function Venues() {
                 <tbody className="table-border-bottom-0">
                   {venues.map((venue) => {
                     return <tr key={venue._id}>
-                      
-                      <td>
-                        
-                            <span className="mouse-hover-pointer"><i className="bx bx-edit-alt me-1" /></span>
-                            <span className="mouse-hover-pointer" onClick={(e) => { handleDeleteVenue(e, venue._id) }}><i className="bx bx-trash me-1" /> </span>
-                        
+
+                      <td className='text-center'>
+                        <Link to={`/editvenue/:${venue._id}`} state={{ venue }}>
+                          <button type='button' className="btn btn-icon btn-outline-primary mx-1">
+                            <i className="bx bxs-edit" />
+                          </button>
+                        </Link>
+
+                        <button type="button" className="btn btn-icon btn-outline-danger mx-1" onClick={(e) => { handleDeleteVenue(e, venue._id) }}>
+                          <i className="bx bx-trash-alt"></i>
+                        </button>
+
                       </td>
                       <td> <strong>{venue.name}</strong></td>
                       <td>{venue.ownerName}</td>
@@ -102,13 +139,20 @@ function Venues() {
                         $ {venue.price}
                       </td>
                       <td><span className="badge bg-label-success me-1">Available</span></td>
-                      <td>{venue.outsideFood}</td>
-                      <td>{venue.foodFacility}</td>
-                      <td>{venue.peopleCapacity}</td>
-                      <td>{venue.carParking}</td>
-                      <td>{venue.rooms}</td>
-                      <td>{venue.halls}</td>
-                     
+                      <td className='text-center'>
+                        {
+                          (venue.outsideFood === 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
+                        }
+                      </td>
+                      <td className='text-center'>{venue.foodFacility}</td>
+                      <td className='text-center'>{venue.peopleCapacity}</td>
+                      <td className='text-center'>
+                        {
+                          (venue.carParking === 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
+                        }</td>
+                      <td className='text-center'>{venue.rooms}</td>
+                      <td className='text-center'>{venue.halls}</td>
+
                     </tr>
                   })}
 

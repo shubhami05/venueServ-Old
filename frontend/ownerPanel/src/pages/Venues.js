@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom'
 function Venues() {
 
   const [venues, setVenues] = useState([]);
-  const [userId,setUserId] = useState('');
-
+  const [userId, setUserId] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     fetchSessionData()
   }, []);
 
-  
+
   const fetchVenues = async (userId) => {
 
     // fetchSessionData();
@@ -24,8 +24,10 @@ function Venues() {
         .then((response) => {
           if (response.status === 200) {
             setVenues(response.data.venueData);
+            setIsLoading(false);
           } else {
             alert("No any venues listed by you!");
+            setIsLoading(false);
           }
           // console.log(response.data.venueData);
         })
@@ -72,13 +74,17 @@ function Venues() {
 
 
   return (
-    <div className="h-100">
-      <div className="content-wrapper">
-        {/* Content */}
-        <div className="container-xxl flex-grow-1 container-p-y">
-          <h4 className="fw-bold py-3 mb-4">Your Venues</h4>
 
-          {/* Striped Rows */}
+    <div className="content-wrapper">
+      {/* Content */}
+      <div className="container-xxl flex-grow-1 container-p-y">
+        <h4 className="fw-bold py-3 mb-4">Your Venues</h4>
+
+
+        {/* Striped Rows */}
+        {isLoading ? (
+          <div className='h-75 d-flex justify-content-center align-items-center'>Loading...</div>
+        ) : (
           <div className="card">
             <div className='d-flex justify-content-between align-items-center '>
               <h5 className="card-header">Manage Venues</h5>
@@ -93,8 +99,7 @@ function Venues() {
               <table className="table table-striped">
                 <thead>
                   <tr>
-
-                    <th className='text-center'>Actions</th>
+                    <th className="text-center">Actions</th>
                     <th>Venue Name</th>
                     <th>Owner Name</th>
                     <th>Contact no.</th>
@@ -111,10 +116,9 @@ function Venues() {
                   </tr>
                 </thead>
                 <tbody className="table-border-bottom-0">
-                  {venues.map((venue) => {
-                    return <tr key={venue._id}>
-
-                      <td className='text-center'>
+                  {venues.map((venue) => (
+                    <tr key={venue._id}>
+                      <td>
                         <Link to={`/editvenue/:${venue._id}`} state={{ venue }}>
                           <button type='button' className="btn btn-icon btn-outline-primary mx-1">
                             <i className="bx bxs-edit" />
@@ -124,48 +128,37 @@ function Venues() {
                         <button type="button" className="btn btn-icon btn-outline-danger mx-1" onClick={(e) => { handleDeleteVenue(e, venue._id) }}>
                           <i className="bx bx-trash-alt"></i>
                         </button>
-
                       </td>
-                      <td> <strong>{venue.name}</strong></td>
+                      <td>
+                        <strong>{venue.name}</strong>
+                      </td>
                       <td>{venue.ownerName}</td>
                       <td>{venue.mobile}</td>
+                      <td>{venue.type}</td>
+                      <td>{venue.city}</td>
+                      <td>$ {venue.price}</td>
                       <td>
-                        {venue.type}
+                        <span className="badge bg-label-success me-1">Available</span>
                       </td>
-                      <td>
-                        {venue.city}
-                      </td>
-                      <td>
-                        $ {venue.price}
-                      </td>
-                      <td><span className="badge bg-label-success me-1">Available</span></td>
-                      <td className='text-center'>
-                        {
-                          (venue.outsideFood === 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
-                        }
-                      </td>
-                      <td className='text-center'>{venue.foodFacility}</td>
-                      <td className='text-center'>{venue.peopleCapacity}</td>
-                      <td className='text-center'>
-                        {
-                          (venue.carParking === 'yes' ? <i className='bx bx-check'></i> : <i className='bx bx-x'></i>)
-                        }</td>
-                      <td className='text-center'>{venue.rooms}</td>
-                      <td className='text-center'>{venue.halls}</td>
-
+                      <td className="text-center">{venue.outsideFood === 'yes' ? <i className="bx bx-check" /> : <i className="bx bx-x" />}</td>
+                      <td className="text-center">{venue.foodFacility}</td>
+                      <td className="text-center">{venue.peopleCapacity}</td>
+                      <td className="text-center">{venue.carParking === 'yes' ? <i className="bx bx-check" /> : <i className="bx bx-x" />}</td>
+                      <td className="text-center">{venue.rooms}</td>
+                      <td className="text-center">{venue.halls}</td>
                     </tr>
-                  })}
-
+                  ))}
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-        {/* / Content */}
 
-        {/* / Footer */}
-        <div className="content-backdrop fade" />
+          </div>
+        )}
       </div>
+      {/* / Content */}
+
+      {/* / Footer */}
+      <div className="content-backdrop fade" />
     </div>
 
   )

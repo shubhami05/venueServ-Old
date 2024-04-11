@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function EditVenue() {
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location.state.user)
+    console.log(location.state.venue);
     // const [userId,setUserId] = useState('');
 
     // useEffect(() => {
@@ -27,22 +27,22 @@ function EditVenue() {
     // console.log(userId);    
 
     const [venueData, setVenueData] = useState({
-        userId: '' ,
-        name: '',
-        type: '',
-        city: '',
-        address: '',
-        price: '',
-        photos: '',
-        foodFacility: '',
-        outsideFood: '',
-        carParking: '',
-        peopleCapacity: '',
-        halls: '',
-        rooms: '',
-        ownerName: '',
-        email: '',
-        mobile: ''
+        vId: location.state.venue._id,
+        name: location.state.venue.name,
+        type: location.state.venue.type,
+        city: location.state.venue.city,
+        address: location.state.venue.address,
+        price: location.state.venue.price,
+        photos: location.state.venue.photos,
+        foodFacility: location.state.venue.foodFacility,
+        outsideFood: location.state.venue.outsideFood,
+        carParking: location.state.venue.carParking,
+        peopleCapacity: location.state.venue.peopleCapacity,
+        halls: location.state.venue.halls,
+        rooms: location.state.venue.rooms,
+        ownerName: location.state.venue.ownerName,
+        email: location.state.venue.email,
+        mobile: location.state.venue.mobile
     });
 
     const handleInputChange = (e) => {
@@ -67,10 +67,9 @@ function EditVenue() {
             form.append(data, venueData[data]);
         }
         try {
-
-            const response = await axios.post("http://localhost:8000/addNewVenue", form);
+            const response = await axios.post("http://localhost:8000/editVenue", form);
             console.log(response);
-            alert("Venue add successfully!");
+            alert("Venue updated successfully!");
             navigate('/myvenues');
 
         }

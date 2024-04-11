@@ -2,10 +2,10 @@
 import './App.css';
 import Navbar from './common/navbar';
 import Footer from './common/footer';
-import { BrowserRouter, Form, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
-import Banquethalls from './pages/Banquethalls';
+import CategoryVenues from './pages/CategoryVenues';
 import Contact from './pages/Contact';
 import Mybooking from './pages/Mybooking';
 import Reviews from './pages/Reviews';
@@ -26,7 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/About" element={<About />} />
-          <Route path="/Banquethalls" element={<Banquethalls />} />
+          <Route path='/Venues/:category' element={<CategoryVenues/>}/>
           <Route path="/Contact" element={<Contact />} />
           <Route path='/Login' element={<LoginUser />} />
           <Route path='/SignupUser' element={<SignupUser />} />

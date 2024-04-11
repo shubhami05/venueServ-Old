@@ -5,7 +5,7 @@ async function ShowOwnerVenues(req, res) {
     try {
         const db = await connectDB();
         const collection = db.collection('venuedata');
-        const { userId } = req.body;
+        const { userId } = await req.body;
         console.log("User:", userId);
 
         const venues = await collection.find({ userId: ObjectId.createFromHexString(userId) }).toArray();

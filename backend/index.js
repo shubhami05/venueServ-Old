@@ -13,6 +13,7 @@ const { showUsersApi } = require("./api/showUsers");
 const { DeleteVenue } = require("./api/deleteVenueApi");
 const { ShowOwnerVenues } = require("./api/ownerVenues");
 const { EditVenue } = require("./api/editVenueApi");
+const { CategoryVenues } = require("./api/CategoryVenuesApi");
 
 const app = express();
 const PORT = 8000;
@@ -42,6 +43,7 @@ app.post("/showUsers", showUsersApi);
 app.post('/addNewVenue', venuePicUpload.single('photos'), venueApi);
 app.post('/myvenues', showVenuesApi); //for admin
 app.post('/showMyVenues', ShowOwnerVenues); //for owners
+app.post('/showCategoryVenues',CategoryVenues); //for user/finders
 app.post("/deleteVenue", DeleteVenue);
 app.post("/editVenue", venuePicUpload.single('photos'),EditVenue);
 

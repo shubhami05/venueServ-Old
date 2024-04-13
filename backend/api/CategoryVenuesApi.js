@@ -11,7 +11,7 @@ async function CategoryVenues(req, res) {
         
         // const venues = await collection.find({ userId: ObjectId.createFromHexString(userId) }).toArray();
         if (venues.length == 0) {
-            return res.status(400).json({ message: "No any venues founded!", venueData: null });
+            return res.status(201).json({ message: "No any venues founded!", venueData: null });
         }
         else {
             return res.status(200).json({ message: "Venues are :", venueData: venues });

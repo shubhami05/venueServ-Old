@@ -5,44 +5,42 @@ import { ReviewCard } from './Reviews'
 function Venuecard() {
   return (
     <>
-      <div className='container'>
-       
-        <div className="row container-fluid">
-          <div className="container-fluid col-lg-9 col-md-12 venue-details d-flex flex-column ">
+      <div className='container-fluid'>
+
+        <div className="row">
+          <div className="col-lg-9 col-md-12 venue-details d-flex flex-column ">
             <h3 className=" text-secondary-emphasis my-4">Venue Name, City, State</h3>
-            <span className="venue-location">
+            <span className="venue-location fs-6">
               <i className="fa-solid fa-location-dot" /> Venue address is at ahemdabad
               newindia colony
-              <a href="/" className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-map"> </i>
-                View on map</a>
+              <a href="/" className="text-decoration-none text-theme2 text-theme2-hover">&nbsp;<i className="fa-solid fa-map"> </i> View on map</a>
             </span>
             <span className="venue-review">
-              <span className="rating">3.5</span>
-              <i className="fa-solid fa-star" />
-              Rates &amp; reviewed by
-              <span className="reviews">99 guests,</span>
-              <Link to="/Reviews  " className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-comments " /> See all
+              <span className="rating">3.5 </span>
+              <i className="fa-solid fa-star" /> Rates & reviewed by
+              <span className="reviews"> 99 guests,</span>
+              <Link to="/Reviews  " className="text-decoration-none text-theme2 text-theme2-hover">&nbsp;<i className="fa-solid fa-comments " /> See all
                 reviews</Link>
             </span>
           </div>
-          <div className="col-lg-3 col-md-12 container-fluid venue-contact d-flex flex-column">
+          <div className="col-lg-3 col-md-12 venue-contact d-flex flex-column">
             <div className="row mt-2 ">
               <div className="col col-lg-12 col-md-6 ">
                 <div className="text-white w-50">
-                  <span className="badge bg-success">Conform</span>
+                  <span className="badge bg-success">Available</span>
                 </div>
                 <span>Price Starts from</span>
                 <h4>$ 500</h4>
               </div>
               <div className="col col-lg-12 col-md-6 d-flex align-items-lg-start align-items-md-end flex-column">
-                <span className="fs-6 ">Talk to Venue Manager</span>
-                <h5><i className="fa-solid fa-phone" /> +919877899878
-                </h5>
+                <span className="fs-6">Talk to Venue Manager</span>
+                <h6><i className="fa-solid fa-phone" /> +919877899878
+                </h6>
               </div>
             </div>
           </div>
         </div>
-        <div className="row mt-3 container-fluid">
+        <div className="row mt-3">
           <div className="col-lg-9 col-md-12 venue-details-container d-flex flex-column">
             <div className="venue-image">
               <div id="carouselExample" className="carousel slide ">
@@ -114,7 +112,7 @@ function Venuecard() {
             </div>
             <div className="latest-review-container">
               <h5>Latest Review:</h5>
-              <ReviewCard name="Shubham italiya" time="1" rating="3" msg="Hello world!  "/>
+              <ReviewCard name="Shubham italiya" time="1" rating="3" msg="Hello world!  " />
             </div>
           </div>
           <div className="col-lg-3 col-md-12">

@@ -3,17 +3,18 @@ const connectDB = require("./db/dbConnect")
 const cors = require("cors");
 const session = require("express-session");
 
+const SessionApi = require("./api/sessionApi");
+const { SignupApi } = require("./api/signupApi");
+const { LoginApi } = require("./api/loginApi");
+const { LogoutApi } = require("./api/LogoutApi");
+const { showUsersApi } = require("./api/showUsers");
 const { venuePicUpload } = require("./multer/multerUpload");
 const { venueApi } = require("./api/venueApi");
 const { showVenuesApi } = require("./api/showVenues");
-const { SignupApi } = require("./api/signupApi");
-const SessionApi = require("./api/sessionApi");
-const { LoginApi } = require("./api/loginApi");
-const { showUsersApi } = require("./api/showUsers");
-const { DeleteVenue } = require("./api/deleteVenueApi");
 const { ShowOwnerVenues } = require("./api/ownerVenues");
-const { EditVenue } = require("./api/editVenueApi");
 const { CategoryVenues } = require("./api/CategoryVenuesApi");
+const { EditVenue } = require("./api/editVenueApi");
+const { DeleteVenue } = require("./api/deleteVenueApi");
 
 const app = express();
 const PORT = 8000;
@@ -38,6 +39,7 @@ app.post("/session", SessionApi);
 
 app.post("/signup", SignupApi);
 app.post("/login", LoginApi);
+app.post("/logout",LogoutApi);
 app.post("/showUsers", showUsersApi);
 
 app.post('/addNewVenue', venuePicUpload.single('photos'), venueApi);

@@ -14,39 +14,11 @@ function NavbarMenu() {
    
       fetchSessionData();
       console.log(userLogined);
-    //  handleLogout();
     // eslint-disable-next-line
   }, [10])
 
 
-  // const fetchSessionData = async () => {
-  //   try {
-  //     const response = await axios.post("http://localhost:8000/session");
-  //     console.log(response);
-  //     if (response.data) {
-  //       setUserLogined(true);
-  //     }
-  //   }
-  //   catch (error) {
-  //     console.log("Hello page error: ", error);
-  //   }
-  // };
-  // const handleLogout = async ()=>{
-  //   try {
-  //     const response = await axios.post("http://localhost:8000/logout")
-  //     console.log(response);
-  //     if(response.status === 202)
-  //     {
-  //       alert("User logout!")
-  //       setUserLogined(false);
-  //       navigate('/Login');
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-
-  // }
-
+  
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary header_section long_section ">

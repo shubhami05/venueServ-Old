@@ -2,6 +2,7 @@
 import './App.css';
 import Navbar from './common/navbar';
 import Footer from './common/footer';
+import { AuthProvider } from './common/AuthProvider';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -18,10 +19,19 @@ import axios from 'axios';
 import HelloPage from './pages/HelloPage';
 
 function App() {
+  //run project and telll me theprob
+  // ok
+  //done?wait..
+  //ok done thanks..
+  // look the problem was for css used relative path and you used direct path if any url is having first/second like this then you must need to use relative path
+  //ok ok should i leave?
+  //yes done
+  
   return (
     axios.defaults.withCredentials = true,
     <>
       <BrowserRouter>
+      <AuthProvider>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -38,6 +48,7 @@ function App() {
           <Route path="/*" element={<Notfound />} />
         </Routes>
         <Footer />
+        </AuthProvider>
       </BrowserRouter>
     </>
   );

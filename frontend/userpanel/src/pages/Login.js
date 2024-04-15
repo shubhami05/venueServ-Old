@@ -1,10 +1,12 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../common/AuthProvider';
 
 function LoginUser() {
 
   const navigate = useNavigate();
+  const { setUserLogined } = useContext(AuthContext);
   const [loginData,setLogindata] = useState({
     email:'',
     password:''
@@ -29,7 +31,9 @@ const handleSubmit = async (e) =>{
             const userRole = response.data.userData.session.role;
             if (userRole === 'finder') {
               // Navigate to finder app dashboard
-              navigate('/HelloPage');
+              // window.location.reload();
+              setUserLogined(true);
+              navigate('/');
               // window.location.href = "http://yourfinderapp.com/dashboard";
           } else if (userRole === 'owner') {
               // Navigate to owner app dashboard
@@ -53,7 +57,7 @@ const handleSubmit = async (e) =>{
       <div className="container">
         <div className="row ">
           <div className="d-flex justify-content-center align-items-center col-md-6 my-5 object-fit-cover">
-            <img src="images/about-img.png" width="100%" />
+            <img src="images/about-img.png" width="100%" alt='about' />
           </div>
           <div className="col-md-6">
             <div className="form_container">

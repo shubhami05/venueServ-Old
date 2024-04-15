@@ -5,7 +5,7 @@ import { ReviewCard } from './Reviews'
 function Venuecard() {
   return (
     <>
-      <div className='container-fluid'>
+      <div className='container'>
 
         <div className="row">
           <div className="col-lg-9 col-md-12 venue-details d-flex flex-column ">
@@ -25,14 +25,12 @@ function Venuecard() {
           </div>
           <div className="col-lg-3 col-md-12 venue-contact d-flex flex-column">
             <div className="row mt-2 ">
-              <div className="col col-lg-12 col-md-6 ">
-                <div className="text-white w-50">
-                  <span className="badge bg-success">Available</span>
-                </div>
+              <div className=" col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex flex-column align-items-lg-end">
+                
                 <span>Price Starts from</span>
                 <h4>$ 500</h4>
               </div>
-              <div className="col col-lg-12 col-md-6 d-flex align-items-lg-start align-items-md-end flex-column">
+              <div className="col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex align-items-lg-start align-items-md-end align-items-sm-end  flex-column">
                 <span className="fs-6">Talk to Venue Manager</span>
                 <h6><i className="fa-solid fa-phone" /> +919877899878
                 </h6>
@@ -41,7 +39,7 @@ function Venuecard() {
           </div>
         </div>
         <div className="row mt-3">
-          <div className="col-lg-9 col-md-12 venue-details-container d-flex flex-column">
+          <div className="col-lg-9 col-md-12  d-flex flex-column">
             <div className="venue-image">
               <div id="carouselExample" className="carousel slide ">
                 <div className="carousel-inner object-fit-contain" style={{ aspectRatio: '16/9' }}>
@@ -69,7 +67,7 @@ function Venuecard() {
               <span className="fs-4 fw-semibold">Details:</span>
               <div className="details-table-container row">
                 <div className="table-container col-lg-6 col-md-12 ">
-                  <table className="table table-bordered ">
+                  <table className="table ">
                     <thead>
                     </thead>
                     <tbody>
@@ -78,8 +76,8 @@ function Venuecard() {
                         <td> Veg &amp; Non-Veg Both</td>
                       </tr>
                       <tr>
-                        <td><i className="fa-solid fa-utensils" /> Outside Food :</td>
-                        <td><i className="fa-solid fa-xmark" /> Not allowed</td>
+                        <td><i className="fa-solid fa-landmark" /> Total Halls :</td>
+                        <td>3</td>
                       </tr>
                       <tr>
                         <td><i className="fa-solid fa-bed" /> Rooms :</td>
@@ -89,14 +87,15 @@ function Venuecard() {
                   </table>
                 </div>
                 <div className="table-container col-lg-6 col-md-12">
-                  <table className="table table-bordered">
+                  <table className="table">
                     <thead>
                     </thead>
                     <tbody>
                       <tr>
-                        <td><i className="fa-solid fa-landmark" /> Total Halls :</td>
-                        <td>3</td>
+                        <td><i className="fa-solid fa-utensils" /> Outside Food :</td>
+                        <td><i className="fa-solid fa-xmark" /> Not allowed</td>
                       </tr>
+
                       <tr>
                         <td><i className="fa-solid fa-users" /> Capacity :</td>
                         <td> Upto 600 people</td>

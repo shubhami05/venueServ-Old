@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Venue from './Venue'
 import Contact from './Contact';
+import HelloPage from './HelloPage';
 
 function Home() {
   return (
@@ -11,7 +12,7 @@ function Home() {
         <HeroSection />
         <Venue />
         <Testimonial />
-        <Contact/>
+        <Contact />
 
       </div>
 
@@ -20,7 +21,8 @@ function Home() {
 }
 
 function HeroSection() {
-  return (
+  return (<>
+    <HelloPage />
     <section className=" slider_section long_section">
       <div id="customCarousel" className="carousel slide" data-ride="carousel">
         <div className="carousel-inner">
@@ -49,7 +51,7 @@ function HeroSection() {
                 </div>
                 <div className="col-md-7">
                   <div className="img-box">
-                    <img src="images/slider-img.png" alt="Slider image" />
+                    <img src="images/slider-img.png" alt="Slider" />
                   </div>
                 </div>
               </div>
@@ -64,6 +66,8 @@ function HeroSection() {
       </ol> */}
       </div>
     </section>
+  </>
+
   );
 }
 
@@ -83,7 +87,7 @@ function Testimonial() {
                 <div className="col-md-11 col-lg-10 mx-auto">
                   <div className="box">
                     <div className="img-box">
-                      <img src="images/client.jpg" alt="image not found"/>
+                      <img src="images/client.jpg" alt=" not found" />
                     </div>
                     <div className="detail-box">
                       <div className="name">
@@ -107,7 +111,7 @@ function Testimonial() {
                 <div className="col-md-11 col-lg-10 mx-auto">
                   <div className="box">
                     <div className="img-box">
-                      <img src="images/client.jpg" alt="image not found"/>
+                      <img src="images/client.jpg" alt=" not found" />
                     </div>
                     <div className="detail-box">
                       <div className="name">
@@ -131,7 +135,7 @@ function Testimonial() {
                 <div className="col-md-11 col-lg-10 mx-auto">
                   <div className="box">
                     <div className="img-box">
-                      <img src="images/client.jpg" alt="image not found"/>
+                      <img src="images/client.jpg" alt=" not found" />
                     </div>
                     <div className="detail-box">
                       <div className="name">
@@ -152,11 +156,11 @@ function Testimonial() {
             </div>
           </div>
           <div className="carousel_btn-container">
-            <button className="carousel-control-prev" role="button" data-slide="prev">
+            <button className="carousel-control-prev" data-slide="prev">
               <i className="fa fa-long-arrow-left" aria-hidden="true" />
               <span className="sr-only">Previous</span>
             </button>
-            <button className="carousel-control-next" role="button" data-slide="next">
+            <button className="carousel-control-next" data-slide="next">
               <i className="fa fa-long-arrow-right" aria-hidden="true" />
               <span className="sr-only">Next</span>
             </button>

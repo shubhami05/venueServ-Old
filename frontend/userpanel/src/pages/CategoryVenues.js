@@ -173,8 +173,8 @@ function CategoryVenues() {
                             <span className="text-muted text-small">Price starts with</span>
                             <h4>$ {venue.price}</h4>
                           </div>
-                          <button className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 text-white">  
-                          <Link to="/VenueCard" state={{venue}}>Check out</Link>
+                          <button className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 ">  
+                          <Link to="/VenueCard" state={{venue}} className='text-white'>Check out</Link>
                           </button>
                         </div>
                       </div>

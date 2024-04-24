@@ -67,7 +67,14 @@ function SignupUser() {
                                         <option value="owner">Venue Owner</option>
                                     </select>
                                 </div>
-                                <p className=' text-dark'>Already have an account?<Link to="/Login"> Login now!</Link></p>
+                                <div className='text-dark d-flex flex-lg-row flex-wrap mb-2'>
+                                    <div className=' text-dark'>Already have an account? &nbsp;
+                                    </div>
+                                    <div >
+
+                                    <Link to="/Login"> Login now!</Link>
+                                    </div>
+                                </div>
                                 <div className="btn_box">
                                     <button type='submit'>
                                         Signup

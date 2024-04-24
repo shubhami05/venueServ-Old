@@ -24,9 +24,9 @@ function LoginUser() {
       const response = await axios.post("http://localhost:8000/login", loginData);
       // console.log(response);
       if (response.status === 200) {
-        
+
         alert("LOGIN SUCCESSFULLY!");
-        
+
         const userRole = response.data.userData.session.role;
         if (userRole === 'finder') {
           // Navigate to finder app dashboard
@@ -41,7 +41,7 @@ function LoginUser() {
           // Navigate to admin app dashboard
           window.location.href = "http://localhost:5000/";
         }
-        
+
       } else if (response.status === 244) {
         alert("Invalid Email or Password!!");
       }
@@ -60,7 +60,7 @@ function LoginUser() {
       <div className="container">
         <div className="row ">
           <div className="d-flex justify-content-center align-items-center col-md-6 my-5 object-fit-cover">
-            <img src="images/about-img.png" width="100%" alt='about' />
+            <img src="images/about-img.png" width="100%" alt='about' style={{transform:' scaleX(-1)'}}/>
           </div>
           <div className="col-md-6">
             <div className="form_container">
@@ -77,9 +77,13 @@ function LoginUser() {
                 <div className='d-flex justify-content-end'>
                   <input type="password" name='password' placeholder="Password" onChange={handleInputChange} value={loginData.password} required />
                 </div>
-                <div className='text-dark d-flex'>Don't have an account? &nbsp;
-                  <div className='d-flex flex-column'>
-                    <Link to="/SignupUser">Signup now!</Link>
+                <div className='text-dark d-flex flex-lg-row flex-wrap mb-2'>
+                  <div > 
+                    Don't have an account? &nbsp;
+                  </div>
+                  <div >
+
+                  <Link to="/SignupUser" >Signup now!</Link>
                   </div>
                 </div>
                 <div className="btn_box">

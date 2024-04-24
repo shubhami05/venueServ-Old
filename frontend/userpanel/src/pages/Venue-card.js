@@ -53,7 +53,7 @@ function Venuecard() {
           </div>
           <div className="col-lg-3 col-md-12 venue-contact d-flex flex-column">
             <div className="row mt-2 ">
-              <div className=" col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex flex-column align-items-lg-end">
+              <div className=" col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex flex-column align-items-lg-start">
                 
                 <span>Price Starts from</span>
                 <h4>$ {currentVenue.price}</h4>

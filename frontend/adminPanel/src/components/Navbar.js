@@ -1,9 +1,14 @@
 import React from 'react'
+import axios from 'axios'
 
 function Navbar() {
-  const handleLogout = () => {
-    window.location.href = "http://localhost:3000";
-    
+  async function handleLogout() {
+    const response = await axios.post("http://localhost:8000/logout");
+    console.log(response);
+    if (response.status === 200) {
+        alert("Logout successfully!!");
+        window.location.href = "http://localhost:3000/";
+    }
 }
   return (
     <>

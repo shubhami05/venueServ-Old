@@ -53,15 +53,9 @@ function Userdata() {
                         <td><span className="me-1">{user.password}</span></td>
                         {/* <td><span className>5</span></td> */}
                         <td>
-                          <div className="dropdown">
-                            <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i className="bx bx-dots-vertical-rounded" />
-                            </button>
-                            <div className="dropdown-menu">
-                              <a className="dropdown-item" href='/' ><i className="bx bx-edit-alt me-1" />Edit</a>
-                              <a className="dropdown-item" href='/'><i className="bx bx-trash me-1" /> Delete</a>
-                            </div>
-                          </div>
+                          <button type="button" className="btn btn-icon btn-outline-danger mx-1" >
+                            <i className="bx bx-trash-alt" />
+                          </button>
                         </td>
                       </tr>
                     })

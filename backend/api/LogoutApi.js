@@ -3,11 +3,11 @@ async function LogoutApi(req, res) {
         const userData = req.session.user;
 
         if (!userData) {
-            return res.status(400).json({ message: "User is not logined" });
+            return res.status(401).json({ message: "User is not logined" });
         }
         else {
             req.session.destroy();
-            return res.status(202).json({ message: "User Logout Successfully!" });
+            return res.status(200).json({ message: "User Logout Successfully!" });
         }
     } catch (error) {
         console.log("Logout Api Error!");

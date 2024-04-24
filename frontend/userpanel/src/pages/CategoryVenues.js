@@ -1,11 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Audio } from 'react-loader-spinner'
 
 function CategoryVenues() {
   const params = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [cities, setCities] = useState([]);
   const [venues, setVenues] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -65,41 +65,39 @@ function CategoryVenues() {
       </Link>
     )
   }
-  function VenueCard(props) {
-    return (
-      <div className="venue-card mb-2 row bg-body-tertiary border-0">
-        <div className="col-lg-4 col-md-12 col-sm-12 ">
-          <img src={require(`../images/venuePics/${props.photo}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
-        </div>
-        <div className="col-lg-8 col-md-12 col-sm-12 ">
-          <div className="row d-flex justify-content-between">
-            <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mt-2">
-              <div className="d-flex flex-column">
-                <h4 className="text-capitalize fs-5">{props.name}</h4>
-                <span className='text-capitalize'><i className=" fa-solid fa-location-dot" /> {props.city}</span>
-                <span><i className="fa-solid fa-user" /> {props.capacity}</span>
-                <span><i className="fa-solid fa-car" /> {props.parking} </span>
-                <span><i className="fa-solid fa-star" /> 3.5 / 5 rated by 99 Guests</span>
-                <span className="text-success mt-2">6969 people enquired this venue</span>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex flex-column justify-content-between">
-              <div className="d-flex flex-column align-items-end mt-2 me-2">
-                <span className="text-muted text-small">Price starts with</span>
-                <h4>$ {props.price}</h4>
-              </div>
-              <button state={{ props }} className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 text-white"
-                onClick={() => {
-                  navigate("/Venuecard")
-                }}
-              >Check out</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+  // function VenueCard(props) {
+  //   return (
+  //     <div className="venue-card mb-2 row bg-body-tertiary border-0">
+  //       <div className="col-lg-4 col-md-12 col-sm-12 ">
+  //         <img src={require(`../images/venuePics/${props.photo}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
+  //       </div>
+  //       <div className="col-lg-8 col-md-12 col-sm-12 ">
+  //         <div className="row d-flex justify-content-between">
+  //           <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mt-2">
+  //             <div className="d-flex flex-column">
+  //               <h4 className="text-capitalize fs-5">{props.name}</h4>
+  //               <span className='text-capitalize'><i className=" fa-solid fa-location-dot" /> {props.city}</span>
+  //               <span><i className="fa-solid fa-user" /> {props.capacity}</span>
+  //               <span><i className="fa-solid fa-car" /> {props.parking} </span>
+  //               <span><i className="fa-solid fa-star" /> 3.5 / 5 rated by 99 Guests</span>
+  //               <span className="text-success mt-2">6969 people enquired this venue</span>
+  //             </div>
+  //           </div>
+  //           <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex flex-column justify-content-between">
+  //             <div className="d-flex flex-column align-items-end mt-2 me-2">
+  //               <span className="text-muted text-small">Price starts with</span>
+  //               <h4>$ {props.price}</h4>
+  //             </div>
+  //             <button  className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 text-white">  
+  //             <Link to="/VenueCard" state={ props}>Check out</Link>
+  //             </button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   )
 
-  }
+  // }
 
   return (
     <>
@@ -151,18 +149,42 @@ function CategoryVenues() {
                   />
                 </p>
               ) : (venues && venues.length > 0) ? (
-                venues.map((venue) => {
-                  return (
-                    <VenueCard photo={venue.photos?.filename} name={venue.name} city={venue.city} capacity={venue.peopleCapacity} price={venue.price} parking={(venue.carParking === 'yes') ? ("Available") : ("Not available")} />
+                venues.map((venue) =>
+                {
+                  return(
+                    <div className="venue-card mb-2 row bg-body-tertiary border-0">
+                    <div className="col-lg-4 col-md-12 col-sm-12 ">
+                      <img src={require(`../images/venuePics/${venue.photos?.filename}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
+                    </div>
+                    <div className="col-lg-8 col-md-12 col-sm-12 ">
+                      <div className="row d-flex justify-content-between">
+                        <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mt-2">
+                          <div className="d-flex flex-column">
+                            <h4 className="text-capitalize fs-5">{venue.name}</h4>
+                            <span className='text-capitalize'><i className=" fa-solid fa-location-dot" /> {venue.city}</span>
+                            <span><i className="fa-solid fa-user" /> {venue.peopleCapacity}</span>
+                            <span><i className="fa-solid fa-car" /> {(venue.carParking === 'yes') ? ("Available") : ("Not available")} </span>
+                            <span><i className="fa-solid fa-star" /> 3.5 / 5 rated by 99 Guests</span>
+                            <span className="text-success mt-2">6969 people enquired this venue</span>
+                          </div>
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex flex-column justify-content-between">
+                          <div className="d-flex flex-column align-items-end mt-2 me-2">
+                            <span className="text-muted text-small">Price starts with</span>
+                            <h4>$ {venue.price}</h4>
+                          </div>
+                          <button className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 text-white">  
+                          <Link to="/VenueCard" state={{venue}}>Check out</Link>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   )
                 })
               ) : (
                 <p>No {params.category} available.</p>
               )}
-
-
-
-
             </div>
           </div>
         </div>

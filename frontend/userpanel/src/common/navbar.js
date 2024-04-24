@@ -1,23 +1,59 @@
 // import axios from 'axios';
-import { useContext, useEffect } from 'react';
+import {  useEffect ,useState} from 'react';
+import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-// import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthProvider';
+import { Link ,useNavigate} from 'react-router-dom';
+import fetchSessionData from '../auth/authService';
 
 function NavbarMenu() {
   // const navigate = useNavigate();
-  const { userLogined, fetchSessionData, handleLogout } = useContext(AuthContext);
+  // const { userLogined, fetchSessionData, handleLogout } = useContext(AuthContext);
+  const [isAuth,setAuth] = useState(false);
+  const [loading,setLoading] = useState(true);
+  const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
   useEffect( () => {
    
-      fetchSessionData();
-      console.log(userLogined);
+      const authenticateUser = async () =>{
+        try {
+          const isAuth = await fetchSessionData();
+          setAuth(isAuth);
+          
+        } catch (error) {
+          setAuth(false);
+        }
+        finally{
+          setLoading(false);
+        }
+      };
+
+      if(!isAuth)
+      {
+        authenticateUser();  
+      }
+      else
+      {
+        setLoading(false);
+      }
     // eslint-disable-next-line
   }, [10])
-
-
+  
+  if(loading)
+  {
+    return <h1>Loading....</h1>
+  }
+  async function handleLogout(){
+    const response = await axios.post("http://localhost:8000/logout");
+    console.log(response);
+    if(response.status === 200)
+    {
+      alert("Logout successfully!!");
+      navigate("Login");
+      window.location.reload(false); 
+    }
+  }
   
 
   return (
@@ -43,7 +79,7 @@ function NavbarMenu() {
               <Link to='/Contact' className='nav-link'>Contact</Link>
             </li>
             <li className='nav-item'>
-              {userLogined ? (
+              {isAuth ? (
                 <Link 
                   className='nav-link'
                   onClick={handleLogout}

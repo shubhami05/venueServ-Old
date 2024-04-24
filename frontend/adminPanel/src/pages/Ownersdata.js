@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 function Ownersdata() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,10 +25,10 @@ function Ownersdata() {
         {/* Striped Rows */}
         {isLoading ? (
           <div className='h-75 d-flex justify-content-center align-items-center'>
-          <div class="spinner-grow text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        </div>
+            <div class="spinner-grow text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         ) : (
           <div className="card">
             <h5 className="card-header">Logined Venue Owners</h5>
@@ -54,15 +54,9 @@ function Ownersdata() {
                         <td><span className="me-1">{user.password}</span></td>
                         {/* <td><span className>5</span></td> */}
                         <td>
-                          <div className="dropdown">
-                            <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i className="bx bx-dots-vertical-rounded" />
-                            </button>
-                            <div className="dropdown-menu">
-                              <Link className="dropdown-item" ><i className="bx bx-edit-alt me-1" />Edit</Link>
-                              <Link className="dropdown-item" ><i className="bx bx-trash me-1" /> Delete</Link>
-                            </div>
-                          </div>
+                          <button type="button" className="btn btn-icon btn-outline-danger mx-1"  >
+                            <i className="bx bx-trash-alt" />
+                          </button>
                         </td>
                       </tr>
                     })

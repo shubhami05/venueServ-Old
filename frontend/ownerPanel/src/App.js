@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+// import {useState,useEffect} from 'react';
 import Homepage from './pages/Homepage';
 import Bookings from './pages/Bookings';
 import Venues from './pages/Venues';
@@ -11,9 +12,10 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import axios from 'axios';
 import EditVenue from './pages/EditVenue';
+// import fetchSessionData from './auth/authService';
 
 function App() {
-  
+ 
   return (
     axios.defaults.withCredentials = true,
     <BrowserRouter>

@@ -10,7 +10,7 @@ async function LoginApi(req,res){
         const user = await collection.findOne({email,password});
         if(!user)
         {
-            return res.status(400).json({userData:null,message:'Invalid email or password!'});
+            return res.status(244).json({userData:null,message:'Invalid email or password!'});
         }
         else
         {

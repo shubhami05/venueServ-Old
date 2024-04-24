@@ -1,56 +1,59 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { AuthContext } from '../common/AuthProvider';
 
 function LoginUser() {
 
   const navigate = useNavigate();
-  const { setUserLogined } = useContext(AuthContext);
-  const [loginData,setLogindata] = useState({
-    email:'',
-    password:''
+  const [loginData, setLogindata] = useState({
+    email: '',
+    password: ''
   });
 
-const handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLogindata((prevData) => ({
-        ...prevData,
-        [name]: value,
+      ...prevData,
+      [name]: value,
     }))
-}
-const handleSubmit = async (e) =>{
+  }
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(loginData);
     try {
-      const response = await axios.post("http://localhost:8000/login",loginData);
-        // console.log(response);
-        if (response.status === 200) {
-            alert("LOGIN SUCCESSFULLY!");
-            
-            const userRole = response.data.userData.session.role;
-            if (userRole === 'finder') {
-              // Navigate to finder app dashboard
-              // window.location.reload();
-              setUserLogined(true);
-              navigate('/');
-              // window.location.href = "http://yourfinderapp.com/dashboard";
-          } else if (userRole === 'owner') {
-              // Navigate to owner app dashboard
-              window.location.href = "http://localhost:4000/";
-          } else if (userRole === 'admin') {
-              // Navigate to admin app dashboard
-              window.location.href = "http://localhost:5000/";
-          }
-
-        } else {
-            alert("user not found!!");
+      const response = await axios.post("http://localhost:8000/login", loginData);
+      // console.log(response);
+      if (response.status === 200) {
+        
+        alert("LOGIN SUCCESSFULLY!");
+        
+        const userRole = response.data.userData.session.role;
+        if (userRole === 'finder') {
+          // Navigate to finder app dashboard
+          // window.location.reload();
+          navigate('/');
+          window.location.reload(false);
+          // window.location.href = "http://yourfinderapp.com/dashboard";
+        } else if (userRole === 'owner') {
+          // Navigate to owner app dashboard
+          window.location.href = "http://localhost:4000/";
+        } else if (userRole === 'admin') {
+          // Navigate to admin app dashboard
+          window.location.href = "http://localhost:5000/";
         }
         
+      } else if (response.status === 244) {
+        alert("Invalid Email or Password!!");
+      }
+      else {
+        alert("Something went wrong!!")
+      }
+
     } catch (err) {
-        console.log("Error in submitting login form : ",err)
+      console.log("Error in submitting login form : ", err)
     }
-}
+
+  }
 
   return (
     <section className="contact_section  long_section">
@@ -66,7 +69,7 @@ const handleSubmit = async (e) =>{
                   Login Now!
                 </h2>
               </div>
-              <form  onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}>
 
                 <div>
                   <input type="text" name='email' placeholder="Email address or Mobile number" onChange={handleInputChange} value={loginData.email} required />

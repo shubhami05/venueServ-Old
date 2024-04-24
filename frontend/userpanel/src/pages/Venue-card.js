@@ -1,18 +1,46 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { ReviewCard } from './Reviews'
 
 function Venuecard() {
+  const location = useLocation();
+  console.log(location.state.venue);
+  const [currentVenue,setCurrentVenue] = useState({
+    id : location.state.venue._id,
+    name : location.state.venue.name,
+    address : location.state.venue.address,
+    carParking : location.state.venue.carParking,
+    city : location.state.venue.city,
+    foodFacility : location.state.venue.foodFacility,
+    halls : location.state.venue.halls,
+    outsideFood : location.state.venue.outsideFood,
+    peopleCapacity : location.state.venue.peopleCapacity,
+    price : location.state.venue.price,
+    rooms : location.state.venue.rooms,
+    type : location.state.venue.type,
+    photos : location.state.venue.photos,
+    ownerId : location.state.venue.userId,
+    ownerEmail : location.state.venue.email,
+    ownerName : location.state.venue.ownerName,
+    ownerContact : location.state.venue.mobile
+
+
+  })
+
+  useEffect(()=>{
+    setCurrentVenue(currentVenue);
+  })
+
+
   return (
     <>
       <div className='container'>
 
         <div className="row">
           <div className="col-lg-9 col-md-12 venue-details d-flex flex-column ">
-            <h3 className=" text-secondary-emphasis my-4">Venue Name, City, State</h3>
+            <h3 className="text-uppercase text-secondary-emphasis my-4">{currentVenue.name}, {currentVenue.city}</h3>
             <span className="venue-location fs-6">
-              <i className="fa-solid fa-location-dot" /> Venue address is at ahemdabad
-              newindia colony
+              <i className="fa-solid fa-location-dot" /> {currentVenue.address}
               <a href="/" className="text-decoration-none text-theme2 text-theme2-hover">&nbsp;<i className="fa-solid fa-map"> </i> View on map</a>
             </span>
             <span className="venue-review">
@@ -28,11 +56,11 @@ function Venuecard() {
               <div className=" col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex flex-column align-items-lg-end">
                 
                 <span>Price Starts from</span>
-                <h4>$ 500</h4>
+                <h4>$ {currentVenue.price}</h4>
               </div>
               <div className="col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex align-items-lg-start align-items-md-end align-items-sm-end  flex-column">
                 <span className="fs-6">Talk to Venue Manager</span>
-                <h6><i className="fa-solid fa-phone" /> +919877899878
+                <h6><i className="fa-solid fa-phone" /> {currentVenue.ownerContact}
                 </h6>
               </div>
             </div>
@@ -73,15 +101,15 @@ function Venuecard() {
                     <tbody>
                       <tr>
                         <td><i className="fa-solid fa-utensils" /> Food Facility :</td>
-                        <td> Veg &amp; Non-Veg Both</td>
+                        <td className='text-capitalize'> {currentVenue.foodFacility}</td>
                       </tr>
                       <tr>
                         <td><i className="fa-solid fa-landmark" /> Total Halls :</td>
-                        <td>3</td>
+                        <td>{currentVenue.halls}</td>
                       </tr>
                       <tr>
                         <td><i className="fa-solid fa-bed" /> Rooms :</td>
-                        <td> 34</td>
+                        <td> {currentVenue.rooms}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -93,16 +121,18 @@ function Venuecard() {
                     <tbody>
                       <tr>
                         <td><i className="fa-solid fa-utensils" /> Outside Food :</td>
-                        <td><i className="fa-solid fa-xmark" /> Not allowed</td>
+                        <td>
+                          {(currentVenue.outsideFood === "yes") ?  (<><i className="fa-solid fa-check" /> Allowed</>):  (<><i className="fa-solid fa-xmark" /> Not Allowed</>) }
+                        </td>
                       </tr>
 
                       <tr>
                         <td><i className="fa-solid fa-users" /> Capacity :</td>
-                        <td> Upto 600 people</td>
+                        <td> Upto {currentVenue.peopleCapacity} people</td>
                       </tr>
                       <tr>
                         <td><i className="fa-solid fa-car" /> Car parking :</td>
-                        <td><i className="fa-solid fa-check" /> Available</td>
+                        <td>{(currentVenue.carParking === "yes") ?  (<><i className="fa-solid fa-check" /> Allowed</>):  (<><i className="fa-solid fa-xmark" /> Not Allowed</>) }</td>
                       </tr>
                     </tbody>
                   </table>
@@ -140,7 +170,7 @@ function Venuecard() {
                 <input className="form-control mt-3 " type="text" name="guest" placeholder="No. of Guest" required />
                 <input className="form-control mt-3 " type="text" name="name" placeholder="Your Full Name" required />
                 <input className="form-control mt-3 " type="text" name="nobile" placeholder="Your Mobile No." required />
-                <button type="submit" onclick="alert('VenueManager will review your application shortly! \nYou can check status in Booking section.')" className=" mt-3 btn bg-theme1 text-white w-100">
+                <button type="submit" onClick={()=>{alert('VenueManager will review your application shortly! \nYou can check status in Booking section.')}} className=" mt-3 btn bg-theme1 text-white w-100">
                   Check Availibility
                 </button>
               </form>

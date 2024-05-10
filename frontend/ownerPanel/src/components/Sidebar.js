@@ -4,12 +4,7 @@ import { Link, useLocation  } from 'react-router-dom'
 function Sidebar() {
 
     let location = useLocation();
-
-
     // const navigate = useNavigate();
- 
- 
-
 
     return (
         <>

@@ -149,37 +149,36 @@ function CategoryVenues() {
                   />
                 </p>
               ) : (venues && venues.length > 0) ? (
-                venues.map((venue) =>
-                {
-                  return(
+                venues.map((venue) => {
+                  return (
                     <div className="venue-card mb-2 row bg-body-tertiary border-0">
-                    <div className="col-lg-4 col-md-12 col-sm-12 ">
-                      <img src={require(`../images/venuePics/${venue.photos?.filename}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
-                    </div>
-                    <div className="col-lg-8 col-md-12 col-sm-12 ">
-                      <div className="row d-flex justify-content-between">
-                        <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mt-2">
-                          <div className="d-flex flex-column">
-                            <h4 className="text-capitalize fs-5">{venue.name}</h4>
-                            <span className='text-capitalize'><i className=" fa-solid fa-location-dot" /> {venue.city}</span>
-                            <span><i className="fa-solid fa-user" /> {venue.peopleCapacity}</span>
-                            <span><i className="fa-solid fa-car" /> {(venue.carParking === 'yes') ? ("Available") : ("Not available")} </span>
-                            <span><i className="fa-solid fa-star" /> 3.5 / 5 rated by 99 Guests</span>
-                            <span className="text-success mt-2">6969 people enquired this venue</span>
+                      <div className="col-lg-4 col-md-12 col-sm-12 ">
+                        <img src={require(`../images/venuePics/${venue.photos?.filename}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
+                      </div>
+                      <div className="col-lg-8 col-md-12 col-sm-12 ">
+                        <div className="row d-flex justify-content-between">
+                          <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mt-2">
+                            <div className="d-flex flex-column">
+                              <h4 className="text-capitalize fs-5">{venue.name}</h4>
+                              <span className='text-capitalize'><i className=" fa-solid fa-location-dot" /> {venue.city}</span>
+                              <span><i className="fa-solid fa-user" /> {venue.peopleCapacity}</span>
+                              <span><i className="fa-solid fa-car" /> {(venue.carParking === 'yes') ? ("Available") : ("Not available")} </span>
+                              <span><i className="fa-solid fa-star" /> 3.5 / 5 rated by 99 Guests</span>
+                              <span className="text-success mt-2">6969 people enquired this venue</span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex flex-column justify-content-between">
-                          <div className="d-flex flex-column align-items-end mt-2 me-2">
-                            <span className="text-muted text-small">Price starts with</span>
-                            <h4>$ {venue.price}</h4>
+                          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex flex-column justify-content-between">
+                            <div className="d-flex flex-column align-items-end mt-2 me-2">
+                              <span className="text-muted text-small">Price starts with</span>
+                              <h4>$ {venue.price}</h4>
+                            </div>
+                            <button className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 ">
+                              <Link to="/VenueCard" state={{ venue }} className='text-white'>Check out</Link>
+                            </button>
                           </div>
-                          <button className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 ">  
-                          <Link to="/VenueCard" state={{venue}} className='text-white'>Check out</Link>
-                          </button>
                         </div>
                       </div>
                     </div>
-                  </div>
                   )
                 })
               ) : (

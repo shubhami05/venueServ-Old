@@ -36,3 +36,33 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+
+.loginAlert {
+  animation-duration: 550ms;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  -webkit-animation-duration: 550ms;
+  -webkit-animation-name: blink;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}
+@-webkit-keyframes blink {
+  from {
+      opacity: 1;
+  }
+  to {
+      opacity: 0;
+  }
+}
+@keyframes blink {
+  from {
+      opacity: 1;
+  }
+  to {
+      opacity: 0;
+  }
+}

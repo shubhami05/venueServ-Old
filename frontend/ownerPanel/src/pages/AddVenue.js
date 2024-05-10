@@ -34,6 +34,7 @@ function AddVenue() {
             email: userEmail,
             mobile: userMobile
         }));
+        //eslint-disable-next-line
     }, [userId, userEmail, userMobile]);
 
 
@@ -57,6 +58,7 @@ function AddVenue() {
             }
         };
         fetchSessionData();
+        //eslint-disable-next-line
     }, []);
     // console.log(userId);    
 

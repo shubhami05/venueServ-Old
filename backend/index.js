@@ -15,6 +15,11 @@ const { ShowOwnerVenues } = require("./api/ownerVenues");
 const { CategoryVenues } = require("./api/CategoryVenuesApi");
 const { EditVenue } = require("./api/editVenueApi");
 const { DeleteVenue } = require("./api/deleteVenueApi");
+const {  BookingSendApi } = require("./api/bookingApi");
+const { ShowBookings } = require("./api/bookingShowApi");
+const { DeleteBooking } = require("./api/bookingDelete");
+const { UpdateBookingStatus } = require("./api/boookingStatusApi");
+const { ShowUserBookings } = require("./api/bookingShowUserApi");
 
 const app = express();
 const PORT = 8000;
@@ -40,14 +45,22 @@ app.post("/session", SessionApi);
 app.post("/signup", SignupApi);
 app.post("/login", LoginApi);
 app.post("/logout",LogoutApi);
-app.post("/showUsers", showUsersApi);
+app.post("/showUsers", showUsersApi); //for admin
 
-app.post('/addNewVenue', venuePicUpload.single('photos'), venueApi);
+app.post('/addNewVenue', venuePicUpload.single('photos'), venueApi); //for owners
 app.post('/myvenues', showVenuesApi); //for admin
 app.post('/showMyVenues', ShowOwnerVenues); //for owners
 app.post('/showCategoryVenues',CategoryVenues); //for user/finders
-app.post("/deleteVenue", DeleteVenue);
-app.post("/editVenue", venuePicUpload.single('photos'),EditVenue);
+app.post("/deleteVenue", DeleteVenue); //for admin / owner
+app.post("/editVenue", venuePicUpload.single('photos'),EditVenue); //for owners
+
+
+app.post("/bookingSend",BookingSendApi) //for finders
+app.post("/showBookings",ShowBookings) //for Owners
+app.post("/deleteBooking",DeleteBooking) // for Owners
+app.post("/updateBookingStatus",UpdateBookingStatus) //for owners
+app.post("/showUserBookings",ShowUserBookings) // for finders
+
 
 
 app.listen(PORT, () => {

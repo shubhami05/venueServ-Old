@@ -1,14 +1,18 @@
 const connectDB = require("../db/dbConnect");
 
-async function SignupApi(req,res){
+async function SignupApi(req, res) {
     try {
-        const db =await connectDB();
+        const db = await connectDB();
         const collection = db.collection("signupdata");
-        const {email,mobile,password,role} = req.body;
-        const userExist = await collection.findOne({email});
-        if(userExist)
-        {
-            return res.status(400).json({message:'User already exist!'});
+        const { email, mobile, password, role } = req.body;
+        const userExist = await collection.findOne({ email });
+        const mobileExist = await collection.findOne({ mobile });
+        if (userExist) {
+            return res.status(299).json({ message: 'User already exist!' });
+        }
+
+        if (mobileExist) {
+            return res.status(298).json({message:'Mobile already exist!'});
         }
 
         await collection.insertOne({
@@ -17,10 +21,10 @@ async function SignupApi(req,res){
             password,
             role
         });
-        return res.status(200).json({message:'Signup successfully!'});
+        return res.status(200).json({ message: 'Signup successfully!' });
     } catch (err) {
-        return res.status(500).json("Signup adding error!  ",{message:err.message});
+        return res.status(500).json("Signup adding error!  ", { message: err.message });
     }
 }
 
-module.exports = {SignupApi}; //index.js ma backend ma
+module.exports = { SignupApi }; //index.js ma backend ma

@@ -1,13 +1,15 @@
 import React, { } from 'react'
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function Header() {
 
     async function handleLogout() {
-        const response = await axios.post("http://localhost:8000/logout");
+        const response = await axios.post(`http://localhost:8000/logout`);
         console.log(response);
         if (response.status === 200) {
-            alert("Logout successfully!!");
-            window.location.href = "http://localhost:3000/";
+            toast.success("Logout successfully!!");
+            window.location.href = `http://localhost:3000`;
         }
     }
 

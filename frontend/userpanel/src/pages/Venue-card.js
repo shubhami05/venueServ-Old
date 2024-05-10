@@ -1,35 +1,105 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ReviewCard } from './Reviews'
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 function Venuecard() {
   const location = useLocation();
-  console.log(location.state.venue);
-  const [currentVenue,setCurrentVenue] = useState({
-    id : location.state.venue._id,
-    name : location.state.venue.name,
-    address : location.state.venue.address,
-    carParking : location.state.venue.carParking,
-    city : location.state.venue.city,
-    foodFacility : location.state.venue.foodFacility,
-    halls : location.state.venue.halls,
-    outsideFood : location.state.venue.outsideFood,
-    peopleCapacity : location.state.venue.peopleCapacity,
-    price : location.state.venue.price,
-    rooms : location.state.venue.rooms,
-    type : location.state.venue.type,
-    photos : location.state.venue.photos,
-    ownerId : location.state.venue.userId,
-    ownerEmail : location.state.venue.email,
-    ownerName : location.state.venue.ownerName,
-    ownerContact : location.state.venue.mobile
+  const navigate = useNavigate();
+  const [isAuth, setAuth] = useState(false);
 
+  useEffect(() => {
+    const fetchSessionData = async () => {
+      try {
+        // const loggedInUser = sessionStorage.getItem('loggedInUser');
+        const response = await axios.post("http://localhost:8000/session");
+        console.log(response);
+        if (response.data) {
+          setAuth(true);
+        }
+      }
+      catch (error) {
+        console.log("SESSION ERROR IN ADD VENUE PAGE: ", error);
+      }
+    };
+    fetchSessionData();
+    //eslint-disable-next-line
+  }, []);
 
-  })
-
-  useEffect(()=>{
+  useEffect(() => {
     setCurrentVenue(currentVenue);
+  }, [])
+
+  const [currentVenue, setCurrentVenue] = useState({
+    id: location.state.venue._id,
+    name: location.state.venue.name,
+    address: location.state.venue.address,
+    carParking: location.state.venue.carParking,
+    city: location.state.venue.city,
+    foodFacility: location.state.venue.foodFacility,
+    halls: location.state.venue.halls,
+    outsideFood: location.state.venue.outsideFood,
+    peopleCapacity: location.state.venue.peopleCapacity,
+    price: location.state.venue.price,
+    rooms: location.state.venue.rooms,
+    type: location.state.venue.type,
+    photos: location.state.venue.photos,
+    ownerId: location.state.venue.userId,
+    ownerEmail: location.state.venue.email,
+    ownerName: location.state.venue.ownerName,
+    ownerContact: location.state.venue.mobile
   })
+
+
+  const [booking, setBooking] = useState({
+    ownerId: currentVenue.ownerId,
+    venueId: currentVenue.id,
+    venueName:currentVenue.name,
+    eventType: '',
+    date: '',
+    eventSession: '',
+    foodType: '',
+    numberOfGuests: '',
+    fullname: '',
+    contact: ''
+  })
+
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+    setBooking((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+
+      if (isAuth) {
+        const response = await axios.post("http://localhost:8000/bookingSend", booking);
+        console.log(response);
+        toast.success("Venue owner will contact you shortly!");
+        navigate("/Mybooking");
+      }
+      else {
+        toast.error("Please Login first!");
+        navigate('/Login');
+      }
+
+    }
+    catch (err) {
+      toast.error("Something Went Wrong!");
+      console.log("Venue card error: ",err)
+    }
+  }
+
+
+
 
 
   return (
@@ -54,14 +124,14 @@ function Venuecard() {
           <div className="col-lg-3 col-md-12 venue-contact d-flex flex-column">
             <div className="row mt-2 ">
               <div className=" col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex flex-column align-items-lg-start">
-                
+
                 <span>Price Starts from</span>
                 <h4>$ {currentVenue.price}</h4>
               </div>
               <div className="col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex align-items-lg-start align-items-md-end align-items-sm-end  flex-column">
                 <span className="fs-6">Talk to Venue Manager</span>
-                <h6><i className="fa-solid fa-phone" /> {currentVenue.ownerContact}
-                </h6>
+                <h5><i className="fa-solid fa-phone" /> {currentVenue.ownerContact}
+                </h5>
               </div>
             </div>
           </div>
@@ -101,7 +171,7 @@ function Venuecard() {
                     <tbody>
                       <tr>
                         <td><i className="fa-solid fa-utensils" /> Food Facility :</td>
-                        <td className='text-capitalize'> {currentVenue.foodFacility}</td>
+                        <td className='text-capitalize'> {(currentVenue.foodFacility === 'both') ? ("Veg & Non-veg") : (currentVenue.foodFacility)}</td>
                       </tr>
                       <tr>
                         <td><i className="fa-solid fa-landmark" /> Total Halls :</td>
@@ -122,7 +192,7 @@ function Venuecard() {
                       <tr>
                         <td><i className="fa-solid fa-utensils" /> Outside Food :</td>
                         <td>
-                          {(currentVenue.outsideFood === "yes") ?  (<><i className="fa-solid fa-check" /> Allowed</>):  (<><i className="fa-solid fa-xmark" /> Not Allowed</>) }
+                          {(currentVenue.outsideFood === "yes") ? (<><i className="fa-solid fa-check" /> Allowed</>) : (<><i className="fa-solid fa-xmark" /> Not Allowed</>)}
                         </td>
                       </tr>
 
@@ -132,7 +202,7 @@ function Venuecard() {
                       </tr>
                       <tr>
                         <td><i className="fa-solid fa-car" /> Car parking :</td>
-                        <td>{(currentVenue.carParking === "yes") ?  (<><i className="fa-solid fa-check" /> Allowed</>):  (<><i className="fa-solid fa-xmark" /> Not Allowed</>) }</td>
+                        <td>{(currentVenue.carParking === "yes") ? (<><i className="fa-solid fa-check" /> Available</>) : (<><i className="fa-solid fa-xmark" /> Not Available</>)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -146,32 +216,68 @@ function Venuecard() {
           </div>
           <div className="col-lg-3 col-md-12">
             <div className="form-container bg-body-tertiary">
-              <form className="p-4">
+              <form className="p-4" onSubmit={handleSubmit}>
                 <p className="fs-4">Please fill in the details</p>
-                <select className="form-select mt-3" aria-label="Default select example" required>
-                  <option selected>Select Event Type</option>
-                  <option value={1}>Birthday Party</option>
-                  <option value={2}>Engagement</option>
-                  <option value={3}>Wedding ceremony</option>
+                <select className="form-select mt-3" aria-label="Default select example"
+                  value={booking.eventType}
+                  name='eventType'
+                  onChange={handleChange}
+                  required>
+                  <option value="" >Select Event Type</option>
+                  <option value={'Birtday Party'}>Birthday Party</option>
+                  <option value={'Engagement'}>Engagement</option>
+                  <option value={'Wedding ceremony'}>Wedding ceremony</option>
                 </select>
-                <input className="form-control mt-3 " type="date" name="date" placeholder="Event Date" required />
-                <select className="form-select mt-3" aria-label="Default select example" required>
-                  <option selected>Select Event Session</option>
-                  <option value={1}>Morning - Lunch</option>
-                  <option value={2}>Evening - Dinner</option>
-                  <option value={3}>Full day</option>
+
+                <input className="form-control mt-3 " type="date"
+                  name="date"
+                  onChange={handleChange}
+                  value={booking.date}
+                  placeholder="Event Date" required />
+
+                <select className="form-select mt-3" aria-label="Default select example"
+                  name='eventSession'
+                  onChange={handleChange}
+                  value={booking.eventSession}
+                  required>
+                  <option value="">Select Event Session</option>
+                  <option value={'Morning - Lunch'}>Morning - Lunch</option>
+                  <option value={'Evening - Dinner'}>Evening - Dinner</option>
+                  <option value={'Full day'}>Full day</option>
                 </select>
-                <select className="form-select mt-3" aria-label="Default select example" required>
-                  <option selected>Select Food Type </option>
-                  <option value={1}>Only Veg</option>
-                  <option value={2}>Only Non-veg</option>
-                  <option value={3}>Both Veg &amp; Non-veg </option>
+
+                <select className="form-select mt-3"
+                  name='foodType'
+                  value={booking.foodType}
+                  onChange={handleChange}
+                  aria-label="Default select example" required>
+                  <option value=''>Select Food Type </option>
+                  <option value={'Only Veg'}>Only Veg</option>
+                  <option value={'Only Non-veg'}>Only Non-veg</option>
+                  <option value={'Both Veg & Non-veg'}>Both Veg &amp; Non-veg </option>
                 </select>
-                <input className="form-control mt-3 " type="text" name="guest" placeholder="No. of Guest" required />
-                <input className="form-control mt-3 " type="text" name="name" placeholder="Your Full Name" required />
-                <input className="form-control mt-3 " type="text" name="nobile" placeholder="Your Mobile No." required />
-                <button type="submit" onClick={()=>{alert('VenueManager will review your application shortly! \nYou can check status in Booking section.')}} className=" mt-3 btn bg-theme1 text-white w-100">
-                  Check Availibility
+
+                <input className="form-control mt-3 " type="number"
+                  name="numberOfGuests"
+                  onChange={handleChange}
+                  value={booking.numberOfGuests}
+                  placeholder="No. of Guest" required />
+
+
+                <input className="form-control mt-3 " type="text"
+                  name="fullname"
+                  value={booking.fullname}
+                  onChange={handleChange}
+                  placeholder="Your Full Name" required />
+
+                <input className="form-control mt-3 " type="text"
+                  name="contact"
+                  onChange={handleChange}
+                  value={booking.contact}
+                  placeholder="Your Mobile No." required />
+
+                <button type="submit" className="fw-semibold text-uppercase mt-3 btn bg-theme1 text-white w-100">
+                  Check availability
                 </button>
               </form>
             </div>
@@ -181,13 +287,16 @@ function Venuecard() {
                 <p className="card-text">People checked availability of this venue</p>
               </div>
             </div>
-            <div className="choose-us d-flex flex-column p-4 bg-body-tertiary">
-              <img className="mx-5" src="images/VenueservIcon.png" alt="VenueServ" />
-              <h5>Why choose VenueServ?</h5>
-              <span>&gt; 100% Verified Venues</span>
-              <span>&gt; Online Booking</span>
-              <span>&gt; Every sharpen Details </span>
-              <span>&gt; People Ratings &amp; Reviews</span>
+            <div className="choose-us row p-3 bg-body-tertiary">
+
+              <div className=' col-lg-12 col-sm-8 col-xs-7 d-flex flex-column align-items-left justify-content-center'>
+                <h5>Why choose VenueServ?</h5>
+                <span>&gt; 100% Verified Venues</span>
+                <span>&gt; Online Booking</span>
+                <span>&gt; Every sharpen Details </span>
+                <span>&gt; People Ratings &amp; Reviews</span>
+              </div>
+              <img className="col-lg-12 col-sm-3 col-xs-4" src="images/VenueservIcon.png" alt="VenueServ" />
             </div>
           </div>
         </div>

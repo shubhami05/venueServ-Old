@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -67,7 +67,7 @@ function EditVenue() {
             form.append(data, venueData[data]);
         }
         try {
-            const response = await axios.post("http://localhost:8000/editVenue", form);
+            const response = await axios.post(`http://localhost:8000/editVenue`, form);
             console.log(response);
             alert("Venue updated successfully!");
             navigate('/myvenues');

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom'
 
 function Venues() {
@@ -11,6 +12,7 @@ function Venues() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     fetchSessionData()
+    //eslint-disable-next-line
   }, []);
 
 
@@ -20,21 +22,26 @@ function Venues() {
     try {
       // console.log(uId)
 
-      axios.post('http://localhost:8000/showMyVenues', { userId })
-        .then((response) => {
-          if (response.status === 200) {
-            setVenues(response.data.venueData);
-            setIsLoading(false);
-          } else {
-            alert("No any venues listed by you!");
-            setIsLoading(false);
-          }
-          // console.log(response.data.venueData);
-        })
+      const response = await axios.post('http://localhost:8000/showMyVenues', { userId })
+
+      if (response.status === 200) {
+        setVenues(response.data.venueData);
+      } else {
+        toast.error("No any venues listed by you!");
+      }
+      // console.log(response.data.venueData);
+
     }
     catch (error) {
+      if(error.response.status === 400)
+        {
+          toast.error("No any venue is listed by you!");
+        }
       console.log("error in fetching venues data: ", error)
 
+    }
+    finally{
+      setIsLoading(false);
     }
   }
 
@@ -61,12 +68,15 @@ function Venues() {
     e.preventDefault();
     console.log(vId);
     try {
-      const response = await axios.post("http://localhost:8000/deleteVenue", { vId });
+      const response = await axios.post(`http://localhost:8000/deleteVenue`, { vId });
       console.log(response.data.message);
-      // alert()
       fetchVenues(userId);
     }
     catch (err) {
+      if(err.response.status === 400)
+        {
+          toast.error("Something went wrong!");
+        }
       console.log("Error in deleting venue", err)
     }
   }
@@ -83,14 +93,18 @@ function Venues() {
 
         {/* Striped Rows */}
         {isLoading ? (
-          <div className='h-75 d-flex justify-content-center align-items-center'>Loading...</div>
+          <div className='h-75 d-flex justify-content-center align-items-center'>
+            <div class="spinner-grow text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         ) : (
           <div className="card">
-            <div className='d-flex justify-content-between align-items-center '>
-              <h5 className="card-header">Manage Venues</h5>
-              <Link to='/addnewvenue' className=' col-lg-2 col-md-2 col-sm-2 h-25'>
+            <div className='row p-2 '>
+              <h4 className="card-header col-lg-10 col-md-9 col-sm-8 col-xs-12">Manage Venues</h4>
+              <Link to='/addnewvenue' className='d-flex py-2 justify-content-end col-lg-2 col-md-3 col-sm-4 col-xs-12 h-25'>
                 <button className="btn btn-primary">
-                  <i className='tf-icons bx bx-plus'></i> Add New Venue
+                  <i className='tf-icons bx bx-plus'></i> Add Venue
                 </button>
               </Link>
             </div>

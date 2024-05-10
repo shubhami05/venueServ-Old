@@ -1,6 +1,6 @@
 // import { useContext} from 'react';
 import './App.css';
-import {useState,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './common/navbar';
 import Footer from './common/footer';
 // import { AuthContext ,AuthProvider} from './common/AuthProvider';
@@ -19,6 +19,7 @@ import LoginUser from './pages/Login';
 import axios from 'axios';
 import HelloPage from './pages/HelloPage';
 import fetchSessionData from './auth/authService';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   //run project and telll me theprob
@@ -28,59 +29,66 @@ function App() {
   // look the problem was for css used relative path and you used direct path if any url is having first/second like this then you must need to use relative path
   //ok ok should i leave?
   //yes done
-  const [isAuth,setAuth] = useState(false);
-  const [loading,setLoading] = useState(true);
+  const [isAuth, setAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
   axios.defaults.withCredentials = true;
-  useEffect( () => {
-   
-      const authenticateUser = async () =>{
-        try {
-          const isAuth = await fetchSessionData();
-          setAuth(isAuth);
-          console.log("auth:",isAuth);
-          
-        } catch (error) {
-          setAuth(false);
-        }
-        finally{
-          setLoading(false);
-        }
-      };
+  useEffect(() => {
+    const authenticateUser = async () => {
+      try {
+        const isAuth = await fetchSessionData();
+        setAuth(isAuth);
+        console.log("auth:", isAuth);
 
-      if(!isAuth)
-      {
-        authenticateUser();  
+      } catch (error) {
+        setAuth(false);
       }
-      else
-      {
+      finally {
         setLoading(false);
       }
+    };
+
+    if (!isAuth) {
+      authenticateUser();
+    }
+    else {
+      setLoading(false);
+    }
     // eslint-disable-next-line
   }, [])
-  
-  if(loading)
-  {
+
+  if (loading) {
     return <h1>Loading....</h1>
   }
-  
+
   return (
     // axios.defaults.withCredentials = true,
     <>
       <BrowserRouter>
-      {/* <AuthProvider> */}
+        {/* <AuthProvider> */}
         <Navbar />
+        <Toaster
+          toastOptions={{
+            style: {
+              border: '1px solid #713200',
+              padding: '16px',
+              color: '#713200',
+              backgroundColor:'#fff',
+              zIndex:11
+            },
+          }}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/About" element={<About />} />
-          <Route path='/Venues/:category' element={<CategoryVenues/>}/>
+          <Route path='/Venues/:category' element={<CategoryVenues />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path='/Login' element={<LoginUser />} />
           <Route path='/SignupUser' element={<SignupUser />} />
-          <Route path="/Mybooking" element={(isAuth)? (<Mybooking/>):(<LoginUser/>)} />
+          <Route path="/Mybooking" element={(isAuth) ? (<Mybooking />) : (<LoginUser />)} />
           <Route path="/Reviews" element={<Reviews />} />
           <Route path="/Venuecard" element={<Venuecard />} />
           <Route path="/Venue" element={<Venue />} />
-          <Route path='/HelloPage' element={<HelloPage/>}/>
+          <Route path='/HelloPage' element={<HelloPage />} />
           <Route path="/*" element={<Notfound />} />
         </Routes>
         <Footer />

@@ -20,6 +20,7 @@ const { ShowBookings } = require("./api/bookingShowApi");
 const { DeleteBooking } = require("./api/bookingDelete");
 const { UpdateBookingStatus } = require("./api/boookingStatusApi");
 const { ShowUserBookings } = require("./api/bookingShowUserApi");
+const { ContactSendApi } = require("./api/contactSendApi");
 
 const app = express();
 const PORT = 8000;
@@ -62,6 +63,7 @@ app.post("/updateBookingStatus",UpdateBookingStatus) //for owners
 app.post("/showUserBookings",ShowUserBookings) // for finders
 
 
+app.post("/contactSend",ContactSendApi) // for finders
 
 app.listen(PORT, () => {
     console.log("Server started on port: ", PORT);

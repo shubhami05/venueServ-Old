@@ -28,6 +28,7 @@ function Venuecard() {
   }, []);
 
   useEffect(() => {
+    console.log(currentVenue.photos)
     setCurrentVenue(currentVenue);
   }, [])
 
@@ -142,14 +143,20 @@ function Venuecard() {
               <div id="carouselExample" className="carousel slide ">
                 <div className="carousel-inner object-fit-contain" style={{ aspectRatio: '16/9' }}>
                   <div className="carousel-item active ">
-                    <img className="w-100 d-block" src="https://images.unsplash.com/photo-1579625498716-f6b4502d8091?q=80&w=2533&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="VenueImage" />
+                    <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos?.filename}`)} alt="VenueImage" />
                   </div>
-                  <div className="carousel-item">
+                  <div className="carousel-item active ">
+                    <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos?.filename}`)} alt="VenueImage" />
+                  </div>
+                  <div className="carousel-item active ">
+                    <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos?.filename}`)} alt="VenueImage" />
+                  </div>
+                  {/* <div className="carousel-item">
                     <img className="w-100 d-block" src="https://images.unsplash.com/photo-1558998708-ed5f8eaf1af1?q=80&w=2652&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="VenueImage" />
                   </div>
                   <div className="carousel-item">
                     <img className="w-100 d-block" src="https://plus.unsplash.com/premium_photo-1678916185496-99e3f8bf5819?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGJhbnF1ZXQlMjBoYWxsfGVufDB8fDB8fHww" alt="VenueImage" />
-                  </div>
+                  </div> */}
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                   <span className="carousel-control-prev-icon" aria-hidden="true" />
@@ -281,6 +288,7 @@ function Venuecard() {
                 </button>
               </form>
             </div>
+            
             <div className="venue-stats-container card border-theme2 my-3 bg-body-primary">
               <div className="card-body text-theme2 text-center">
                 <h5>99 <i className="fa-solid fa-users" /></h5>

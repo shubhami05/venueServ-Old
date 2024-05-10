@@ -6,7 +6,7 @@ async function SessionApi(req, res) {
             return res.status(499).json({ message: "No session created!" });
         }
         else {
-            res.status(200).json({
+            return res.status(200).json({
                 sessionData: userData, success: true, message: "Got successful"
             })
         }

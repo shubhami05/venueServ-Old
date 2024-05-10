@@ -1,14 +1,65 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 
 function Contact() {
+
+
+  const [isLoading, setLoading] = useState(false);
+  const [contactData, setContactData] = useState({
+    name: '',
+    mobile: '',
+    email: '',
+    message: ''
+  })
+
+
+  const handleChange = (e) => {
+
+    const { name, value } = e.target;
+    setContactData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
+
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+
+      await axios.post("http://localhost:8000/session");
+
+      const response = await axios.post("http://localhost:8000/contactSend", contactData);
+      if (response.data) {
+        toast.success(response.data.message)
+      
+      }
+
+    }
+    catch (error) {
+      if (error.response.status === 499) {
+        toast.error("Please Login first")
+      }
+      else {
+        toast.error("Something went wrong!");
+      }
+    }
+    finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <section className="contact_section  long_section">
         <div className="container">
           <div className="row ">
             <div className="d-flex justify-content-center align-items-center col-md-6 my-5">
-              <img src="images/Contact-photo.png" width="360px" height="360px" />
-            
+              <img src="images/Contact-photo.png" alt='contact icons' width="360px" height="360px" />
+
             </div>
             <div className="col-md-6">
               <div className="form_container">
@@ -17,21 +68,22 @@ function Contact() {
                     Contact Us
                   </h2>
                 </div>
-                <form action>
+                <form onSubmit={handleSubmit}>
                   <div>
-                    <input type="text" placeholder="Your Name" required />
+                    <input type="text" name='name'
+                      onChange={handleChange} placeholder="Your Name" required />
                   </div>
                   <div>
-                    <input type="text" placeholder="Phone Number" required />
+                    <input type="text" name='mobile' onChange={handleChange} placeholder="Phone Number" required />
                   </div>
                   <div>
-                    <input type="email" placeholder="Email" required />
+                    <input type="email" name='email' onChange={handleChange} placeholder="Email" required />
                   </div>
                   <div>
-                    <input type="text" className="message-box" placeholder="Message" required />
+                    <input type="text" name='message' onChange={handleChange} className="message-box" placeholder="Message" required />
                   </div>
                   <div className="btn_box">
-                    <button>
+                    <button type='submit' className={isLoading ? ("btn disabled") : ("btn active")}>
                       SEND
                     </button>
                   </div>

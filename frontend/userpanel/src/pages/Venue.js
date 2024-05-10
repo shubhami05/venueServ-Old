@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate} from 'react-router-dom'
 
 function Venue() {
   const navigate = useNavigate();
 
   function VenueBox(props) {
-  
     return (
       <div className="col-md-6 col-lg-4">
         <div className="box bg-white">
@@ -25,6 +24,9 @@ function Venue() {
       </div>
     )
   }
+
+
+
   return (
     <>
 

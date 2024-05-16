@@ -1,16 +1,22 @@
-const {MongoClient} = require("mongodb");
-const url = "mongodb+srv://Cluster0:ism234905@cluster0.yziyphn.mongodb.net/";
-const client = new MongoClient(url);
+const { MongoClient } = require("mongodb");
+require('dotenv-safe').config({
+    path: './.env.local',
+    example:'./.env.local.example'
+});
 
-async function connectToMongodb(){
-    try{
+const mongodbUri = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
+const client = new MongoClient(mongodbUri);
+
+
+async function connectToMongodb() {
+    try {
         await client.connect();
         console.log("Connected to Database");
-        const database = client.db("venueserv");
+        const database = client.db(dbName);
         return database;
     }
-    catch(err)
-    {
+    catch (err) {
         console.log(err);
     }
 }

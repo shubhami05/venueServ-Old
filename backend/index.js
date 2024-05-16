@@ -3,6 +3,8 @@ const connectDB = require("./db/dbConnect")
 const cors = require("cors");
 const session = require("express-session");
 
+
+
 const SessionApi = require("./api/sessionApi");
 const { SignupApi } = require("./api/signupApi");
 const { LoginApi } = require("./api/loginApi");
@@ -24,6 +26,7 @@ const { ContactSendApi } = require("./api/contactSendApi");
 
 const app = express();
 const PORT = 8000;
+
 connectDB();
 
 app.use(express.json());
@@ -35,7 +38,7 @@ app.use(cors({
 }));
 
 app.use(session({
-    secret: 'your-secret-key',
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true
 }))

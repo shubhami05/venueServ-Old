@@ -77,9 +77,7 @@ function Mybooking() {
                 <button type="button" className="button-explore ">
                   Cancel booking
                 </button>
-                <button type="button" className="button-explore ">
-                  Cancel booking
-                </button>
+                
               </div>
             </div>
           </div>

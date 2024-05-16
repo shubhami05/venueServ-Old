@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import React, { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 
 function LoginUser() {
@@ -105,10 +105,18 @@ function LoginUser() {
                   </div>
                 </div>
                 <div className="btn_box">
+                  {
+                    loading ? (
+                      <button type='submit' disabled='true'>
+                        Login
+                      </button>
+                    ) : (
+                      <button type='submit' >
+                        Login
+                      </button>
+                    )
+                  }
 
-                  <button type='submit' >
-                    Login
-                  </button>
 
 
                 </div>
@@ -116,8 +124,8 @@ function LoginUser() {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   )
 }
 

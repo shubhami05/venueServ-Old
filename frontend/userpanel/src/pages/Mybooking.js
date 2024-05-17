@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 function Mybooking() {
 
   const [bookings, setBookings] = useState([]);
-  const [userId, setUserId] = useState();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,9 +18,7 @@ function Mybooking() {
       const response = await axios.post("http://localhost:8000/session");
       console.log(response);
       if (response.data) {
-        setUserId(response.data.sessionData.session._id);
         await fetchBookings(response.data.sessionData.session._id);
-        console.log("USERID: ", userId);
       }
     }
     catch (error) {
@@ -33,7 +30,7 @@ function Mybooking() {
       const response = await axios.post("http://localhost:8000/showUserBookings", { userId });
       if (response.status === 200) {
         setBookings(response.data.bookingData);
-        console.log(bookings);
+        console.log(response.data.bookingData);
       }
     } catch (error) {
       console.log("error:", error.status)
@@ -61,6 +58,9 @@ function Mybooking() {
                 {/* <span><i className="fa-solid fa-star"> </i> {props.rating} / 5 rated by {props.persons} Guests</span> */}
                 <span><i className="fa-solid fa-users" /> {props.persons} Guests</span>
                 <span><i className="fa-solid fa-calendar" /> {props.date} </span>
+                <span><i className="fa-solid fa-clock" /> {props.eventSession} </span>
+                <span><i className="fa-solid fa-utensils" /> {props.foodType} </span>
+
                 {/* <span className="text-success mt-2">{props.inquiries} people enquired this venue</span> */}
               </div>
             </div>
@@ -86,6 +86,7 @@ function Mybooking() {
     )
   }
 
+  
 
   if (isLoading) {
     return <h2>Loading...</h2>
@@ -98,11 +99,12 @@ function Mybooking() {
           <h4 className="fw-bold ">MY BOOKINGS</h4>
         </div>
         <div>
+          
           <div className="col-lg-12 col-md-12">
 
             {
               bookings.map((booking) => {
-                return <SingleCard name={booking.venueName} date={booking.date} persons={booking.numberOfGuests} confirmation={booking.status} />
+                return <SingleCard name={booking.venueName} date={booking.date} eventSession={booking.eventSession} persons={booking.numberOfGuests} confirmation={booking.status} foodType={booking.foodType}/>
               })
             }
 

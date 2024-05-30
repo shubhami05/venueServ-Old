@@ -14,11 +14,12 @@ function Venues() {
       axios.post('http://localhost:8000/myvenues').then((response) => {
         setVenues(response.data.venueData);
         console.log(response.data.venueData);
-        setIsLoading(false);
       })
     }
     catch (error) {
       console.log("error in fetching venues data: ", error)
+    }
+    finally{
       setIsLoading(false);
     }
   }
@@ -49,8 +50,8 @@ function Venues() {
         {/* Striped Rows */}
         {isLoading ? (
           <div className='h-75 d-flex justify-content-center align-items-center'>
-            <div class="spinner-grow text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
           </div>
         ) : (

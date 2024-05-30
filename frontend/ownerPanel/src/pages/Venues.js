@@ -33,14 +33,13 @@ function Venues() {
 
     }
     catch (error) {
-      if(error.response.status === 400)
-        {
-          toast.error("No any venue is listed by you!");
-        }
+      if (error.response.status === 400) {
+        toast.error("No any venue is listed by you!");
+      }
       console.log("error in fetching venues data: ", error)
 
     }
-    finally{
+    finally {
       setIsLoading(false);
     }
   }
@@ -73,10 +72,9 @@ function Venues() {
       fetchVenues(userId);
     }
     catch (err) {
-      if(err.response.status === 400)
-        {
-          toast.error("Something went wrong!");
-        }
+      if (err.response.status === 400) {
+        toast.error("Something went wrong!");
+      }
       console.log("Error in deleting venue", err)
     }
   }
@@ -130,7 +128,7 @@ function Venues() {
                   </tr>
                 </thead>
                 <tbody className="table-border-bottom-0">
-                  {venues.map((venue) => (
+                  {venues.length == 0 ? (<tr><td className="text-center" colSpan={16}>No any Venue Listed by You!</td></tr>) : venues.map((venue) => (
                     <tr key={venue._id}>
                       <td>
                         <Link to={`/editvenue/:${venue._id}`} state={{ venue }}>
@@ -161,7 +159,10 @@ function Venues() {
                       <td className="text-center">{venue.rooms}</td>
                       <td className="text-center">{venue.halls}</td>
                     </tr>
-                  ))}
+                  )
+                  )
+
+                  }
                 </tbody>
               </table>
             </div>

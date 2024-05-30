@@ -3,7 +3,6 @@ import React from 'react'
 function Contactdata() {
   return (
     <div className="content-wrapper">
-
       <div className="container-xxl flex-grow-1 container-p-y">
         <h4 className="fw-bold py-3 mb-4">Contact Data</h4>
         {/* Striped Rows */}
@@ -32,8 +31,8 @@ function Contactdata() {
                         <i className="bx bx-dots-vertical-rounded" />
                       </button>
                       <div className="dropdown-menu">
-                        <a className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</a>
-                        <a className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</a>
+                        <span className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</span>
+                        <span className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</span>
                       </div>
                     </div>
                   </td>
@@ -49,8 +48,8 @@ function Contactdata() {
                         <i className="bx bx-dots-vertical-rounded" />
                       </button>
                       <div className="dropdown-menu">
-                        <a className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</a>
-                        <a className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</a>
+                        <span className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</span>
+                        <span className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</span>
                       </div>
                     </div>
                   </td>
@@ -66,8 +65,8 @@ function Contactdata() {
                         <i className="bx bx-dots-vertical-rounded" />
                       </button>
                       <div className="dropdown-menu">
-                        <a className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</a>
-                        <a className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</a>
+                        <span className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</span>
+                        <span className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</span>
                       </div>
                     </div>
                   </td>
@@ -83,8 +82,8 @@ function Contactdata() {
                         <i className="bx bx-dots-vertical-rounded" />
                       </button>
                       <div className="dropdown-menu">
-                        <a className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</a>
-                        <a className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</a>
+                        <span className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</span>
+                        <span className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</span>
                       </div>
                     </div>
                   </td>

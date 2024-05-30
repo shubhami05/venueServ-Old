@@ -10,7 +10,7 @@ function Homepage() {
                     <div className="row">
                         <div className="col-lg-12 col-md-12 order-1">
                             <div className="row">
-                                <div className="col-lg-3 col-md-6 col-6 mb-4">
+                                <div className="col-lg-3 col-sm-1 col-md-6 col-6 mb-4">
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="card-title d-flex align-items-start justify-content-between">
@@ -25,7 +25,7 @@ function Homepage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-md-6 col-6 mb-4">
+                                <div className="col-lg-3 col-sm-1 col-md-6 col-6 mb-4">
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="card-title d-flex align-items-start justify-content-between">
@@ -40,7 +40,7 @@ function Homepage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-md-6 col-6 mb-4">
+                                <div className="col-lg-3 col-sm-1 col-md-6 col-6 mb-4">
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="card-title d-flex align-items-start justify-content-between">
@@ -56,7 +56,7 @@ function Homepage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-md-6 col-6 mb-4">
+                                <div className="col-lg-3 col-sm-1 col-md-6 col-6 mb-4">
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="card-title d-flex align-items-start justify-content-between">

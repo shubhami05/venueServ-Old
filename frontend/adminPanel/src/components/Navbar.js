@@ -1,34 +1,38 @@
 import React from 'react'
 import axios from 'axios'
+import { toast } from 'react-toastify';
+
+
 
 function Navbar() {
+  
   async function handleLogout() {
     const response = await axios.post("http://localhost:8000/logout");
-    console.log(response);
     if (response.status === 200) {
-        alert("Logout successfully!!");
-        window.location.href = "http://localhost:3000/";
+      toast.success("Logout successfully")
+      window.location.href = process.env.DEFAULT_PORT;
     }
-}
+  }
   return (
     <>
       {/* Navbar */}
-      <nav className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
-        <div className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-          <a className="nav-item nav-link px-0 me-xl-4" href="/">
-            <i className="bx bx-menu bx-sm" />
-          </a>
-        </div>
-        <div className="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+      <nav className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme z-0" style={{zIndex:2}} >
+
+
+        <div className="ms-4 navbar-nav-right d-flex align-items-center" id="navbar-collapse">
           {/* Search */}
-          <div className="navbar-nav align-items-center">
-            <div className="nav-item d-flex align-items-center">
-              <i className="bx bx-search fs-4 lh-0" />
-              <input type="text" className="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search..." />
+          {/* <div className='app-brand demo'>
+          <Link to='/'  >
+            <div className='ms-1 d-xl-none d-block'>
+              <div className="app-brand-text text-black demo menu-text fw-bolder  text-capitalize d-flex justify-content-center ms-2">VenueServ</div>
+              <div className="text-primary app-brand-text text-bold menu-text d-flex justify-content-center text-capitalize ms-2">Admin Panel</div>
             </div>
-          </div>
+          </Link>
+          </div> */}
+          
           {/* /Search */}
           <ul className="navbar-nav flex-row align-items-center ms-auto">
+
             {/* User */}
             <li className="nav-item navbar-dropdown dropdown-user dropdown">
             </li><li>

@@ -1,14 +1,18 @@
 import axios from "axios";
-axios.defaults.withCredentials = true;
 
-const fetchSessionData = async () =>{
-    try{
+const fetchSessionData = async () => {
+    axios.defaults.withCredentials = true;
+    try {
         console.log("Logging.....");
         const response = await axios.post("http://localhost:8000/session");
-        return true;
+        if (response.status === 200) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
-    catch(error)
-    {
+    catch (error) {
         return false;
     }
 };

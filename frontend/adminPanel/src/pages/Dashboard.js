@@ -49,12 +49,10 @@ function Dashboard() {
       axios.post('http://localhost:8000/myvenues').then((response) => {
         setVenues(response.data.venueData);
         console.log(response.data.venueData);
-        setIsLoading(false);
       })
     }
     catch (error) {
       console.log("error in fetching venues data: ", error)
-      setIsLoading(false);
     }
   }
   return (
@@ -66,16 +64,15 @@ function Dashboard() {
 
           {isLoading ? (
             <div className='h-100 d-flex justify-content-center align-items-center'>
-              <div class="spinner-grow text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
+              <div className="spinner-grow text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
               </div>
             </div>
           ) : (
             <div className="container-xxl flex-grow-1 container-p-y">
-              <div className="row">
-                <div className="col-lg-12 col-md-12 order-1">
+              
                   <div className="row">
-                    <div className="col-lg-3 col-md-6 col-6 mb-4">
+                    <div className="col-lg-3 col-sm-6 col-12 mb-4">
                       <div className="card">
                         <div className="card-body">
                           <div className="card-title d-flex align-items-start justify-content-between">
@@ -91,7 +88,7 @@ function Dashboard() {
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-3 col-md-6 col-6 mb-4">
+                    <div className="col-lg-3 col-sm-6 col-12 mb-4">
                       <div className="card">
                         <div className="card-body">
                           <div className="card-title d-flex align-items-start justify-content-between">
@@ -105,7 +102,7 @@ function Dashboard() {
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-3 col-md-6 col-6 mb-4">
+                    <div className="col-lg-3 col-sm-6  col-12 mb-4">
                       <div className="card">
                         <div className="card-body">
                           <div className="card-title d-flex align-items-start justify-content-between">
@@ -121,7 +118,7 @@ function Dashboard() {
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-3 col-md-6 col-6 mb-4">
+                    <div className="col-lg-3  col-sm-6  col-12 mb-4">
                       <div className="card">
                         <div className="card-body">
                           <div className="card-title d-flex align-items-start justify-content-between">
@@ -137,8 +134,7 @@ function Dashboard() {
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                
               </div>
               <div className="row">
                 {/* Order Statistics */}
@@ -414,11 +410,11 @@ function Dashboard() {
         {/* Overlay */}
         <div className="layout-overlay layout-menu-toggle" />
         {/* / Layout wrapper */}
-        {/* <div class="buy-now">
+        {/* <div className="buy-now">
 <a
   href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/"
   target="_blank"
-  class="btn btn-danger btn-buy-now"
+  className="btn btn-danger btn-buy-now"
   >Upgrade to Pro</a
 >
 </div> */}

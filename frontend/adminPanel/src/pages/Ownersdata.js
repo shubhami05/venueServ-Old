@@ -6,7 +6,7 @@ function Ownersdata() {
   const [isLoading, setIsLoading] = useState(true);
   const [userdata, setUserdata] = useState([]);
 
-  useEffect(() => {
+  useEffect( () => {
     axios.post("http://localhost:8000/showUsers")
       .then((resp) => {
         setUserdata(resp.data.OwnersData);
@@ -25,8 +25,8 @@ function Ownersdata() {
         {/* Striped Rows */}
         {isLoading ? (
           <div className='h-75 d-flex justify-content-center align-items-center'>
-            <div class="spinner-grow text-primary" role="status">
-              <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         ) : (

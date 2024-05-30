@@ -25,8 +25,8 @@ function Userdata() {
         {/* Striped Rows */}
         {isLoading ? (
           <div className='h-75 d-flex justify-content-center align-items-center'>
-            <div class="spinner-grow text-primary" role="status">
-              <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         ) : (

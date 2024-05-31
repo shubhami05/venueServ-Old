@@ -5,7 +5,7 @@ function Sidebar() {
 
   let location = useLocation();
   const [sidebar, setSidebar] = useState(false);
-  const [nav, setNav] = useState(false);
+  // const [nav, setNav] = useState(false);
   const toggleSidebar = () => {
     setSidebar(!sidebar)
   }
@@ -19,15 +19,16 @@ function Sidebar() {
 
 
   return (
-    <div onScroll={closeSidebar} className='d-md-block min-vh-100 w-auto' style={{ zIndex: 12 }}>
+    <div onScroll={closeSidebar} onBlur={closeSidebar} className='d-md-block min-vh-100 w-auto' style={{ zIndex: 12 }}>
       <div className='menu-icon-container d-block d-xl-none position-absolute  mt-3 pt-1 ms-4 ps-2 '  >
 
           <span onClick={toggleSidebar} className="layout-menu-toggle menu-link text-large ms-auto mt-2 ">
-          {sidebar ? (
+          {/* {sidebar ? (
             <i className="bx bx-chevron-left bx-sm " />
           ) : (
             <i className="bx bx-menu bx-sm "/>
-          )}
+          )} */}
+          <i className="bx bx-menu bx-sm "/>
         </span>
 
       </div>
@@ -40,7 +41,7 @@ function Sidebar() {
               <div className="text-primary app-brand-text text-bold menu-text d-flex justify-content-center text-capitalize ms-2">Admin Panel</div>
             </div>
           </Link>
-
+          
         </div>
         <div className="menu-inner-shadow" />
         <ul className="menu-inner py-1">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 
@@ -6,12 +6,31 @@ import { toast } from 'react-toastify';
 
 function Navbar() {
   
+  const [loggingOut, setLoggingOut] = useState(false);
+
   async function handleLogout() {
-    const response = await axios.post("http://localhost:8000/logout");
-    if (response.status === 200) {
-      toast.success("Logout successfully")
-      window.location.href = process.env.DEFAULT_PORT;
+    setLoggingOut(true);
+    try {
+      const response = await axios.post("http://localhost:8000/logout");
+      if (response.status === 200) {
+        toast.success("Logged out successfully");
+        window.location.replace(process.env.REACT_APP_DEFAULT_PORT);
+      }
+    } catch (error) {
+      toast.error("Failed to logout");
+      console.error("Logout error:", error);
+      setLoggingOut(false);
     }
+  }
+
+  if (loggingOut) {
+    return (
+      <div className="h-100 d-flex justify-content-center align-items-center">
+        <div className="spinner-grow text-primary" role="status">
+          <span className="visually-hidden">Logging out...</span>
+        </div>
+      </div>
+    );
   }
   return (
     <>

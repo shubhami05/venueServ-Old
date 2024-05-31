@@ -18,7 +18,7 @@ function Sidebar() {
     // const navigate = useNavigate();
 
     return (
-        <div onScroll={closeSidebar} onBlur={closeSidebar} className='d-md-block min-vh-100 w-auto' style={{ zIndex: 12 }}>
+        <div onScroll={closeSidebar} onBlur={closeSidebar} className='h-100 sticky-top w-auto' style={{ zIndex: 12 }}>
             <div className='menu-icon-container d-block d-xl-none position-absolute  mt-3 pt-1 ms-4 ps-2 '  >
 
                 <span onClick={toggleSidebar} className="layout-menu-toggle menu-link text-large ms-auto mt-2 ">
@@ -26,7 +26,7 @@ function Sidebar() {
                 </span>
 
             </div>
-            <aside className={`menu-vertical menu bg-menu-theme min-vh-100 ${sidebar ? 'd-block position-absolute pt-3' : 'd-none d-xl-block position-relative '}`}>
+            <aside className={`menu-vertical menu bg-menu-theme h-100 ${sidebar ? 'd-block position-absolute pt-3' : 'd-none d-xl-block position-relative '}`}>
                 <div className="app-brand py-3">
                     <Link to='/' className="app-brand-link">
                         <div className={`menu-item ${location.pathname === "/" ? "active" : ""}`} >

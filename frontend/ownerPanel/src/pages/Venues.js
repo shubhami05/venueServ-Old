@@ -1,95 +1,59 @@
 import axios from 'axios';
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom'
 
 function Venues() {
-
   const [venues, setVenues] = useState([]);
   const [userId, setUserId] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [venueToDelete, setVenueToDelete] = useState(null);
+
   useEffect(() => {
-    fetchSessionData()
-    //eslint-disable-next-line
+    fetchSessionData();
   }, []);
 
-
   const fetchVenues = async (userId) => {
-
-    // fetchSessionData();
     try {
-      // console.log(uId)
-
-      const response = await axios.post('http://localhost:8000/showMyVenues', { userId })
-
+      const response = await axios.post('http://localhost:8000/showMyVenues', { userId });
       if (response.status === 200) {
         setVenues(response.data.venueData);
       } else {
-        toast.error("No any venues listed by you!");
+        toast.error("No venues listed by you!");
       }
-      // console.log(response.data.venueData);
-
-    }
-    catch (error) {
-      if (error.response.status === 400) {
-        toast.error("No any venue is listed by you!");
-      }
-      console.log("error in fetching venues data: ", error)
-
-    }
-    finally {
+    } catch (error) {
+      toast.error("Error fetching venue data!");
+    } finally {
       setIsLoading(false);
-    }
-  }
-
-  const fetchSessionData = async () => {
-    try {
-      // const loggedInUser = sessionStorage.getItem('loggedInUser');
-      const response = await axios.post("http://localhost:8000/session");
-      console.log(response);
-      if (response.data) {
-        setUserId(response.data.sessionData.session._id);
-        fetchVenues(response.data.sessionData.session._id);
-        // console.log(response.data.sessionData.session._id);
-      }
-    }
-    catch (error) {
-      console.log("SESSION ERROR IN ADD VENUE PAGE: ", error);
     }
   };
 
-
-
-
-  const handleDeleteVenue = async (e, vId) => {
-    e.preventDefault();
-    console.log(vId);
+  const fetchSessionData = async () => {
     try {
-      const response = await axios.post(`http://localhost:8000/deleteVenue`, { vId });
-      console.log(response.data.message);
-      fetchVenues(userId);
-    }
-    catch (err) {
-      if (err.response.status === 400) {
-        toast.error("Something went wrong!");
+      const response = await axios.post("http://localhost:8000/session");
+      if (response.data) {
+        setUserId(response.data.sessionData.session._id);
+        fetchVenues(response.data.sessionData.session._id);
       }
-      console.log("Error in deleting venue", err)
+    } catch (error) {
+      toast.error("Error fetching session data!");
     }
-  }
+  };
 
-
+  const handleDeleteVenue = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8000/deleteVenue`, { vId: venueToDelete });
+      toast.success(response.data.message);
+      fetchVenues(userId);
+    } catch (error) {
+      toast.error("Error deleting venue!");
+    }
+  };
 
   return (
-
     <div className="content-wrapper">
-      {/* Content */}
       <div className="container-xxl flex-grow-1 container-p-y">
         <h4 className="fw-bold py-3 mb-4">Your Venues</h4>
-
-
-        {/* Striped Rows */}
         {isLoading ? (
           <div className='h-75 d-flex justify-content-center align-items-center'>
             <div class="spinner-grow text-primary" role="status">
@@ -128,55 +92,74 @@ function Venues() {
                   </tr>
                 </thead>
                 <tbody className="table-border-bottom-0">
-                  {venues.length == 0 ? (<tr><td className="text-center" colSpan={16}>No any Venue Listed by You!</td></tr>) : venues.map((venue) => (
-                    <tr key={venue._id}>
-                      <td>
-                        <Link to={`/editvenue/:${venue._id}`} state={{ venue }}>
-                          <button type='button' className="btn btn-icon btn-outline-primary mx-1">
-                            <i className="bx bxs-edit" />
+                  {venues.length === 0 ? (
+                    <tr>
+                      <td className="text-center" colSpan={16}>No venues listed by you!</td>
+                    </tr>
+                  ) : (
+                    venues.map((venue) => (
+                      <tr key={venue._id}>
+                        <td>
+                          <Link to={`/editvenue/:${venue._id}`} state={{ venue }}>
+                            <button type='button' className="btn btn-icon btn-outline-primary mx-1">
+                              <i className="bx bxs-edit" />
+                            </button>
+                          </Link>
+                          <button
+                            type="button"
+                            className="btn btn-icon btn-outline-danger mx-1"
+                            onClick={() => setVenueToDelete(venue._id)}
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteVenueModal"
+                          >
+                            <i className="bx bx-trash-alt"></i>
                           </button>
-                        </Link>
-
-                        <button type="button" className="btn btn-icon btn-outline-danger mx-1" onClick={(e) => { handleDeleteVenue(e, venue._id) }}>
-                          <i className="bx bx-trash-alt"></i>
-                        </button>
-                      </td>
-                      <td>
-                        <strong>{venue.name}</strong>
-                      </td>
-                      <td>{venue.ownerName}</td>
-                      <td>{venue.mobile}</td>
-                      <td>{venue.type}</td>
-                      <td>{venue.city}</td>
-                      <td>$ {venue.price}</td>
-                      <td>
-                        <span className="badge bg-label-success me-1">Available</span>
-                      </td>
-                      <td className="text-center">{venue.outsideFood === 'yes' ? <i className="bx bx-check" /> : <i className="bx bx-x" />}</td>
-                      <td className="text-center">{venue.foodFacility}</td>
+                        </td>
+                        <td><strong>{venue.name}</strong></td>
+                        <td>{venue.ownerName}</td>
+                        <td>{venue.mobile}</td>
+                        <td>{venue.type}</td>
+                        <td>{venue.city}</td>
+                        <td>$ {venue.price}</td>
+                        <td>
+                          <span className="badge bg-label-success me-1">Available</span>
+                        </td>
+                        <td className="text-center">{venue.outsideFood === 'yes' ? <i className="bx bx-check" /> : <i className="bx bx-x" />}</td>
+                        <td className="text-center">{venue.foodFacility}</td>
                       <td className="text-center">{venue.peopleCapacity}</td>
                       <td className="text-center">{venue.carParking === 'yes' ? <i className="bx bx-check" /> : <i className="bx bx-x" />}</td>
                       <td className="text-center">{venue.rooms}</td>
                       <td className="text-center">{venue.halls}</td>
                     </tr>
-                  )
-                  )
-
-                  }
+                  )))}
                 </tbody>
               </table>
             </div>
-
           </div>
         )}
       </div>
-      {/* / Content */}
 
-      {/* / Footer */}
-      <div className="content-backdrop fade" />
+      {/* Confirmation Modal for Deleting Venue */}
+      <div className="modal fade" id="confirmDeleteVenueModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>Are you sure you want to delete the venue?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-danger" onClick={handleDeleteVenue} data-bs-dismiss="modal">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-  )
+  );
 }
 
-export default Venues
+export default Venues;
+

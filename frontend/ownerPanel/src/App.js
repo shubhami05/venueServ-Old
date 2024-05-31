@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
-// import {useState,useEffect} from 'react';
+import './App.css'; // Ensure this includes both Bootstrap and your custom CSS
 import Homepage from './pages/Homepage';
 import Bookings from './pages/Bookings';
 import Venues from './pages/Venues';
@@ -15,73 +14,78 @@ import EditVenue from './pages/EditVenue';
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import fetchSessionData from './auth/authService';
-// import fetchSessionData from './auth/authService';
 
 function App() {
-
   const [isAuth, setAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   axios.defaults.withCredentials = true;
+
   useEffect(() => {
     const authenticateUser = async () => {
       try {
         const isAuth = await fetchSessionData();
         setAuth(isAuth);
         console.log("auth:", isAuth);
-
       } catch (error) {
         setAuth(false);
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     };
 
     if (!isAuth) {
       authenticateUser();
-    }
-    else {
+    } else {
       setLoading(false);
     }
-    // eslint-disable-next-line
-  }, [])
+  }, [isAuth]);
 
   if (loading) {
     return (
       <div className='h-75 d-flex justify-content-center align-items-center'>
-        <div class="spinner-grow text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-grow text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
-      </div>)
+      </div>
+    );
   }
-
 
   if (!isAuth) {
-    toast.error("Invalid user, Please try logining again!");
+    toast.error("Invalid user, Please try logging in again!");
     window.location.href = "http://localhost:3000/Login";
-  }
-  else {
-
+  } else {
     return (
       axios.defaults.withCredentials = true,
       <BrowserRouter>
-
-        <div className='layout-wrapper layout-content-navbar'>
+        <div className='layout-wrapper'>
           <div className='layout-container'>
-
-            <Sidebar />
+            <div className='layout-sidebar bg-light'>
+              <Sidebar />
+            </div>
             <div className='layout-page'>
               <Header />
-              <Toaster />
-              <Routes>
-                <Route path='/' element={<Homepage />} />
-                <Route path='/bookings' element={<Bookings />} />
-                <Route path='/myvenues' element={<Venues />} />
-                <Route path='/reviews' element={<Reviews />} />
-                <Route path='/addnewvenue' element={<AddVenue />} />
-                <Route path='/editvenue/:id' element={<EditVenue />} />
-                <Route path='/*' element={<Notfound />} />
-              </Routes>
+              <Toaster
+              toastOptions={{
+                style: {
+                  border: '1px solid #713200',
+                  padding: '16px',
+                  color: '#713200',
+                  backgroundColor: '#fff',
+                  zIndex: 11,
+                },
+              }}
+            />
+              <div className='container-fluid flex-grow-1 d-flex flex-column overflow-auto'>
+                <Routes>
+                  <Route path='/' element={<Homepage />} />
+                  <Route path='/bookings' element={<Bookings />} />
+                  <Route path='/myvenues' element={<Venues />} />
+                  <Route path='/reviews' element={<Reviews />} />
+                  <Route path='/addnewvenue' element={<AddVenue />} />
+                  <Route path='/editvenue/:id' element={<EditVenue />} />
+                  <Route path='/*' element={<Notfound />} />
+                </Routes>
+              </div>
               <Footer />
             </div>
           </div>

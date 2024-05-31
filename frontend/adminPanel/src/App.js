@@ -1,7 +1,6 @@
 import './App.css';
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -20,28 +19,26 @@ export default function App() {
   const [isAuth, setAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   axios.defaults.withCredentials = true;
+
   useEffect(() => {
     const authenticateUser = async () => {
       try {
         const isAuth = await fetchSessionData();
         setAuth(isAuth);
         console.log("auth:", isAuth);
-
       } catch (error) {
         setAuth(false);
-      }
-      finally {
+      } finally {
         setLoading(false);
       }
     };
+
     if (!isAuth) {
       authenticateUser();
-    }
-    else {
+    } else {
       setLoading(false);
     }
-    // eslint-disable-next-line
-  }, [])
+  }, [isAuth]);
 
   if (loading) {
     return (
@@ -49,19 +46,20 @@ export default function App() {
         <div className="spinner-grow text-primary" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
-      </div>)
+      </div>
+    );
   }
+
   if (!isAuth) {
-    toast.error("Invalid user, Please try logining again!");
+    toast.error("Invalid user, Please try logging in again!");
     window.location.href = "http://localhost:3000/Login";
   }
 
   return (
     axios.defaults.withCredentials = true,
     <>
-
-      <BrowserRouter >
-        <div className='layout-wrapper layout-content-navbar'>
+      <BrowserRouter>
+        <div className='layout-wrapper'>
           <div className='layout-container'>
             <Toaster
               toastOptions={{
@@ -70,22 +68,26 @@ export default function App() {
                   padding: '16px',
                   color: '#713200',
                   backgroundColor: '#fff',
-                  zIndex: 11
+                  zIndex: 11,
                 },
               }}
             />
-            <Sidebar />
+            <div className='layout-sidebar bg-light'>
+              <Sidebar />
+            </div>
             <div className='layout-page'>
               <Navbar />
-              <Routes>
-                <Route path='/' element={<Dashboard />} />
-                <Route path='/booking' element={<Booking />} />
-                <Route path='/ownersdata' element={<Ownersdata />} />
-                <Route path='/userdata' element={<Userdata />} />
-                <Route path='/venues' element={<Venues />} />
-                <Route path='/contactdata' element={<Contactdata />} />
-                <Route path='/*' element={<NotFound />} />
-              </Routes>
+              <div className='container-fluid flex-grow-1 d-flex flex-column overflow-auto'>
+                <Routes>
+                  <Route path='/' element={<Dashboard />} />
+                  <Route path='/booking' element={<Booking />} />
+                  <Route path='/ownersdata' element={<Ownersdata />} />
+                  <Route path='/userdata' element={<Userdata />} />
+                  <Route path='/venues' element={<Venues />} />
+                  <Route path='/contactdata' element={<Contactdata />} />
+                  <Route path='/*' element={<NotFound />} />
+                </Routes>
+              </div>
               <Footer />
             </div>
           </div>
@@ -94,5 +96,3 @@ export default function App() {
     </>
   );
 }
-
-

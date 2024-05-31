@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function AddVenue() {
     const navigate = useNavigate();
@@ -43,12 +44,11 @@ function AddVenue() {
             try {
                 // const loggedInUser = sessionStorage.getItem('loggedInUser');
                 const response = await axios.post("http://localhost:8000/session");
-                console.log(response);
+                
                 if (response.data) {
                     setUserId(response.data.sessionData.session._id);
                     // setUserName(response.data.sessionData.session.name);
                     setUserEmail(response.data.sessionData.session.email);
-                    console.log(userEmail)
                     setUserMobile(response.data.sessionData.session.mobile);
                     // console.log(response.data.sessionData.session._id);
                 }
@@ -88,11 +88,12 @@ function AddVenue() {
 
             const response = await axios.post("http://localhost:8000/addNewVenue", form);
             console.log(response);
-            alert("Venue add successfully!");
+            toast.success("Venue added successfully!");
             navigate('/myvenues');
 
         }
         catch (err) {
+            toast.error("Something went wrong!");
             console.log("external error:::" + err);
         }
         // Clear input fields after form submission

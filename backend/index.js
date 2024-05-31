@@ -23,6 +23,7 @@ const { DeleteBooking } = require("./api/bookingDelete");
 const { UpdateBookingStatus } = require("./api/boookingStatusApi");
 const { ShowUserBookings } = require("./api/bookingShowUserApi");
 const { ContactSendApi } = require("./api/contactSendApi");
+const { ShowAdminBookings } = require("./api/bookingShowAdmin");
 
 const app = express();
 const PORT = 8000;
@@ -64,7 +65,7 @@ app.post("/showBookings",ShowBookings) //for Owners
 app.post("/deleteBooking",DeleteBooking) // for Owners
 app.post("/updateBookingStatus",UpdateBookingStatus) //for owners
 app.post("/showUserBookings",ShowUserBookings) // for finders
-
+app.post("/showAdminBookings",ShowAdminBookings)// for admin
 
 app.post("/contactSend",ContactSendApi) // for finders
 

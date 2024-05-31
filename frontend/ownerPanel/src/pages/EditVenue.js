@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function EditVenue() {
     const navigate = useNavigate();
@@ -69,11 +70,12 @@ function EditVenue() {
         try {
             const response = await axios.post(`http://localhost:8000/editVenue`, form);
             console.log(response);
-            alert("Venue updated successfully!");
+            toast.success("Venue updated successfully!");
             navigate('/myvenues');
-
+            
         }
         catch (err) {
+            toast.error("Something went wrong!");
             console.log("external error:::" + err);
         }
         // Clear input fields after form submission

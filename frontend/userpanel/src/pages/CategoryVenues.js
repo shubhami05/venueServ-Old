@@ -13,14 +13,12 @@ function CategoryVenues() {
 
   useEffect(() => {
     fetchVenues(params.category);
-    console.log(params.category);
+    
     // eslint-disable-next-line
   }, []);
 
   const fetchVenues = async (category) => {
-
     try {
-
       axios.post('http://localhost:8000/showCategoryVenues', { category })
         .then((response) => {
           if (response.status === 200) {
@@ -65,39 +63,6 @@ function CategoryVenues() {
       </Link>
     )
   }
-  // function VenueCard(props) {
-  //   return (
-  //     <div className="venue-card mb-2 row bg-body-tertiary border-0">
-  //       <div className="col-lg-4 col-md-12 col-sm-12 ">
-  //         <img src={require(`../images/venuePics/${props.photo}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
-  //       </div>
-  //       <div className="col-lg-8 col-md-12 col-sm-12 ">
-  //         <div className="row d-flex justify-content-between">
-  //           <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mt-2">
-  //             <div className="d-flex flex-column">
-  //               <h4 className="text-capitalize fs-5">{props.name}</h4>
-  //               <span className='text-capitalize'><i className=" fa-solid fa-location-dot" /> {props.city}</span>
-  //               <span><i className="fa-solid fa-user" /> {props.capacity}</span>
-  //               <span><i className="fa-solid fa-car" /> {props.parking} </span>
-  //               <span><i className="fa-solid fa-star" /> 3.5 / 5 rated by 99 Guests</span>
-  //               <span className="text-success mt-2">6969 people enquired this venue</span>
-  //             </div>
-  //           </div>
-  //           <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 d-flex flex-column justify-content-between">
-  //             <div className="d-flex flex-column align-items-end mt-2 me-2">
-  //               <span className="text-muted text-small">Price starts with</span>
-  //               <h4>$ {props.price}</h4>
-  //             </div>
-  //             <button  className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 text-white">  
-  //             <Link to="/VenueCard" state={ props}>Check out</Link>
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
-
-  // }
 
   return (
     <>
@@ -117,7 +82,7 @@ function CategoryVenues() {
                 </form> */}
                 <div className="city-list">
                   {loading ? (
-                    <p><Audio
+                    <div><Audio
                       height="40"
                       width="40"
                       radius="9"
@@ -125,7 +90,7 @@ function CategoryVenues() {
                       ariaLabel="loading"
                       wrapperStyle
                       wrapperClass
-                    /></p>
+                    /></div>
                   ) : (cities && cities.length > 0) ? (
                     cities.map(cityName => <LocationButton key={cityName} city={cityName} />)
                   ) : (
@@ -137,7 +102,7 @@ function CategoryVenues() {
             <div className="col-lg-8 col-md-12 mx-2 ">
 
               {isLoading ? (
-                <p className='h-100 w-100 d-flex align-items-center justify-content-center'>
+                <div className='h-100 w-100 d-flex align-items-center justify-content-center'>
                   <Audio
                     height="40"
                     width="40"
@@ -147,7 +112,7 @@ function CategoryVenues() {
                     wrapperStyle
                     wrapperClass
                   />
-                </p>
+                </div>
               ) : (venues && venues.length > 0) ? (
                 venues.map((venue) => {
                   return (

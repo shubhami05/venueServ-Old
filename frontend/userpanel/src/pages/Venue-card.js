@@ -3,34 +3,22 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ReviewCard } from './Reviews'
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { Audio } from 'react-loader-spinner'
+
+
 
 function Venuecard() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isAuth, setAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const fetchSessionData = async () => {
-      try {
-        // const loggedInUser = sessionStorage.getItem('loggedInUser');
-        const response = await axios.post("http://localhost:8000/session");
-        console.log(response);
-        if (response.data) {
-          setAuth(true);
-        }
-      }
-      catch (error) {
-        console.log("SESSION ERROR IN ADD VENUE PAGE: ", error);
-      }
-    };
+
     fetchSessionData();
+    setCurrentVenue(currentVenue);
     //eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    console.log(currentVenue.photos)
-    setCurrentVenue(currentVenue);
-  }, [])
 
   const [currentVenue, setCurrentVenue] = useState({
     id: location.state.venue._id,
@@ -56,7 +44,7 @@ function Venuecard() {
   const [booking, setBooking] = useState({
     ownerId: currentVenue.ownerId,
     venueId: currentVenue.id,
-    venueName:currentVenue.name,
+    venueName: currentVenue.name,
     eventType: '',
     date: '',
     eventSession: '',
@@ -66,6 +54,23 @@ function Venuecard() {
     contact: ''
   })
 
+  const fetchSessionData = async () => {
+    try {
+      setIsLoading(true)
+      // const loggedInUser = sessionStorage.getItem('loggedInUser');
+      const response = await axios.post("http://localhost:8000/session");
+      console.log(response);
+      if (response.data) {
+        setAuth(true);
+      }
+    }
+    catch (error) {
+      console.log("SESSION ERROR IN ADD VENUE PAGE: ", error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
   const handleChange = (e) => {
 
     const { name, value } = e.target;
@@ -78,9 +83,8 @@ function Venuecard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-
+      setIsLoading(true)
       if (isAuth) {
         const response = await axios.post("http://localhost:8000/bookingSend", booking);
         console.log(response);
@@ -95,18 +99,35 @@ function Venuecard() {
     }
     catch (err) {
       toast.error("Something Went Wrong!");
-      console.log("Venue card error: ",err)
+      console.log("Venue card error: ", err)
     }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className='h-100 w-100 d-flex align-items-center justify-content-center'>
+        <Audio
+          height="40"
+          width="40"
+          radius="9"
+          color="#f89646"
+          ariaLabel="loading"
+          wrapperStyle
+          wrapperClass
+        />
+      </div>
+    )
   }
 
 
 
-
-
   return (
+
     <>
       <div className='container'>
-
         <div className="row">
           <div className="col-lg-9 col-md-12 venue-details d-flex flex-column ">
             <h3 className="text-uppercase text-secondary-emphasis my-4">{currentVenue.name}, {currentVenue.city}</h3>
@@ -151,12 +172,7 @@ function Venuecard() {
                   <div className="carousel-item active ">
                     <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos?.filename}`)} alt="VenueImage" />
                   </div>
-                  {/* <div className="carousel-item">
-                    <img className="w-100 d-block" src="https://images.unsplash.com/photo-1558998708-ed5f8eaf1af1?q=80&w=2652&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="VenueImage" />
-                  </div>
-                  <div className="carousel-item">
-                    <img className="w-100 d-block" src="https://plus.unsplash.com/premium_photo-1678916185496-99e3f8bf5819?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGJhbnF1ZXQlMjBoYWxsfGVufDB8fDB8fHww" alt="VenueImage" />
-                  </div> */}
+
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                   <span className="carousel-control-prev-icon" aria-hidden="true" />
@@ -225,22 +241,21 @@ function Venuecard() {
             <div className="form-container bg-body-tertiary">
               <form className="p-4" onSubmit={handleSubmit}>
                 <p className="fs-4">Please fill in the details</p>
-                <select className="form-select mt-3" aria-label="Default select example"
+                <input className="form-select mt-3" aria-label="Default select example"
                   value={booking.eventType}
                   name='eventType'
                   onChange={handleChange}
-                  required>
-                  <option value="" >Select Event Type</option>
-                  <option value={'Birtday Party'}>Birthday Party</option>
-                  <option value={'Engagement'}>Engagement</option>
-                  <option value={'Wedding ceremony'}>Wedding ceremony</option>
-                </select>
+                  placeholder="Enter event type"
+                  required />
+
 
                 <input className="form-control mt-3 " type="date"
                   name="date"
                   onChange={handleChange}
                   value={booking.date}
-                  placeholder="Event Date" required />
+                  placeholder="Event Date"
+                  min={Date.now()}
+                  required />
 
                 <select className="form-select mt-3" aria-label="Default select example"
                   name='eventSession'
@@ -288,7 +303,7 @@ function Venuecard() {
                 </button>
               </form>
             </div>
-            
+
             <div className="venue-stats-container card border-theme2 my-3 bg-body-primary">
               <div className="card-body text-theme2 text-center">
                 <h5>99 <i className="fa-solid fa-users" /></h5>

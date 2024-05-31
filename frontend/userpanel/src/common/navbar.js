@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 import fetchSessionData from '../auth/authService';
 import toast from 'react-hot-toast';
+import { Audio } from 'react-loader-spinner';
 
 function NavbarMenu() {
   // const navigate = useNavigate();
@@ -21,7 +22,7 @@ function NavbarMenu() {
       try {
         const isAuth = await fetchSessionData();
         setAuth(isAuth);
-        
+
 
       } catch (error) {
         setAuth(false);
@@ -41,23 +42,41 @@ function NavbarMenu() {
   }, [])
 
   if (loading) {
-    return <h1>Loading....</h1>
+    return (<div className='h-100 w-100 d-flex align-items-center justify-content-center'>
+      <Audio
+        height="40"
+        width="40"
+        radius="9"
+        color="#f89646"
+        ariaLabel="loading"
+        wrapperStyle
+        wrapperClass
+      />
+    </div>)
   }
   async function handleLogout() {
-    const response = await axios.post("http://localhost:8000/logout");
-    console.log(response);
-    if (response.status === 200) {
-      setAuth(false);
-      navigate("/Login");
-      window.location.reload(false); 
-      // toast.success("Logout Successfully");
+    try {
+      setLoading(true)
+      const response = await axios.post("http://localhost:8000/logout");
+      console.log(response);
+      if (response.status === 200) {
+        setAuth(false);
+        toast.success("Logout Successfully");
+        navigate("/Login");
+        window.location.reload(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    finally {
+      setLoading(false)
     }
   }
 
 
   return (
     <Navbar expand="lg"
-    style={{'zIndex':10}} className="bg-body-tertiary header_section long_section ">
+      style={{ 'zIndex': 10 }} className="bg-body-tertiary header_section long_section ">
       <Container className='navbar navbar-expand-lg custom_nav-container justify-content-between'>
         <Navbar.Brand>
           <Link to='/' className='nav-link hover:text-white text-uppercase fw-bold'>Venueserv</Link>
@@ -91,8 +110,6 @@ function NavbarMenu() {
               )}
 
             </li>
-
-
           </Nav>
         </Navbar.Collapse>
       </Container>

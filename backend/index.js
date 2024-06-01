@@ -49,13 +49,13 @@ app.post("/logout", LogoutApi);
 app.post("/showUsers", showUsersApi);
 
 // Use venuePicUpload middleware for handling file uploads
-app.post('/addNewVenue', venuePicUpload.array('photos', 10), venueApi);
+app.post('/addNewVenue', venuePicUpload.single('photos'), venueApi);
 
 app.post('/myvenues', showVenuesApi);
 app.post('/showMyVenues', ShowOwnerVenues);
 app.post('/showCategoryVenues', CategoryVenues);
 app.post("/deleteVenue", DeleteVenue);
-app.post("/editVenue", venuePicUpload.array('photos', 10), EditVenue);
+app.post("/editVenue", venuePicUpload.single('photos'), EditVenue);
 
 app.post("/bookingSend", BookingSendApi);
 app.post("/showBookings", ShowBookings);

@@ -1,23 +1,21 @@
 const express = require("express");
-const connectDB = require("./db/dbConnect")
+const connectDB = require("./db/dbConnect");
 const cors = require("cors");
 const session = require("express-session");
-
-
 
 const SessionApi = require("./api/sessionApi");
 const { SignupApi } = require("./api/signupApi");
 const { LoginApi } = require("./api/loginApi");
 const { LogoutApi } = require("./api/LogoutApi");
 const { showUsersApi } = require("./api/showUsers");
-const { venuePicUpload } = require("./multer/multerUpload");
+const { venuePicUpload } = require("./multer/multerUpload"); // Import multer middleware for handling file uploads
 const { venueApi } = require("./api/venueApi");
 const { showVenuesApi } = require("./api/showVenues");
 const { ShowOwnerVenues } = require("./api/ownerVenues");
 const { CategoryVenues } = require("./api/CategoryVenuesApi");
 const { EditVenue } = require("./api/editVenueApi");
 const { DeleteVenue } = require("./api/deleteVenueApi");
-const {  BookingSendApi } = require("./api/bookingApi");
+const { BookingSendApi } = require("./api/bookingApi");
 const { ShowBookings } = require("./api/bookingShowApi");
 const { DeleteBooking } = require("./api/bookingDelete");
 const { UpdateBookingStatus } = require("./api/boookingStatusApi");
@@ -42,32 +40,31 @@ app.use(session({
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true
-}))
-
+}));
 
 app.post("/session", SessionApi);
-
 app.post("/signup", SignupApi);
 app.post("/login", LoginApi);
-app.post("/logout",LogoutApi);
-app.post("/showUsers", showUsersApi); //for admin
+app.post("/logout", LogoutApi);
+app.post("/showUsers", showUsersApi);
 
-app.post('/addNewVenue', venuePicUpload.single('photos'), venueApi); //for owners
-app.post('/myvenues', showVenuesApi); //for admin
-app.post('/showMyVenues', ShowOwnerVenues); //for owners
-app.post('/showCategoryVenues',CategoryVenues); //for user/finders
-app.post("/deleteVenue", DeleteVenue); //for admin / owner
-app.post("/editVenue", venuePicUpload.single('photos'),EditVenue); //for owners
+// Use venuePicUpload middleware for handling file uploads
+app.post('/addNewVenue', venuePicUpload.array('photos', 10), venueApi);
 
+app.post('/myvenues', showVenuesApi);
+app.post('/showMyVenues', ShowOwnerVenues);
+app.post('/showCategoryVenues', CategoryVenues);
+app.post("/deleteVenue", DeleteVenue);
+app.post("/editVenue", venuePicUpload.array('photos', 10), EditVenue);
 
-app.post("/bookingSend",BookingSendApi) //for finders
-app.post("/showBookings",ShowBookings) //for Owners
-app.post("/deleteBooking",DeleteBooking) // for Owners
-app.post("/updateBookingStatus",UpdateBookingStatus) //for owners
-app.post("/showUserBookings",ShowUserBookings) // for finders
-app.post("/showAdminBookings",ShowAdminBookings)// for admin
+app.post("/bookingSend", BookingSendApi);
+app.post("/showBookings", ShowBookings);
+app.post("/deleteBooking", DeleteBooking);
+app.post("/updateBookingStatus", UpdateBookingStatus);
+app.post("/showUserBookings", ShowUserBookings);
+app.post("/showAdminBookings", ShowAdminBookings);
 
-app.post("/contactSend",ContactSendApi) // for finders
+app.post("/contactSend", ContactSendApi);
 
 app.listen(PORT, () => {
     console.log("Server started on port: ", PORT);

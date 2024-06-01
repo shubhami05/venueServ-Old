@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 function AddVenue() {
     const navigate = useNavigate();
     const [userId, setUserId] = useState('');
-    // const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userMobile, setUserMobile] = useState('');
     const [venueData, setVenueData] = useState({
@@ -16,10 +15,10 @@ function AddVenue() {
         city: '',
         address: '',
         price: '',
-        photos: '',
+        photos: [],
         foodFacility: '',
         outsideFood: '',
-        carParking: '',
+        carParking: '', 
         peopleCapacity: '',
         halls: '',
         rooms: '',
@@ -44,7 +43,7 @@ function AddVenue() {
             try {
                 // const loggedInUser = sessionStorage.getItem('loggedInUser');
                 const response = await axios.post("http://localhost:8000/session");
-                
+
                 if (response.data) {
                     setUserId(response.data.sessionData.session._id);
                     // setUserName(response.data.sessionData.session.name);
@@ -71,25 +70,40 @@ function AddVenue() {
         }))
     }
     const handleFileChange = (e) => {
+        console.log(e.target.files)
+        const files = Array.from(e.target.files);
+        console.log(files)
         setVenueData((formData) => ({
             ...formData,
-            photos: e.target.files[0],
+            photos:files,
         }));
-        console.log(venueData.photos);
+        console.log(venueData.photos)
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(venueData); // Process form data here
-        const form = new FormData();
-        for (const data in venueData) {
-            form.append(data, venueData[data]);
+        const formData = new FormData();
+        for (const key in venueData) {
+            if (key === 'photos') {
+                venueData[key].forEach((file, index) => {
+                    formData.append(`photo${index + 1}`, file);
+                });
+            } 
+            else {
+                formData.append(key, venueData[key]);
+            }
         }
+        
         try {
-
-            const response = await axios.post("http://localhost:8000/addNewVenue", form);
+            const response = await axios.post("http://localhost:8000/addNewVenue", formData);
             console.log(response);
-            toast.success("Venue added successfully!");
-            navigate('/myvenues');
+            if (response.status === 200) {
+                toast.success("Venue added successfully!");
+                navigate('/myvenues');
+            }
+            else {
+                toast.error("Something went wrong!");
+            }
 
         }
         catch (err) {
@@ -107,7 +121,7 @@ function AddVenue() {
             city: '',
             address: '',
             price: '',
-            photos: '',
+            photos: [],
             foodFacility: '',
             outsideFood: '',
             carParking: '',

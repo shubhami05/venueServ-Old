@@ -60,8 +60,8 @@ function NavbarMenu() {
       const response = await axios.post("http://localhost:8000/logout");
       console.log(response);
       if (response.status === 200) {
-        setAuth(false);
         toast.success("Logout Successfully");
+        setAuth(false);
         navigate("/Login");
         window.location.reload(false);
       }

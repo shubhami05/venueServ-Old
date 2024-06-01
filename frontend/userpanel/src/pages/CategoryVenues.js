@@ -13,39 +13,30 @@ function CategoryVenues() {
 
   useEffect(() => {
     fetchVenues(params.category);
-    
     // eslint-disable-next-line
   }, []);
 
   const fetchVenues = async (category) => {
     try {
-      axios.post('http://localhost:8000/showCategoryVenues', { category })
-        .then((response) => {
-          if (response.status === 200) {
-            setVenues(response.data.venueData);
-            const uniqueCities = [...new Set((response.data.venueData).map(venue => venue.city))];
-            setCities(uniqueCities);
-            setIsLoading(false);
-            setLoading(false);
-            console.log(venues);
-          }
-          else {
-            setVenues(null);
-            // alert("No any venues listed by you!");
-            setIsLoading(false);
-            setLoading(false);
-          }
-
-        })
-    }
-    catch (error) {
-      console.log("error in fetching venues data: ", error)
-
+      const response = await axios.post('http://localhost:8000/showCategoryVenues', { category });
+      if (response.status === 200) {
+        setVenues(response.data.venueData);
+        const uniqueCities = [...new Set(response.data.venueData.map(venue => venue.city))];
+        setCities(uniqueCities);
+      } else {
+        setVenues([]);
+      }
+    } catch (error) {
+      console.error("Error in fetching venues data:", error);
+      setVenues([]);
+    } finally {
+      setLoading(false);
+      setIsLoading(false);
     }
   }
 
 
-  function LocationButton(props) {
+  function LocationButton(props,{city}) {
     return (
       <Link to={`/Venues/${params.category}/${props.city}`} className="mx-3 border-none text-theme2 text-theme2-hover d-flex align-items-center" >
         <i className="fa-solid  fa-location-dot" />
@@ -81,7 +72,7 @@ function CategoryVenues() {
                       wrapperStyle
                       wrapperClass
                     /></div>
-                  ) : (cities && cities.length > 0) ? (
+                  ) : (cities.length > 0) ? (
                     cities.map(cityName => <LocationButton key={cityName} city={cityName} />)
                   ) : (
                     <p>No cities available.</p>
@@ -103,12 +94,12 @@ function CategoryVenues() {
                     wrapperClass
                   />
                 </div>
-              ) : (venues && venues.length > 0) ? (
-                venues.map((venue) => {
+              ) : (venues.length > 0) ? (
+                venues.map((venue,index) => {
                   return (
-                    <div className="venue-card mb-2 row bg-body-tertiary border-0">
+                    <div key={index} className="venue-card mb-2 row bg-body-tertiary border-0">
                       <div className="col-lg-4 col-md-12 col-sm-12 ">
-                        <img src={require(`../images/venuePics/${venue.photos?.filename}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
+                        <img src={require(`../images/venuePics/${venue.photos.filename}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
                       </div>
                       <div className="col-lg-8 col-md-12 col-sm-12 ">
                         <div className="row d-flex justify-content-between">

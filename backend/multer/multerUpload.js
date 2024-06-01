@@ -8,7 +8,6 @@ const venuePicStorage = multer.diskStorage({
         cb(null,`${Date.now()}-${file.originalname}`);
     }
 });
-
 const venuePicUpload =  multer({storage:venuePicStorage});
 
 module.exports = {venuePicUpload}

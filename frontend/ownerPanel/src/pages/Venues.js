@@ -11,6 +11,7 @@ function Venues() {
 
   useEffect(() => {
     fetchSessionData();
+     // eslint-disable-next-line
   }, []);
 
   const fetchVenues = async (userId) => {
@@ -56,8 +57,8 @@ function Venues() {
         <h4 className="fw-bold py-3 mb-4">Your Venues</h4>
         {isLoading ? (
           <div className='h-75 d-flex justify-content-center align-items-center'>
-            <div class="spinner-grow text-primary" role="status">
-              <span class="visually-hidden">Loading...</span>
+            <div className="spinner-grow text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         ) : (

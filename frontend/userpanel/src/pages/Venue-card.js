@@ -106,7 +106,7 @@ function Venuecard() {
     }
   }
 
-  const setLatestDate = async ()=>{
+  const setLatestDate = async () => {
     const today = new Date();
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -172,17 +172,19 @@ function Venuecard() {
         <div className="row mt-3">
           <div className="col-lg-9 col-md-12  d-flex flex-column">
             <div className="venue-image">
-              <div id="carouselExample" className="carousel slide ">
+              <div id="carouselExample" className="carousel slide">
                 <div className="carousel-inner object-fit-contain" style={{ aspectRatio: '16/9' }}>
-                  <div className="carousel-item active ">
-                    <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos?.filename}`)} alt="VenueImage" />
-                  </div>
-                  <div className="carousel-item active ">
-                    <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos?.filename}`)} alt="VenueImage" />
-                  </div>
-                  <div className="carousel-item active ">
-                    <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos?.filename}`)} alt="VenueImage" />
-                  </div>
+                  {currentVenue.photos && currentVenue.photos.length > 1 ? (
+                    currentVenue.photos.map((photo, index) => (
+                      <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                        <img className="w-100 d-block" src={require(`../images/venuePics/${photo.filename}`)} alt="VenueImage" />
+                      </div>
+                    ))): (
+                    <div  className={'carousel-item active'}>
+                      <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos.filename}`)} alt="VenueImage" />
+                    </div>
+                  )
+                  }
 
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">

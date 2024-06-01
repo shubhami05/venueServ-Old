@@ -25,7 +25,7 @@ function HelloPage() {
   }, [])
 
   return (<div className='container'>
-    {useremail == '' ? (
+    {useremail === '' ? (
       <div className='text-center w-100 '>
           <h4 className='text-theme2 loginAlert' role='status'>Login to Book a Venue!</h4>
       </div>

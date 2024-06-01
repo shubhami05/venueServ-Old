@@ -89,7 +89,7 @@ function NavbarMenu() {
               <Link to='/' className='nav-link'>Home</Link>
             </li>
             <li className="nav-item">
-              <Link to='/Venue' className='nav-link'>Venue</Link>
+              <Link to='/Venues' className='nav-link'>Venue</Link>
             </li>
             <li className="nav-item">
               <Link to='/Mybooking' className='nav-link'>My booking</Link>

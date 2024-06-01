@@ -73,7 +73,7 @@ function AddVenue() {
     const handleFileChange = (e) => {
         setVenueData((formData) => ({
             ...formData,
-            photos: e.target.files[0],
+            photos: Array.from(e.target.files),
         }));
         console.log(venueData.photos);
     }
@@ -81,12 +81,20 @@ function AddVenue() {
         e.preventDefault();
         console.log(venueData); // Process form data here
         const form = new FormData();
-        for (const data in venueData) {
-            form.append(data, venueData[data]);
+        for (const key in venueData) {
+            if (key === 'photos') {
+                venueData.photos.forEach(photo => form.append('photos', photo));
+            } else {
+                form.append(key, venueData[key]);
+            }
         }
         try {
 
-            const response = await axios.post("http://localhost:8000/addNewVenue", form);
+            const response = await axios.post("http://localhost:8000/addNewVenue", form, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             console.log(response);
             toast.success("Venue added successfully!");
             navigate('/myvenues');

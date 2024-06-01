@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { } from 'react'
 import { useNavigate} from 'react-router-dom'
 
 function Venue() {
@@ -9,7 +9,7 @@ function Venue() {
       <div className="col-md-6 col-lg-4">
         <div className="box bg-white">
           <div className="img-box">
-            <img src={props.url} alt="This is image" />
+            <img src={props.url} alt="Loading" />
           </div>
           <div className="detail-box">
             <h5>

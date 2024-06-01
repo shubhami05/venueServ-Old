@@ -4,8 +4,8 @@ import { ReviewCard } from './Reviews'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Audio } from 'react-loader-spinner'
-
-
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 function Venuecard() {
   const location = useLocation();
@@ -174,27 +174,26 @@ function Venuecard() {
             <div className="venue-image">
               <div id="carouselExample" className="carousel slide">
                 <div className="carousel-inner object-fit-contain" style={{ aspectRatio: '16/9' }}>
-                  {currentVenue.photos && currentVenue.photos.length > 1 ? (
-                    currentVenue.photos.map((photo, index) => (
-                      <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-                        <img className="w-100 d-block" src={require(`../images/venuePics/${photo.filename}`)} alt="VenueImage" />
-                      </div>
-                    ))): (
-                    <div  className={'carousel-item active'}>
-                      <img className="w-100 d-block" src={require(`../images/venuePics/${currentVenue.photos.filename}`)} alt="VenueImage" />
-                    </div>
-                  )
-                  }
+                  <Carousel autoPlay stopOnHover verticalSwipe infiniteLoop>
+                    {
+                      currentVenue.photos.map((photo, index) => (
+                        <div key={index}>
+                          <img src={require(`../images/venuePics/${photo}`)} alt='venue' text={index} key={index} />
+                        </div>
+                      ))
+                    }
+                  </Carousel>
+
 
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                {/* <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                   <span className="carousel-control-prev-icon" aria-hidden="true" />
                   <span className="visually-hidden">Previous</span>
                 </button>
                 <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                   <span className="carousel-control-next-icon" aria-hidden="true" />
                   <span className="visually-hidden">Next</span>
-                </button>
+                </button> */}
               </div>
             </div>
             <div className="venue-details my-3">
@@ -214,9 +213,10 @@ function Venuecard() {
                         <td>{currentVenue.halls}</td>
                       </tr>
                       <tr>
-                        <td><i className="fa-solid fa-bed" /> Rooms :</td>
-                        <td> {currentVenue.rooms}</td>
+                        <td><i className="fa-solid fa-car" /> Car parking :</td>
+                        <td>{(currentVenue.carParking === "yes") ? (<><i className="fa-solid fa-check" /> Available</>) : (<><i className="fa-solid fa-xmark" /> Not Available</>)}</td>
                       </tr>
+
                     </tbody>
                   </table>
                 </div>
@@ -227,19 +227,19 @@ function Venuecard() {
                     <tbody>
                       <tr>
                         <td><i className="fa-solid fa-utensils" /> Outside Food :</td>
-                        <td>
+                        <td   >
                           {(currentVenue.outsideFood === "yes") ? (<><i className="fa-solid fa-check" /> Allowed</>) : (<><i className="fa-solid fa-xmark" /> Not Allowed</>)}
                         </td>
                       </tr>
-
+                      <tr>
+                        <td><i className="fa-solid fa-bed" /> Rooms :</td>
+                        <td> {currentVenue.rooms}</td>
+                      </tr>
                       <tr>
                         <td><i className="fa-solid fa-users" /> Capacity :</td>
-                        <td> Upto {currentVenue.peopleCapacity} people</td>
+                        <td> {currentVenue.peopleCapacity} people</td>
                       </tr>
-                      <tr>
-                        <td><i className="fa-solid fa-car" /> Car parking :</td>
-                        <td>{(currentVenue.carParking === "yes") ? (<><i className="fa-solid fa-check" /> Available</>) : (<><i className="fa-solid fa-xmark" /> Not Available</>)}</td>
-                      </tr>
+
                     </tbody>
                   </table>
                 </div>
@@ -325,14 +325,14 @@ function Venuecard() {
             </div>
             <div className="choose-us row p-3 bg-body-tertiary">
 
-              <div className=' col-lg-12 col-sm-8 col-xs-7 d-flex flex-column align-items-left justify-content-center'>
+              <div className='  d-flex flex-column align-items-left justify-content-center'>
                 <h5>Why choose VenueServ?</h5>
                 <span>&gt; 100% Verified Venues</span>
                 <span>&gt; Online Booking</span>
                 <span>&gt; Every sharpen Details </span>
                 <span>&gt; People Ratings &amp; Reviews</span>
               </div>
-              <img className="col-lg-12 col-sm-3 col-xs-4" src="images/VenueservIcon.png" alt="VenueServ" />
+             
             </div>
           </div>
         </div>

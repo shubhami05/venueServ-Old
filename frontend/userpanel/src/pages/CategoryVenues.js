@@ -21,6 +21,7 @@ function CategoryVenues() {
       const response = await axios.post('http://localhost:8000/showCategoryVenues', { category });
       if (response.status === 200) {
         setVenues(response.data.venueData);
+        console.log(venues)
         const uniqueCities = [...new Set(response.data.venueData.map(venue => venue.city))];
         setCities(uniqueCities);
       } else {
@@ -99,7 +100,7 @@ function CategoryVenues() {
                   return (
                     <div key={index} className="venue-card mb-2 row bg-body-tertiary border-0">
                       <div className="col-lg-4 col-md-12 col-sm-12 ">
-                        <img src={require(`../images/venuePics/${venue.photos.filename}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
+                        <img src={require(`../images/venuePics/${venue.photos[0]}`)} style={{ aspectRatio: '3/2' }} className="h-100 w-100" alt='img' />
                       </div>
                       <div className="col-lg-8 col-md-12 col-sm-12 ">
                         <div className="row d-flex justify-content-between">

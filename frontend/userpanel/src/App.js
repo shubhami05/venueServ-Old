@@ -99,7 +99,7 @@ function App() {
           <Route path="/Mybooking" element={(isAuth) ? (<Mybooking />) : (<LoginUser />)} />
           <Route path="/Reviews" element={<Reviews />} />
           <Route path="/Venuecard" element={<Venuecard />} />
-          <Route path="/Venue" element={<Venue />} />
+          <Route path="/Venues" element={<Venue />} />
           <Route path='/HelloPage' element={<HelloPage />} />
           <Route path="/*" element={<Notfound />} />
         </Routes>

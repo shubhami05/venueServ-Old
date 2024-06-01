@@ -3,19 +3,16 @@ import { Link } from 'react-router-dom'
 import Venue from './Venue'
 import Contact from './Contact';
 import HelloPage from './HelloPage';
-import { Toaster } from 'react-hot-toast';
 
 function Home() {
   return (
     <>
 
       <div>
-        <Toaster />
         <HeroSection />
         <Venue />
         <Testimonial />
         <Contact />
-
       </div>
 
     </>

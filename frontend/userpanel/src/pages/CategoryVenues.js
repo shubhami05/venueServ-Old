@@ -43,17 +43,7 @@ function CategoryVenues() {
 
     }
   }
-  // async function fetchAllCities() {
-  //   try {
-  //     const response = await axios.post(`http://localhost:8000/myvenues`);
-  //     const venueData = response.data.venueData;
-  //     const uniqueCities = [...new Set(venueData.map(venue => venue.city))];
-  //     setCities(uniqueCities);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.log("Error fetching cities:", error);
-  //   }
-  // }
+
 
   function LocationButton(props) {
     return (

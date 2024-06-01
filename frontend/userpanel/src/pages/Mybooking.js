@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useState ,useEffect} from 'react'
-import { toast } from 'react-toastify';
+import React, { useState, useEffect } from 'react'
+import toast from 'react-hot-toast';
+import { Audio } from 'react-loader-spinner';
 
 function Mybooking() {
 
@@ -23,6 +24,10 @@ function Mybooking() {
     }
     catch (error) {
       console.log("SESSION ERROR IN BOOKING PAGE: ", error);
+      toast.error("Something went wrong!");
+    }
+    finally{
+      setLoading(false)
     }
   };
   const fetchBookings = async (userId) => {
@@ -35,10 +40,6 @@ function Mybooking() {
     } catch (error) {
       console.log("error:", error.status)
       toast.error("No any booking available!");
-      console.log(error)
-    }
-    finally {
-      setLoading(false);
     }
   }
 
@@ -69,7 +70,7 @@ function Mybooking() {
                 <div className="text-white w-50 d-flex justify-content-end">
                   <span className={props.confirmation === true ? "badge bg-success" : "badge bg-warning "}>{props.confirmation === true ? "ACCEPTED" : "PENDING"}</span>
                 </div>
-                <br/>
+                <br />
                 {/* <span className="text-muted text-small">Menu starts with</span>
                 <h4>$ {props.price}</h4> */}
               </div>
@@ -77,7 +78,7 @@ function Mybooking() {
                 <button type="button" className="button-explore ">
                   Cancel booking
                 </button>
-                
+
               </div>
             </div>
           </div>
@@ -86,10 +87,20 @@ function Mybooking() {
     )
   }
 
-  
+
 
   if (isLoading) {
-    return <h2>Loading...</h2>
+    return <div className='h-100 w-100 d-flex align-items-center justify-content-center'>
+      <Audio
+        height="40"
+        width="40"
+        radius="9"
+        color="#f89646"
+        ariaLabel="loading"
+        wrapperStyle
+        wrapperClass
+      />
+    </div>
   }
 
   return (
@@ -99,12 +110,11 @@ function Mybooking() {
           <h4 className="fw-bold ">MY BOOKINGS</h4>
         </div>
         <div>
-          
-          <div className="col-lg-12 col-md-12">
 
+          <div className="col-lg-12 col-md-12">
             {
               bookings.map((booking) => {
-                return <SingleCard name={booking.venueName} date={booking.date} eventSession={booking.eventSession} persons={booking.numberOfGuests} confirmation={booking.status} foodType={booking.foodType}/>
+                return <SingleCard name={booking.venueName} date={booking.date} eventSession={booking.eventSession} persons={booking.numberOfGuests} confirmation={booking.status} foodType={booking.foodType} />
               })
             }
 

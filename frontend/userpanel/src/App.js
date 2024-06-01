@@ -20,6 +20,7 @@ import axios from 'axios';
 import HelloPage from './pages/HelloPage';
 import fetchSessionData from './auth/authService';
 import { Toaster } from 'react-hot-toast';
+import { Audio } from 'react-loader-spinner';
 
 function App() {
   //run project and telll me theprob
@@ -57,7 +58,17 @@ function App() {
   }, [])
 
   if (loading) {
-    return <h1>Loading....</h1>
+    return <div className='min-vh-100 w-100 d-flex align-items-center justify-content-center'>
+    <Audio
+      height="40"
+      width="40"
+      radius="9"
+      color="#f89646"
+      ariaLabel="loading"
+      wrapperStyle
+      wrapperClass
+    />
+  </div>
   }
 
   return (

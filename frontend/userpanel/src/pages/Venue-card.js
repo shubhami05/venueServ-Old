@@ -12,11 +12,14 @@ function Venuecard() {
   const navigate = useNavigate();
   const [isAuth, setAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
+  const [minDate, setMinDate] = useState('');
+
 
   useEffect(() => {
 
     fetchSessionData();
     setCurrentVenue(currentVenue);
+    setLatestDate();
     //eslint-disable-next-line
   }, []);
 
@@ -72,13 +75,11 @@ function Venuecard() {
     }
   };
   const handleChange = (e) => {
-
     const { name, value } = e.target;
     setBooking((prevData) => ({
       ...prevData,
       [name]: value,
     }))
-
   }
 
   const handleSubmit = async (e) => {
@@ -95,7 +96,6 @@ function Venuecard() {
         toast.error("Please Login first!");
         navigate('/Login');
       }
-
     }
     catch (err) {
       toast.error("Something Went Wrong!");
@@ -104,6 +104,17 @@ function Venuecard() {
     finally {
       setIsLoading(false);
     }
+  }
+
+  const setLatestDate = async ()=>{
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    setMinDate(`${yyyy}-${mm}-${dd}`);
+
+    // const today = new Date().toISOString().split('T')[0];
+    // document.getElementById("date-picker").setAttribute("min",today);
   }
 
   if (isLoading) {
@@ -249,12 +260,12 @@ function Venuecard() {
                   required />
 
 
-                <input className="form-control mt-3 " type="date"
+                <input className="form-control mt-3" id="date-picker" type="date"
                   name="date"
                   onChange={handleChange}
                   value={booking.date}
                   placeholder="Event Date"
-                  min={Date.now()}
+                  min={minDate}
                   required />
 
                 <select className="form-select mt-3" aria-label="Default select example"

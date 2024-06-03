@@ -37,7 +37,7 @@ function CategoryVenues() {
   }
 
 
-  function LocationButton(props,{city}) {
+  function LocationButton(props, { city }) {
     return (
       <Link to={`/Venues/${params.category}/${props.city}`} className="mx-3 border-none text-theme2 text-theme2-hover d-flex align-items-center" >
         <i className="fa-solid  fa-location-dot" />
@@ -96,7 +96,7 @@ function CategoryVenues() {
                   />
                 </div>
               ) : (venues.length > 0) ? (
-                venues.map((venue,index) => {
+                venues.map((venue, index) => {
                   return (
                     <div key={index} className="venue-card mb-2 row bg-body-tertiary border-0">
                       <div className="col-lg-4 col-md-12 col-sm-12 ">
@@ -119,9 +119,11 @@ function CategoryVenues() {
                               <span className="text-muted text-small">Price starts with</span>
                               <h4>$ {venue.price}</h4>
                             </div>
-                            <button className=" fs-6 btn my-2 fw-semibold text-uppercase bg-theme2 ">
-                              <Link to="/VenueCard" state={{ venue }} className='text-white'>Check out</Link>
-                            </button>
+                            <Link to={`/VenueCard/${venue._id}`} className='my-2 d-flex justify-content-end'>
+                              <button className="text-white fs-6 btn fw-semibold text-uppercase bg-theme2 ">
+                                Check out
+                              </button>
+                            </Link>
                           </div>
                         </div>
                       </div>

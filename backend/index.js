@@ -22,6 +22,7 @@ const { UpdateBookingStatus } = require("./api/boookingStatusApi");
 const { ShowUserBookings } = require("./api/bookingShowUserApi");
 const { ContactSendApi } = require("./api/contactSendApi");
 const { ShowAdminBookings } = require("./api/bookingShowAdmin");
+const { fetchSingleVenueData } = require("./api/fetchSingleVenueData");
 
 const app = express();
 const PORT = 8000;
@@ -64,6 +65,8 @@ app.post("/deleteBooking", DeleteBooking);
 app.post("/updateBookingStatus", UpdateBookingStatus);
 app.post("/showUserBookings", ShowUserBookings);
 app.post("/showAdminBookings", ShowAdminBookings);
+
+app.post("/fetchSingleVenueData", fetchSingleVenueData);
 
 app.post("/contactSend", ContactSendApi);
 

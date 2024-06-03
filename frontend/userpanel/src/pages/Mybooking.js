@@ -2,11 +2,13 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import toast from 'react-hot-toast';
 import { Audio } from 'react-loader-spinner';
+import { useNavigate } from 'react-router-dom';
 
 function Mybooking() {
 
   const [bookings, setBookings] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchSessionData();
@@ -43,10 +45,40 @@ function Mybooking() {
     }
   }
 
+  const isVenueExist = async(id)=>{
+     try {
+      setLoading(true);  
+      const response = await axios.post("http://localhost:8000/fetchSingleVenueData",{id});
+      if(response.data.venueData){
+        return true;
+      }
+      else{
+        toast.error("Venue does not exist currently!");
+        return false;
+      }
+    } 
+    catch (error) {
+      console.log(error);
+      toast.error("Venue is not available now!");
+      return false;
+    }
+    finally{
+      setLoading(false)
+    }
+  }
+
+  const handleVenueNavigation =async (e, venueId) => {
+      e.preventDefault();
+      const venueExists = await isVenueExist(venueId);
+      if (venueExists) {
+        navigate(`/VenueCard/${venueId}`);
+      }
+    };
+
 
   function SingleCard(props) {
     return (
-      <div className="venue-card container-fluid row my-2">
+      <div className="venue-card container-fluid row my-2" >
         <div className="col-lg-4 col-md-4 col-sm-12">
           <img src="images/OIP.jpg" className="w-100" alt="img not found" />
         </div>
@@ -54,7 +86,9 @@ function Mybooking() {
           <div className="row">
             <div className="col-lg-7 col-md-7 col-sm-7 mt-2">
               <div className="d-flex flex-column">
+                <p style={{cursor:'pointer'}} className="link-primary" onClick={(e) => handleVenueNavigation(e, props.venueId)}>
                 <h4 className="fs-5 text-uppercase">{props.name}</h4>
+                </p>
                 {/* <span><i className="fa-solid fa-location-dot" /> {props.location}</span> */}
                 {/* <span><i className="fa-solid fa-star"> </i> {props.rating} / 5 rated by {props.persons} Guests</span> */}
                 <span><i className="fa-solid fa-users" /> {props.persons} Guests</span>
@@ -104,17 +138,17 @@ function Mybooking() {
   }
 
   return (
-    <section className='furniture_section layout_padding long_section bg-body-tertiary'>
+    <section className='furniture_section long_section bg-body-tertiary'>
       <div className="container">
-        <div>
-          <h4 className="fw-bold ">MY BOOKINGS</h4>
+        <div className='py-3'>
+          <h2 className="fw-bold fs-2 fs-">MY BOOKINGS</h2>
         </div>
         <div>
 
           <div className="col-lg-12 col-md-12">
             {
               bookings.map((booking) => {
-                return <SingleCard name={booking.venueName} date={booking.date} eventSession={booking.eventSession} persons={booking.numberOfGuests} confirmation={booking.status} foodType={booking.foodType} />
+                return <SingleCard venueId={booking.venueId} name={booking.venueName} date={booking.date} eventSession={booking.eventSession} persons={booking.numberOfGuests} confirmation={booking.status} foodType={booking.foodType} />
               })
             }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ReviewCard } from './Reviews'
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -8,46 +8,17 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 
 function Venuecard() {
-  const location = useLocation();
   const navigate = useNavigate();
   const [isAuth, setAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [minDate, setMinDate] = useState('');
-
-
-  useEffect(() => {
-
-    fetchSessionData();
-    setCurrentVenue(currentVenue);
-    setLatestDate();
-    //eslint-disable-next-line
-  }, []);
-
-  const [currentVenue, setCurrentVenue] = useState({
-    id: location.state.venue._id,
-    name: location.state.venue.name,
-    address: location.state.venue.address,
-    carParking: location.state.venue.carParking,
-    city: location.state.venue.city,
-    foodFacility: location.state.venue.foodFacility,
-    halls: location.state.venue.halls,
-    outsideFood: location.state.venue.outsideFood,
-    peopleCapacity: location.state.venue.peopleCapacity,
-    price: location.state.venue.price,
-    rooms: location.state.venue.rooms,
-    type: location.state.venue.type,
-    photos: location.state.venue.photos,
-    ownerId: location.state.venue.userId,
-    ownerEmail: location.state.venue.email,
-    ownerName: location.state.venue.ownerName,
-    ownerContact: location.state.venue.mobile
-  })
-
+  const [currentVenue, setCurrentVenue] = useState({})
+  const params = useParams()
 
   const [booking, setBooking] = useState({
-    ownerId: currentVenue.ownerId,
-    venueId: currentVenue.id,
-    venueName: currentVenue.name,
+    ownerId: null,
+    venueId: null,
+    venueName: '',
     eventType: '',
     date: '',
     eventSession: '',
@@ -56,6 +27,42 @@ function Venuecard() {
     fullname: '',
     contact: ''
   })
+
+  useEffect(() => {
+    fetchSessionData();
+    setLatestDate();
+    fetchVenueData(params.id)
+    //eslint-disable-next-line
+  }, []);
+  const fetchVenueData = async (id) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post("http://localhost:8000/fetchSingleVenueData", { id });
+      if (response.status === 200) {
+        console.log(response)
+        setCurrentVenue(response.data.venueData);
+        setBooking((prevBooking) => ({
+          ...prevBooking,
+          ownerId: response.data.venueData.userId,
+          venueId: response.data.venueData._id,
+          venueName:response.data.venueData.name
+        }));
+      }
+      else {
+        toast.error("Venue is not founded!");
+        navigate('/bookings');
+      }
+    }
+    catch (error) {
+      toast.error("Something went wrong");
+      console.log("Error in venue card page", error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
+  
 
   const fetchSessionData = async () => {
     try {
@@ -80,17 +87,21 @@ function Venuecard() {
       ...prevData,
       [name]: value,
     }))
-  }
-
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setIsLoading(true)
       if (isAuth) {
         const response = await axios.post("http://localhost:8000/bookingSend", booking);
-        console.log(response);
-        toast.success("Venue owner will contact you shortly!");
-        navigate("/Mybooking");
+        if(response.status === 200)
+          {
+            toast.success("Venue owner will contact you shortly!");
+            navigate("/Mybooking");
+          }
+          else{
+            toast.success(response.data.error)
+          }
       }
       else {
         toast.error("Please Login first!");
@@ -104,8 +115,7 @@ function Venuecard() {
     finally {
       setIsLoading(false);
     }
-  }
-
+  };
   const setLatestDate = async () => {
     const today = new Date();
     const yyyy = today.getFullYear();
@@ -115,7 +125,7 @@ function Venuecard() {
 
     // const today = new Date().toISOString().split('T')[0];
     // document.getElementById("date-picker").setAttribute("min",today);
-  }
+  };
 
   if (isLoading) {
     return (
@@ -144,7 +154,7 @@ function Venuecard() {
             <h3 className="text-uppercase text-secondary-emphasis my-4">{currentVenue.name}, {currentVenue.city}</h3>
             <span className="venue-location fs-6">
               <i className="fa-solid fa-location-dot" /> {currentVenue.address}
-              <a href="/" className="text-decoration-none text-theme2 text-theme2-hover">&nbsp;<i className="fa-solid fa-map"> </i> View on map</a>
+              {/* <a href="/" className="text-decoration-none text-theme2 text-theme2-hover">&nbsp;<i className="fa-solid fa-map"> </i> View on map</a> */}
             </span>
             <span className="venue-review">
               <span className="rating">3.5 </span>
@@ -163,7 +173,7 @@ function Venuecard() {
               </div>
               <div className="col-lg-12 col-md-6 col-sm-6 col-xs-12 d-flex align-items-lg-start align-items-md-end align-items-sm-end  flex-column">
                 <span className="fs-6">Talk to Venue Manager</span>
-                <h5><i className="fa-solid fa-phone" /> {currentVenue.ownerContact}
+                <h5><i className="fa-solid fa-phone" /> {currentVenue.mobile}
                 </h5>
               </div>
             </div>
@@ -175,12 +185,17 @@ function Venuecard() {
               <div id="carouselExample" className="carousel slide">
                 <div className="carousel-inner object-fit-contain" style={{ aspectRatio: '16/9' }}>
                   <Carousel autoPlay stopOnHover verticalSwipe infiniteLoop>
-                    {
+                    {currentVenue.photos ? (
                       currentVenue.photos.map((photo, index) => (
                         <div key={index}>
-                          <img src={require(`../images/venuePics/${photo}`)} alt='venue' text={index} key={index} />
+                          <img src={require(`../images/venuePics/${photo}`)} alt='venue' key={index} />
                         </div>
                       ))
+                    ) : (
+                      <div key='0'>
+                        <p>No images found</p>
+                      </div>
+                    )
                     }
                   </Carousel>
 
@@ -254,7 +269,7 @@ function Venuecard() {
             <div className="form-container bg-body-tertiary">
               <form className="p-4" onSubmit={handleSubmit}>
                 <p className="fs-4">Please fill in the details</p>
-                <input className="form-select mt-3" aria-label="Default select example"
+                <input className="form-control mt-3" type='text'
                   value={booking.eventType}
                   name='eventType'
                   onChange={handleChange}
@@ -332,7 +347,7 @@ function Venuecard() {
                 <span>&gt; Every sharpen Details </span>
                 <span>&gt; People Ratings &amp; Reviews</span>
               </div>
-             
+
             </div>
           </div>
         </div>

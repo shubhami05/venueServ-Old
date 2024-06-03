@@ -9,6 +9,9 @@ async function BookingSendApi(req,res){
         const {ownerId,venueId,venueName,eventType,date,eventSession,foodType,numberOfGuests,fullname,contact} =req.body;
         const userId = req.session.user.session._id;
         const userEmail = req.session.user.session.email;
+
+        console.log("ownerid:",ownerId);
+        console.log("venueid:",venueId);
         
  
         await collection.insertOne({

@@ -32,8 +32,8 @@ function LoginUser() {
 
       const response = await axios.post("http://localhost:8000/login", loginData);
       // console.log(response);
-      toast.loading("Logging in, Please wait...");
       if (response.status === 200) {
+        toast.loading("Logging in, Please wait...");
         const userRole = response.data.userData.session.role;
         if (userRole === 'finder') {
           // Navigate to finder app dashboard

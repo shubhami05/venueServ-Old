@@ -97,7 +97,7 @@ function App() {
           <Route path='/Login' element={<LoginUser />} />
           <Route path='/SignupUser' element={<SignupUser />} />
           <Route path="/Mybooking" element={(isAuth) ? (<Mybooking />) : (<LoginUser />)} />
-          <Route path="/Reviews" element={<Reviews />} />
+          <Route path="/Reviews/:id" element={<Reviews />} />
           <Route path="/Venuecard/:id" element={<Venuecard />} />
           <Route path="/Venues" element={<Venue />} />
           <Route path='/HelloPage' element={<HelloPage />} />

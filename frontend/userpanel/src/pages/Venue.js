@@ -15,7 +15,7 @@ function Venue() {
             <h5>
               {props.name}
             </h5>
-              <button type="button" className="button-explore" onClick={()=>{navigate(`/Venues/${props.category}`)}}>
+              <button type="button" className="button-explore rounded-1" onClick={()=>{navigate(`/Venues/${props.category}`)}}>
                 Explore Now
               </button>
            

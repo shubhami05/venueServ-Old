@@ -45,7 +45,7 @@ function Venuecard() {
           ...prevBooking,
           ownerId: response.data.venueData.userId,
           venueId: response.data.venueData._id,
-          venueName:response.data.venueData.name
+          venueName: response.data.venueData.name
         }));
       }
       else {
@@ -62,7 +62,7 @@ function Venuecard() {
     }
   }
 
-  
+
 
   const fetchSessionData = async () => {
     try {
@@ -94,14 +94,13 @@ function Venuecard() {
       setIsLoading(true)
       if (isAuth) {
         const response = await axios.post("http://localhost:8000/bookingSend", booking);
-        if(response.status === 200)
-          {
-            toast.success("Venue owner will contact you shortly!");
-            navigate("/Mybooking");
-          }
-          else{
-            toast.success(response.data.error)
-          }
+        if (response.status === 200) {
+          toast.success("Venue owner will contact you shortly!");
+          navigate("/Mybooking");
+        }
+        else {
+          toast.success(response.data.error)
+        }
       }
       else {
         toast.error("Please Login first!");
@@ -160,8 +159,9 @@ function Venuecard() {
               <span className="rating">3.5 </span>
               <i className="fa-solid fa-star" /> Rates & reviewed by
               <span className="reviews"> 99 guests,</span>
-              <Link to="/Reviews  " className="text-decoration-none text-theme2 text-theme2-hover">&nbsp;<i className="fa-solid fa-comments " /> See all
-                reviews</Link>
+              <Link to={`/Reviews/${currentVenue._id}`} className="text-decoration-none text-theme2 text-theme2-hover">&nbsp;<i className="fa-solid fa-comments " />&nbsp;
+                See all reviews
+              </Link>
             </span>
           </div>
           <div className="col-lg-3 col-md-12 venue-contact d-flex flex-column">
@@ -201,14 +201,7 @@ function Venuecard() {
 
 
                 </div>
-                {/* <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                  <span className="carousel-control-prev-icon" aria-hidden="true" />
-                  <span className="visually-hidden">Previous</span>
-                </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                  <span className="carousel-control-next-icon" aria-hidden="true" />
-                  <span className="visually-hidden">Next</span>
-                </button> */}
+
               </div>
             </div>
             <div className="venue-details my-3">
@@ -261,8 +254,13 @@ function Venuecard() {
               </div>
             </div>
             <div className="latest-review-container">
+              <div className='d-flex gap-2'>
               <h5>Latest Review:</h5>
-              <ReviewCard name="Shubham italiya" time="1" rating="3" msg="Hello world!  " />
+              <Link to={`/Reviews/${currentVenue._id}`} className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-comments" />&nbsp;
+                See all reviews
+              </Link>
+              </div>
+              <ReviewCard name="Shubham italiya" time="1" rating="3" msg="Hello world!" />
             </div>
           </div>
           <div className="col-lg-3 col-md-12">
@@ -326,7 +324,7 @@ function Venuecard() {
                   value={booking.contact}
                   placeholder="Your Mobile No." required />
 
-                <button type="submit" className="fw-semibold text-uppercase mt-3 btn bg-theme1 text-white w-100">
+                <button type="submit" className="fw-semibold text-uppercase mt-3 button-explore rounded-1 w-100">
                   Check availability
                 </button>
               </form>

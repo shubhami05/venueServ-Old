@@ -1,13 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 function Reviews() {
+  const params = useParams()
   return (
     <>
       <div className="container Booking-section ">
         <div className="row ">
           <div className="container-fluid col-lg-9 col-md-12 venue-details d-flex flex-column ">
-            <Link to="/Venuecard" className="text-theme2 text-theme2-hover"><h3><i className="fa-solid fa-arrow-left"  ></i> Venue Name, City, State</h3></Link>
+            <Link to={`/Venuecard/${params.id}`} className="text-theme2 text-theme2-hover"><h3><i className="fa-solid fa-arrow-left"  ></i> Venue Name, City, State</h3></Link>
             <span className="venue-location">
               <i className="fa-solid fa-location-dot" /> Venue address is at ahemdabad
               newindia colony &nbsp;
@@ -111,8 +112,6 @@ function Reviews() {
 
 
 function ReviewCard(props) {
-
-
   return (
     <div className="review-card card m-3">
       <div className="text-body-secondary card-header person-name">
@@ -121,17 +120,11 @@ function ReviewCard(props) {
       </div>
       <div className="card-body text-body-secondary">
         <span className="stars">
-          
-          
-          
           <i className="text-theme2 fa-solid fa-star" />
           <i className="text-theme2 fa-solid fa-star" />
           <i className="text-theme2 fa-solid fa-star" />
           <i className="text-theme2 fa-solid fa-star" />
-
           <i className="text-theme2 fa-regular fa-star" />
-
-
         </span>
         {/* <span className="rating"> {props.rating} </span> */}
         <p className="review-body ">

@@ -44,8 +44,10 @@ function Venues() {
   const handleDeleteVenue = async () => {
     try {
       const response = await axios.post(`http://localhost:8000/deleteVenue`, { vId: venueToDelete });
-      toast.success(response.data.message);
-      fetchVenues(userId);
+      if(response.status === 200){
+        toast.success(response.data.message);
+        fetchVenues(userId);
+      }
     } catch (error) {
       toast.error("Error deleting venue!");
     }

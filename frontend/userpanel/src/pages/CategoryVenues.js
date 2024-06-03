@@ -119,8 +119,8 @@ function CategoryVenues() {
                               <span className="text-muted text-small">Price starts with</span>
                               <h4>$ {venue.price}</h4>
                             </div>
-                            <Link to={`/VenueCard/${venue._id}`} className='my-2 d-flex justify-content-end'>
-                              <button className="text-white fs-6 btn fw-semibold text-uppercase bg-theme2 ">
+                            <Link to={`/VenueCard/${venue._id}`} className='my-2 d-flex text-decoration-none justify-content-end'>
+                              <button className="fs-6  fw-semibold text-uppercase button-explore rounded-1 ">
                                 Check out
                               </button>
                             </Link>

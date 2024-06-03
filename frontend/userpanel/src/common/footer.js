@@ -34,7 +34,7 @@ function Footer() {
                 </h4>
                 <div className="info_links_menu ">
                   <Link to="/">Home</Link>
-                  <Link to="/Venue">Venues</Link>
+                  <Link to="/Venues ">Venues</Link>
                   <Link to="/Mybooking">My Bookings</Link>
                   <Link to="/Contact">Contact</Link>
                 </div>

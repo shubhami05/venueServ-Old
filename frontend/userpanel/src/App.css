@@ -13,6 +13,38 @@
   }
 }
 
+.text-theme1 {
+  color: #6bb7be;
+}
+
+.text-theme2 {
+  color: #f89646;
+}
+
+.text-theme2-hover:hover{
+  color: #6bb7be;
+  transition-duration: 0.3s;
+}
+
+.bg-theme1 {
+  background-color: #6bb7be;
+}
+.bg-theme1:hover{
+  background-color: #f89646;
+  transition-duration: 0.3s;
+}
+.bg-theme2 {
+  background-color: #f89646;
+}
+.bg-theme2:hover{
+  background-color: #6bb7be;
+  transition-duration: 0.3s;
+}
+.venue-card{
+  border: 1px solid gray;
+  padding: 10px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -65,4 +97,7 @@
   to {
       opacity: 0;
   }
+}
+.card-shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }

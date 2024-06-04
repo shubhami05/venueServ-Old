@@ -6,14 +6,23 @@ import toast from 'react-hot-toast';
 import { Audio } from 'react-loader-spinner'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 
-function Venuecard() {
+
+
+export default function Venuecard() {
   const navigate = useNavigate();
   const [isAuth, setAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [minDate, setMinDate] = useState('');
   const [currentVenue, setCurrentVenue] = useState({})
   const params = useParams()
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const [booking, setBooking] = useState({
     ownerId: null,
@@ -257,12 +266,53 @@ function Venuecard() {
               </div>
             </div>
             <div className="latest-review-container">
-              <div className='d-flex gap-2'>
+              <div className='d-flex gap-2 justify-content-between '>
+                <div>
+
                 <h5>Latest Review:</h5>
                 <Link to={`/Reviews/${currentVenue._id}`} className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-comments" />&nbsp;
                   See all reviews
                 </Link>
+                </div>
+                <button className='button-explore mx-3 fw-semibold' onClick={handleShow}>
+                  Write a Review
+                </button>
               </div>
+              <div>
+                
+
+                <Modal
+                  show={show}
+                  onHide={handleClose}
+                  backdrop="static"
+                  keyboard={false}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Modal title</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <>
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label="Email address"
+                        className="mb-3"
+                      >
+                        <Form.Control type="email" placeholder="name@example.com" />
+                      </FloatingLabel>
+                      <FloatingLabel controlId="floatingPassword" label="Password">
+                        <Form.Control type="password" placeholder="Password" />
+                      </FloatingLabel>
+                    </>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <button className='btn1' onClick={handleClose}>
+                      Close
+                    </button>
+                    <button className='button-explore'>Understood</button>
+                  </Modal.Footer>
+                </Modal>
+              </div>
+
               <ReviewCard name="Shubham italiya" time="1" rating="3" msg="Hello world!" />
             </div>
           </div>
@@ -358,4 +408,4 @@ function Venuecard() {
   )
 }
 
-export default Venuecard
+

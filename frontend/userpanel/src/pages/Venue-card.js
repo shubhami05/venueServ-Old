@@ -6,10 +6,10 @@ import toast from 'react-hot-toast';
 import { Audio } from 'react-loader-spinner'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import { Rating } from 'react-simple-star-rating'
 
 
 
@@ -23,6 +23,19 @@ export default function Venuecard() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [rating, setRating] = useState(0)
+
+  // Catch Rating value
+  const handleRating = (rate) => {
+    setRating(rate)
+    console.log(rating)
+
+    // other logic
+  }
+  // Optinal callback functions
+  const onPointerEnter = () => console.log('Enter')
+  const onPointerLeave = () => console.log('Leave')
+  const onPointerMove = (value, index) => console.log(value, index)
 
   const [booking, setBooking] = useState({
     ownerId: null,
@@ -269,17 +282,16 @@ export default function Venuecard() {
               <div className='d-flex gap-2 justify-content-between '>
                 <div>
 
-                <h5>Latest Review:</h5>
-                <Link to={`/Reviews/${currentVenue._id}`} className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-comments" />&nbsp;
-                  See all reviews
-                </Link>
+                  <h5>Latest Review:</h5>
+                  <Link to={`/Reviews/${currentVenue._id}`} className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-comments" />&nbsp;
+                    See all reviews
+                  </Link>
                 </div>
-                <button className='button-explore mx-3 fw-semibold' onClick={handleShow}>
+                <button className='button-explore rounded-1 mx-3 fw-semibold' onClick={handleShow}>
                   Write a Review
                 </button>
               </div>
               <div>
-                
 
                 <Modal
                   show={show}
@@ -288,27 +300,34 @@ export default function Venuecard() {
                   keyboard={false}
                 >
                   <Modal.Header closeButton>
-                    <Modal.Title>Modal title</Modal.Title>
+                    <Modal.Title>Review for {currentVenue.name}</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <>
-                      <FloatingLabel
-                        controlId="floatingInput"
-                        label="Email address"
-                        className="mb-3"
-                      >
-                        <Form.Control type="email" placeholder="name@example.com" />
+                      <Rating
+                        onClick={handleRating}
+                        onPointerEnter={onPointerEnter}
+                        onPointerLeave={onPointerLeave}
+                        onPointerMove={onPointerMove}
+                      /* Available Props */
+                      />
+
+
+                      <FloatingLabel controlId="floatingTextarea2" label="Write your review">
+                        <Form.Control
+                          as="textarea"
+                          placeholder="Leave a review here"
+                          style={{ height: '100px' }}
+                        />
                       </FloatingLabel>
-                      <FloatingLabel controlId="floatingPassword" label="Password">
-                        <Form.Control type="password" placeholder="Password" />
-                      </FloatingLabel>
+
                     </>
                   </Modal.Body>
                   <Modal.Footer>
-                    <button className='btn1' onClick={handleClose}>
+                    <button className='btn1 rounded-1 fw-semibold' variant='danger' onClick={handleClose}>
                       Close
                     </button>
-                    <button className='button-explore'>Understood</button>
+                    <button className='btn2 rounded-1 fw-semibold' >Submit</button>
                   </Modal.Footer>
                 </Modal>
               </div>

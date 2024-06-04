@@ -15,7 +15,7 @@ function Venue() {
             <h5>
               {props.name}
             </h5>
-              <button type="button" className="button-explore rounded-1" onClick={()=>{navigate(`/Venues/${props.category}`)}}>
+              <button type="button" className="button-explore fw-semibold rounded-1" onClick={()=>{navigate(`/Venues/${props.category}`)}}>
                 Explore Now
               </button>
            
@@ -30,8 +30,8 @@ function Venue() {
   return (
     <>
 
-      <section className="furniture_section layout_padding long_section   bg-body-tertiary">
-        <div className=" container">
+      <section className="furniture_section layout_padding long_section  bg-body-tertiary">
+        <div className="container-lg">
           <div className="heading_container">
             <h2>
               Our venues
@@ -48,9 +48,6 @@ function Venue() {
             <VenueBox url="images/f2.png" name="Hotel Venues" category="hotel-venue"/>
             <VenueBox url="images/f2.png" name="Beach Venues" category="beach-venue"/>
             <VenueBox url="images/f2.png" name="Garden Restaurant" category="garden-restaurant"/>
-
-
-
           </div>
         </div>
       </section>

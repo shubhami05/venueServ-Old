@@ -83,7 +83,7 @@ function Contact() {
                     <input type="text" name='message' onChange={handleChange} className="message-box" placeholder="Message" required />
                   </div>
                   <div className="btn_box">
-                    <button type='submit' className={isLoading ? ("btn disabled") : ("btn active")}>
+                    <button type='submit' className={`btn2 rounded-1 fw-semibold ${isLoading ? ("disabled") : ("active")}`}>
                       SEND
                     </button>
                   </div>

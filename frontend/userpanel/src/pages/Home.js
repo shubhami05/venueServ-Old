@@ -46,7 +46,7 @@ function HeroSection() {
                         Contact Us
                       </Link>
                       <Link to="/Venue" className="btn2 rounded-1 text-decoration-none">
-                        Explore Venues
+                      Find Venues
                       </Link>
                     </div>
                   </div>

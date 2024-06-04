@@ -330,7 +330,7 @@ a:focus {
   width: 165px;
 }
 
-.slider_section .detail-box .btn-box .btn1 {
+.btn1 {
   display: inline-block;
   padding: 10px 15px;
   background-color: #f89646;
@@ -341,12 +341,12 @@ a:focus {
   transition: all .2s;
 }
 
-.slider_section .detail-box .btn-box .btn1:hover {
+.btn1:hover {
   background-color: transparent;
   color: #f89646;
 }
 
-.slider_section .detail-box .btn-box .btn2 {
+.btn2 {
   display: inline-block;
   padding: 10px 15px;
   background-color: #6bb7be;
@@ -357,7 +357,7 @@ a:focus {
   transition: all .2s;
 }
 
-.slider_section .detail-box .btn-box .btn2:hover {
+.btn2:hover {
   background-color: transparent;
   color: #6bb7be;
 }

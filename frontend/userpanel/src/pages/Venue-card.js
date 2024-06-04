@@ -222,7 +222,9 @@ function Venuecard() {
                       </tr>
                       <tr>
                         <td><i className="fa-solid fa-car" /> Car parking :</td>
-                        <td>{(currentVenue.carParking === "yes") ? (<><i className="fa-solid fa-check" /> Available</>) : (<><i className="fa-solid fa-xmark" /> Not Available</>)}</td>
+                        <td>
+                          <> {`${currentVenue.carParking === 'yes' ? "Available" : "Not available"}`}</>
+                        </td>
                       </tr>
 
                     </tbody>
@@ -235,8 +237,9 @@ function Venuecard() {
                     <tbody>
                       <tr>
                         <td><i className="fa-solid fa-utensils" /> Outside Food :</td>
-                        <td   >
-                          {(currentVenue.outsideFood === "yes") ? (<><i className="fa-solid fa-check" /> Allowed</>) : (<><i className="fa-solid fa-xmark" /> Not Allowed</>)}
+                        <td>
+                          <>{`${currentVenue.outsideFood === 'yes' ? "Allowed" : "Not Allowed"}`}</>
+
                         </td>
                       </tr>
                       <tr>
@@ -255,10 +258,10 @@ function Venuecard() {
             </div>
             <div className="latest-review-container">
               <div className='d-flex gap-2'>
-              <h5>Latest Review:</h5>
-              <Link to={`/Reviews/${currentVenue._id}`} className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-comments" />&nbsp;
-                See all reviews
-              </Link>
+                <h5>Latest Review:</h5>
+                <Link to={`/Reviews/${currentVenue._id}`} className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-comments" />&nbsp;
+                  See all reviews
+                </Link>
               </div>
               <ReviewCard name="Shubham italiya" time="1" rating="3" msg="Hello world!" />
             </div>

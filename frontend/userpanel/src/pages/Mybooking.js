@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is import
 function Mybooking() {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [userId,setUserId] = useState('');
+  const [userId, setUserId] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function Mybooking() {
       }
     } catch (error) {
       console.log("error:", error.status);
-      toast.error("No any booking available!");
+      // toast.error("No any booking available!");
     }
   };
 
@@ -61,31 +61,30 @@ function Mybooking() {
       setLoading(false);
     }
   };
-  const handleCancelBooking = async (e,venueId) =>{
-    e.preventDefault();
+  const handleCancelBooking = async (bookingId) => {
     try {
-      const response = await axios.post(`http://localhost:8000/deleteVenue`, { vId: venueId });
-      if(response.status === 200){
+      const response = await axios.post(`http://localhost:8000/deleteBooking`, { bId: bookingId });
+      if (response.status === 200) {
         toast.success(response.data.message);
         fetchBookings(userId);
+        window.location.reload(false)
       }
     } catch (error) {
-      toast.error("Error deleting venue!");
+      toast.error(error.message);
     }
-    finally{
+    finally {
       setLoading(false)
     }
   }
 
-  const handleVenueNavigation = async (e, venueId) => {
-    e.preventDefault();
+  const handleVenueNavigation = async (venueId) => {
     const venueExists = await isVenueExist(venueId);
     if (venueExists) {
       navigate(`/VenueCard/${venueId}`);
     }
   };
 
-  
+
 
   if (isLoading) {
     return (
@@ -104,34 +103,37 @@ function Mybooking() {
         </div>
 
         <div className="row">
-          {bookings.map((booking, index) => {
-            const bookingDate = new Date(booking.date);
-            const currentDate = new Date();
-            const isFutureBooking = bookingDate > currentDate;
+          {bookings.length > 0 ? (
+            bookings.map((booking, index) => {
+              const bookingDate = new Date(booking.date);
+              const currentDate = new Date();
+              const isFutureBooking = bookingDate > currentDate;
 
-            return (
-              <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={index}>
-                <div className="card h-100 card-shadow">
-                  <img src="images/OIP.jpg" className="card-img-top" alt="img not found" />
-                  <div className="card-body">
-                    {isFutureBooking ? (
-                      <span className={booking.status ? "badge bg-success" : "badge bg-warning"}>{booking.status ? "ACCEPTED" : "PENDING"}</span>
-                    ) : (
-                      <span className="badge bg-secondary">Expired</span>
-                    )}
-                    <h5 className="card-title my-2 text-capitalize" style={{ cursor: 'pointer' }} onClick={(e) => handleVenueNavigation(e, booking.venueId)}>
-                      {booking.venueName}
-                    </h5>
-                    <p className="card-text"><i className="fa-solid fa-users" /> {booking.numberOfGuests} Guests</p>
-                    <p className="card-text"><i className="fa-solid fa-calendar" /> {booking.date}</p>
-                    <p className="card-text"><i className="fa-solid fa-clock" /> {booking.eventSession}</p>
-                    <p className="card-text"><i className="fa-solid fa-utensils" /> {booking.foodType}</p>
-                    {isFutureBooking && <button type="button" className="rounded-1 button-explore mt-2" onClick={handleCancelBooking(booking._id)}>Cancel booking</button>}
+              return (
+                <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={index}>
+                  <div className="card h-100 card-shadow">
+                    <img src="images/OIP.jpg" className="card-img-top" alt="img not found" />
+                    <div className="card-body">
+                      {isFutureBooking ? (
+                        <span className={booking.status ? "badge bg-success" : "badge bg-warning"}>{booking.status ? "ACCEPTED" : "PENDING"}</span>
+                      ) : (
+                        <span className="badge bg-secondary">Expired</span>
+                      )}
+                      <h5 className="card-title my-2 text-capitalize" style={{ cursor: 'pointer' }} onClick={(e) => handleVenueNavigation(e, booking.venueId)}>
+                        {booking.venueName}
+                      </h5>
+                      <p className="card-text"><i className="fa-solid fa-users" /> {booking.numberOfGuests} Guests</p>
+                      <p className="card-text"><i className="fa-solid fa-calendar" /> {booking.date}</p>
+                      <p className="card-text"><i className="fa-solid fa-clock" /> {booking.eventSession}</p>
+                      <p className="card-text"><i className="fa-solid fa-utensils" /> {booking.foodType}</p>
+                      {isFutureBooking ? (<button className="rounded-1 button-explore mt-2" onClick={()=>handleCancelBooking(booking._id)}>Cancel booking</button>) : (<></>)}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })) : (
+              <div className=' my-5 d-flex align-items-center justify-content-center'>No any booked venue</div>
+          )}
         </div>
       </div>
     </section>

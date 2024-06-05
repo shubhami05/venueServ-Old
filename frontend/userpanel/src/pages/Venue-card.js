@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { ReviewCard } from './Reviews'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Audio } from 'react-loader-spinner'
@@ -25,19 +24,10 @@ export default function Venuecard() {
   const handleShow = () => setShow(true);
   const [rating, setRating] = useState(0)
   const [errors, setErrors] = useState({});
+  const [latestReview, setLatestReview] = useState({})
+  const [reviewAvailable,setReviewAvailable] = useState(false)
 
-  // Catch Rating value
-  const handleRating = (rate) => {
-    setRating(rate);
-    setErrors({ ...errors, rating: '' });
-  };
-  // Optinal callback functions
-  // const onPointerEnter = () => console.log('Enter')
-  // const onPointerLeave = () => console.log('Leave')
-  // const onPointerMove = (value, index) => {
-  //   console.log(value, index)
-  //   setRating(value)
-  // }
+
 
   const [booking, setBooking] = useState({
     ownerId: null,
@@ -56,6 +46,7 @@ export default function Venuecard() {
     venueId: null,
     rating: '',
     review: '',
+    date: new Date()
   })
 
   useEffect(() => {
@@ -64,10 +55,12 @@ export default function Venuecard() {
       rating: rating
     }))
   }, [rating])
+
   useEffect(() => {
     fetchSessionData();
     setLatestDate();
-    fetchVenueData(params.id)
+    fetchVenueData(params.id);
+    fetchLatestReview(params.id);
     //eslint-disable-next-line
   }, []);
   const fetchVenueData = async (id) => {
@@ -164,6 +157,11 @@ export default function Venuecard() {
     // const today = new Date().toISOString().split('T')[0];
     // document.getElementById("date-picker").setAttribute("min",today);
   };
+  // Catch Rating value
+  const handleRating = (rate) => {
+    setRating(rate);
+    setErrors({ ...errors, rating: '' });
+  };
   const handleChangeInReview = (e) => {
     const { name, value } = e.target;
     setReview((prevData) => ({
@@ -195,8 +193,7 @@ export default function Venuecard() {
         if (response.status === 200) {
           toast.success("Review is submitted successfully!");
           handleClose();
-          setRating(0);
-          setReview({ review: '' });
+          window.location.reload(false);
         }
         else {
           toast.error(response.data.error)
@@ -216,6 +213,58 @@ export default function Venuecard() {
       setIsLoading(false);
     }
   }
+  const fetchLatestReview = async (vId) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post("http://localhost:8000/showReview", { vId });
+      if (response.status === 200) {
+        setLatestReview(response.data.reviewData[0]);
+        setReviewAvailable(true)
+      }
+      else {
+        setLatestReview({})
+        setReviewAvailable(false)
+      }
+    }
+    catch (error) {
+
+      console.log("Error in venue card page", error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+  const calculateDateDifference = (pastDate) => {
+    const today = new Date();
+    const past = new Date(pastDate);
+
+    // Calculate the difference in milliseconds
+    const diffInMilliseconds = today - past;
+
+    // Convert milliseconds to days
+    const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+
+    return diffInDays;
+  };
+  const renderStars = (validRating) => {
+    const totalStars = 5;
+
+    const filledStars = Array.from({ length: validRating }, (_, index) => (
+      <i key={index} className="text-theme2 fa-solid fa-star" />
+    ));
+    const emptyStars = Array.from({ length: totalStars - validRating }, (_, index) => (
+      <i key={index + validRating} className="text-theme2 fa-regular fa-star" />
+    ));
+
+
+    return (
+      <span className="stars">
+        {filledStars.concat(emptyStars)}
+      </span>
+    );
+  };
+  const daysDifference = calculateDateDifference(latestReview.date);
+
 
 
   if (isLoading) {
@@ -286,10 +335,7 @@ export default function Venuecard() {
                     )
                     }
                   </Carousel>
-
-
                 </div>
-
               </div>
             </div>
             <div className="venue-details my-3">
@@ -327,7 +373,6 @@ export default function Venuecard() {
                         <td><i className="fa-solid fa-utensils" /> Outside Food :</td>
                         <td>
                           <>{`${currentVenue.outsideFood === 'yes' ? "Allowed" : "Not Allowed"}`}</>
-
                         </td>
                       </tr>
                       <tr>
@@ -338,7 +383,6 @@ export default function Venuecard() {
                         <td><i className="fa-solid fa-users" /> Capacity :</td>
                         <td> {currentVenue.peopleCapacity} people</td>
                       </tr>
-
                     </tbody>
                   </table>
                 </div>
@@ -373,10 +417,6 @@ export default function Venuecard() {
                   <Modal.Body>
                     <>
                       <Rating
-                        required
-                        // onPointerEnter={onPointerEnter}
-                        // onPointerLeave={onPointerLeave}
-                        // onPointerMove={onPointerMove}
                         onClick={handleRating}
                       /* Available Props */
                       />
@@ -401,12 +441,30 @@ export default function Venuecard() {
                     <button className='btn1 rounded-1 fw-semibold' onClick={handleClose}>
                       Close
                     </button>
-                    <button  className='btn2 rounded-1 fw-semibold' onClick={handleSubmitInReview} >Submit</button>
+                    <button className='btn2 rounded-1 fw-semibold' onClick={handleSubmitInReview} >Submit</button>
                   </Modal.Footer>
                 </Modal>
-              </div>  
+              </div>
+              {
+                reviewAvailable ? (<div className="review-card card m-3">
+                  <div className="text-body-secondary card-header person-name">
+                    <i className="fa-solid fa-user" />
+                    &nbsp;{latestReview.email}
+                  </div>
+                  <div className="card-body text-body-secondary">
+                    <span className="stars">
+                      {renderStars(latestReview.rating)}
 
-              <ReviewCard name="Shubham italiya" time="1" rating="3" msg="Hello world!" />
+                    </span>
+                    {/* <span className="rating"> {props.rating} </span> */}
+                    <p className="review-body ">
+                      {latestReview.review}
+                    </p>
+                    <span className="text-muted">{daysDifference === 0 ? 'Today' : daysDifference === 1 ? daysDifference + ' day ago' : daysDifference + ' days ago'} </span>
+                  </div>
+                </div>) : (<div> No any Review</div>)
+              }
+
             </div>
           </div>
           <div className="col-lg-3 col-md-12">

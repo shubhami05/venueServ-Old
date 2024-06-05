@@ -23,6 +23,7 @@ const { ShowUserBookings } = require("./api/bookingShowUserApi");
 const { ContactSendApi } = require("./api/contactSendApi");
 const { ShowAdminBookings } = require("./api/bookingShowAdmin");
 const { fetchSingleVenueData } = require("./api/fetchSingleVenueData");
+const { ReviewSendApi } = require("./api/reviewSendApi");
 
 const app = express();
 const PORT = 8000;
@@ -67,6 +68,8 @@ app.post("/showUserBookings", ShowUserBookings);
 app.post("/showAdminBookings", ShowAdminBookings);
 
 app.post("/fetchSingleVenueData", fetchSingleVenueData);
+
+app.post("/reviewSend", ReviewSendApi);
 
 app.post("/contactSend", ContactSendApi);
 

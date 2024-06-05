@@ -24,18 +24,20 @@ export default function Venuecard() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [rating, setRating] = useState(0)
+  const [errors, setErrors] = useState({});
 
   // Catch Rating value
   const handleRating = (rate) => {
-    setRating(rate)
-    console.log(rating)
-
-    // other logic
-  }
+    setRating(rate);
+    setErrors({ ...errors, rating: '' });
+  };
   // Optinal callback functions
-  const onPointerEnter = () => console.log('Enter')
-  const onPointerLeave = () => console.log('Leave')
-  const onPointerMove = (value, index) => console.log(value, index)
+  // const onPointerEnter = () => console.log('Enter')
+  // const onPointerLeave = () => console.log('Leave')
+  // const onPointerMove = (value, index) => {
+  //   console.log(value, index)
+  //   setRating(value)
+  // }
 
   const [booking, setBooking] = useState({
     ownerId: null,
@@ -49,7 +51,19 @@ export default function Venuecard() {
     fullname: '',
     contact: ''
   })
+  const [review, setReview] = useState({
+    userId: null,
+    venueId: null,
+    rating: '',
+    review: '',
+  })
 
+  useEffect(() => {
+    setReview((prevData) => ({
+      ...prevData,
+      rating: rating
+    }))
+  }, [rating])
   useEffect(() => {
     fetchSessionData();
     setLatestDate();
@@ -69,6 +83,10 @@ export default function Venuecard() {
           venueId: response.data.venueData._id,
           venueName: response.data.venueData.name
         }));
+        setReview((prevData) => ({
+          ...prevData,
+          venueId: response.data.venueData._id
+        }))
       }
       else {
         toast.error("Venue is not founded!");
@@ -83,18 +101,17 @@ export default function Venuecard() {
       setIsLoading(false);
     }
   }
-
-
-
   const fetchSessionData = async () => {
     try {
       setIsLoading(true)
       // const loggedInUser = sessionStorage.getItem('loggedInUser');
       const response = await axios.post("http://localhost:8000/session");
       console.log(response);
-      if (response.data) {
-        setAuth(true);
-      }
+      setAuth(response.data.sessionData.isAuth)
+      setReview((prevData) => ({
+        ...prevData,
+        userId: response.data.sessionData.session._id
+      }))
     }
     catch (error) {
       console.log("SESSION ERROR IN ADD VENUE PAGE: ", error);
@@ -147,6 +164,59 @@ export default function Venuecard() {
     // const today = new Date().toISOString().split('T')[0];
     // document.getElementById("date-picker").setAttribute("min",today);
   };
+  const handleChangeInReview = (e) => {
+    const { name, value } = e.target;
+    setReview((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    setErrors({ ...errors, [name]: '' });
+  };
+  const handleSubmitInReview = async (e) => {
+    e.preventDefault();
+
+    let validationErrors = {};
+    if (!rating) {
+      validationErrors.rating = 'Rating is required';
+    }
+    if (!review.review) {
+      validationErrors.review = 'Review is required';
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    try {
+      setIsLoading(true)
+      if (isAuth) {
+        console.log(review)
+        const response = await axios.post("http://localhost:8000/reviewSend", review);
+        if (response.status === 200) {
+          toast.success("Review is submitted successfully!");
+          handleClose();
+          setRating(0);
+          setReview({ review: '' });
+        }
+        else {
+          toast.error(response.data.error)
+        }
+      }
+      else {
+        toast.error("Please Login first!");
+        handleClose();
+        navigate('/Login');
+      }
+    }
+    catch (err) {
+      toast.error("Something Went Wrong!");
+      console.log("Review card error: ", err)
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
 
   if (isLoading) {
     return (
@@ -163,11 +233,7 @@ export default function Venuecard() {
       </div>
     )
   }
-
-
-
   return (
-
     <>
       <div className='container'>
         <div className="row">
@@ -279,17 +345,19 @@ export default function Venuecard() {
               </div>
             </div>
             <div className="latest-review-container">
-              <div className='d-flex gap-2 justify-content-between '>
-                <div>
-
+              <div className='row'>
+                <div className='col-lg-9 col-md-12 d-flex gap-2'>
                   <h5>Latest Review:</h5>
                   <Link to={`/Reviews/${currentVenue._id}`} className="text-decoration-none text-theme2 text-theme2-hover"><i className="fa-solid fa-comments" />&nbsp;
                     See all reviews
                   </Link>
                 </div>
-                <button className='button-explore rounded-1 mx-3 fw-semibold' onClick={handleShow}>
-                  Write a Review
-                </button>
+                <div className='col-lg-3 col-md-12 d-flex justify-content-end pe-4'>
+                  <button className='button-explore rounded-1 fw-semibold ' onClick={handleShow}>
+                    Write a Review
+                  </button>
+                </div>
+
               </div>
               <div>
 
@@ -305,32 +373,38 @@ export default function Venuecard() {
                   <Modal.Body>
                     <>
                       <Rating
+                        required
+                        // onPointerEnter={onPointerEnter}
+                        // onPointerLeave={onPointerLeave}
+                        // onPointerMove={onPointerMove}
                         onClick={handleRating}
-                        onPointerEnter={onPointerEnter}
-                        onPointerLeave={onPointerLeave}
-                        onPointerMove={onPointerMove}
                       /* Available Props */
                       />
+                      {errors.rating && <p className="text-danger">{errors.rating}</p>}
+                      <hr />
 
 
                       <FloatingLabel controlId="floatingTextarea2" label="Write your review">
                         <Form.Control
                           as="textarea"
+                          name='review'
                           placeholder="Leave a review here"
                           style={{ height: '100px' }}
+                          onChange={handleChangeInReview}
                         />
+                        {errors.review && <p className="text-danger">{errors.review}</p>}
                       </FloatingLabel>
 
                     </>
                   </Modal.Body>
                   <Modal.Footer>
-                    <button className='btn1 rounded-1 fw-semibold' variant='danger' onClick={handleClose}>
+                    <button className='btn1 rounded-1 fw-semibold' onClick={handleClose}>
                       Close
                     </button>
-                    <button className='btn2 rounded-1 fw-semibold' >Submit</button>
+                    <button  className='btn2 rounded-1 fw-semibold' onClick={handleSubmitInReview} >Submit</button>
                   </Modal.Footer>
                 </Modal>
-              </div>
+              </div>  
 
               <ReviewCard name="Shubham italiya" time="1" rating="3" msg="Hello world!" />
             </div>

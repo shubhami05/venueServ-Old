@@ -1,6 +1,65 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 
 function Contactdata() {
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [contacts, setContacts] = useState([]);
+  const [contactToDelete, setContactToDelete] = useState(null);
+  const [contactMessage, setContactMessage] = useState(null)
+  const [contactUser, setContactUser] = useState(null)
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    // Pad single digits with a leading zero
+    const formattedDay = String(day).padStart(2, '0');
+    const formattedMonth = String(month).padStart(2, '0');
+
+    // Return the formatted date in dd-mm-yyyy format
+    return `${formattedDay}-${formattedMonth}-${year}`;
+  }
+
+
+
+  const fetchContacts = () => {
+    try {
+      axios.post('http://localhost:8000/contactShow').then((response) => {
+        setContacts(response.data.contactData);
+        console.log(response.data.contactData);
+      })
+    }
+    catch (error) {
+      console.log("error in fetching venues data: ", error)
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+  useEffect(() => {
+    fetchContacts();
+  }, []);
+
+  const handleDeleteContact = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8000/contactDelete", { id: contactToDelete });
+      console.log(response.data.message);
+      // alert()
+      fetchContacts();
+    }
+    catch (err) {
+      console.log("Error in deleting contact", err)
+    }
+    finally {
+      setContactToDelete(null);
+    }
+  }
+
+
   return (
     <div className="content-wrapper">
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -20,76 +79,79 @@ function Contactdata() {
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>9898989898</td>
-                  <td>abc@gmail.com</td>
-                  <td>13/12/24 15:12:00</td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
-                      </button>
-                      <div className="dropdown-menu">
-                        <span className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</span>
-                        <span className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</span>
-                      </div>
+                {isLoading ? (
+                  <div className='h-75 d-flex justify-content-center align-items-center'>
+                    <div className="spinner-grow text-primary" role="status">
+                      <span className="visually-hidden">Loading...</span>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>9898989898</td>
-                  <td>abc@gmail.com</td>
-                  <td>13/12/24 15:12:00</td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
+                  </div>
+                ) : (contacts.map((contact, index) => (
+                  <tr key={index}>
+                    <td><strong>{contact.name}</strong></td>
+                    <td>{contact.mobile}</td>
+                    <td>{contact.email}</td>
+                    <td>{formatDate(contact.date)}</td>
+                    <td>
+                      <button type="button" class="btn btn-icon btn-outline-primary mx-1"
+                        onClick={() => {
+                          setContactMessage(contact.message)
+                          setContactUser(contact.name)
+                        }
+                        } data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i className="bx bx-show-alt" />
                       </button>
-                      <div className="dropdown-menu">
-                        <span className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</span>
-                        <span className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</span>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>9898989898</td>
-                  <td>abc@gmail.com</td>
-                  <td>13/12/24 15:12:00</td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
+
+                      <button type="button" className="btn btn-icon btn-outline-danger mx-1"
+                        onClick={() => {
+                          setContactToDelete(contact._id)
+                        }}
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmDeleteModal"
+                      >
+                        <i className="bx bx-trash-alt" />
                       </button>
-                      <div className="dropdown-menu">
-                        <span className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</span>
-                        <span className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</span>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>John Abraham</strong></td>
-                  <td>9898989898</td>
-                  <td>abc@gmail.com</td>
-                  <td>13/12/24 15:12:00</td>
-                  <td>
-                    <div className="dropdown">
-                      <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <i className="bx bx-dots-vertical-rounded" />
-                      </button>
-                      <div className="dropdown-menu">
-                        <span className="dropdown-item" href="/"><i className="bx bx-edit-alt me-1" />Read / Reply</span>
-                        <span className="dropdown-item" href="/"><i className="bx bx-trash me-1" /> Delete</span>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
+                ))
+
+                )}
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">{contactUser}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {contactMessage}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="modal fade" id="confirmDeleteModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <p>Are you sure you want to delete this contact data?</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-danger" onClick={handleDeleteContact} data-bs-dismiss="modal">Delete</button>
+            </div>
           </div>
         </div>
       </div>

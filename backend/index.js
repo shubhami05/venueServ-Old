@@ -25,6 +25,8 @@ const { ShowAdminBookings } = require("./api/bookingShowAdmin");
 const { fetchSingleVenueData } = require("./api/fetchSingleVenueData");
 const { ReviewSendApi } = require("./api/reviewSendApi");
 const { ShowReviewsApi } = require("./api/reviewShowApi");
+const { ContactShowApi } = require("./api/contactShowApi");
+const { ContactDeleteApi } = require("./api/contactDelete");
 
 const app = express();
 const PORT = 8000;
@@ -74,6 +76,8 @@ app.post("/reviewSend", ReviewSendApi);
 app.post("/showReview", ShowReviewsApi);
 
 app.post("/contactSend", ContactSendApi);
+app.post("/contactShow", ContactShowApi);
+app.post("/contactDelete", ContactDeleteApi);
 
 app.listen(PORT, () => {
     console.log("Server started on port: ", PORT);

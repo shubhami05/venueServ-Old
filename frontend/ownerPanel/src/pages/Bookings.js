@@ -33,7 +33,7 @@ function Bookings() {
         setBookings(response.data.bookingData);
       }
     } catch (error) {
-      toast.error("No bookings available!");
+      console.log("No bookings available!");
     } finally {
       setLoading(false);
     }

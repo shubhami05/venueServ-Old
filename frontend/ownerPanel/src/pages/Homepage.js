@@ -10,7 +10,7 @@ function Homepage() {
                     <div className="row">
                         <div className="col-lg-12 col-md-12 order-1">
                             <div className="row">
-                                <div className="col-lg-3 col-sm-1 col-md-6 col-6 mb-4">
+                                <div className="col-lg-4 col-sm-6 col-md-4 col-12 mb-4">
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="card-title d-flex align-items-start justify-content-between">
@@ -25,7 +25,7 @@ function Homepage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-1 col-md-6 col-6 mb-4">
+                                <div className="col-lg-4 col-sm-6 col-md-4 col-12 mb-4">
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="card-title d-flex align-items-start justify-content-between">
@@ -40,23 +40,8 @@ function Homepage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-3 col-sm-1 col-md-6 col-6 mb-4">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <div className="card-title d-flex align-items-start justify-content-between">
-                                                <div className="avatar flex-shrink-0">
-                                                    <img src="../assets/img/icons/unicons/booking.png" alt="Credit Card" className="rounded" />
-                                                </div>
-                                            </div>
-                                            <span className="fw-semibold d-block mb-1">Monthly bookings</span>
-                                            <div className="d-flex align-items-baseline">
-                                                <h3 className="card-title mb-2">4,679 </h3>
-                                                <small className="text-success fw-semibold"><i className="bx bx-up-arrow-alt" />+28.42%</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3 col-sm-1 col-md-6 col-6 mb-4">
+                               
+                                <div className="col-lg-4 col-sm-6 col-md-4 col-12 mb-4">
                                     <div className="card">
                                         <div className="card-body">
                                             <div className="card-title d-flex align-items-start justify-content-between">
@@ -77,7 +62,7 @@ function Homepage() {
                     </div>
                     <div className="row">
                         {/* Order Statistics */}
-                        <div className="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
+                        <div className="col-md-6 col-lg-6 col-xl-4 order-0 mb-4">
                             <div className="card h-100">
                                 <div className="card-header d-flex align-items-center justify-content-between pb-0">
                                     <div className="card-title mb-0">
@@ -179,7 +164,7 @@ function Homepage() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
+                        <div className="col-md-6 col-lg-6 col-xl-4 order-0 mb-4">
                             <div className="card h-100">
                                 <div className="card-header d-flex align-items-center justify-content-between pb-0">
                                     <div className="card-title mb-0">
@@ -281,7 +266,7 @@ function Homepage() {
                         </div>
                         {/*/ Order Statistics */}
                         {/* Expense Overview */}
-                        <div className="col-md-6 col-lg-4 order-1 mb-4">
+                        <div className="col-md-6 col-lg-6 col-xl-4 order-1 mb-4">
                             <div className="card h-100">
                                 <div className="card-header">
                                     <ul className="nav nav-pills" role="tablist">

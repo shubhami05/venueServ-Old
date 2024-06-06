@@ -57,24 +57,23 @@ function App() {
     return (
       axios.defaults.withCredentials = true,
       <BrowserRouter>
-        <div className='layout-wrapper'>
+        <div className='layout-wrapper layout-content-navbar'>
           <div className='layout-container'>
-            <div className='layout-sidebar bg-light'>
-              <Sidebar />
-            </div>
+
+            <Sidebar />
             <div className='layout-page'>
-              <Header />
+            <Header />
               <Toaster
-              toastOptions={{
-                style: {
-                  border: '1px solid #713200',
-                  padding: '16px',
-                  color: '#713200',
-                  backgroundColor: '#fff',
-                  zIndex: 11,
-                },
-              }}
-            />
+                toastOptions={{
+                  style: {
+                    border: '1px solid #713200',
+                    padding: '16px',
+                    color: '#713200',
+                    backgroundColor: '#fff',
+                    zIndex: 11,
+                  },
+                }}
+              />
               <div className='container-fluid flex-grow-1 d-flex flex-column overflow-auto'>
                 <Routes>
                   <Route path='/' element={<Homepage />} />

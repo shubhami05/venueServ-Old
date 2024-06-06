@@ -16,11 +16,11 @@ function Booking() {
     try {
       setIsLoading(true)
       const response = await axios.post("http://localhost:8000/showAdminBookings")
-      if(response.status === 200){
+      if (response.status === 200) {
         setBookings(response.data.bookingData)
       }
     } catch (error) {
-      console.log("Error in admin booking page",error)
+      console.log("Error in admin booking page", error)
     }
     finally {
       setIsLoading(false)
@@ -62,30 +62,32 @@ function Booking() {
                   </tr>
                 </thead>
                 <tbody className="table-border-bottom-0">
-                  {
-                    bookings.map((booking) => (
-                      <tr>
-                        <td>
-                          <button type="button" className="btn btn-icon btn-outline-danger mx-1">
-                            <i className="bx bx-trash-alt" />
-                          </button>
-                        </td>
-                        <td><strong>{booking.userName}</strong></td>
-                        <td>{booking.userContact}</td>
-                        <td>{booking.venueName}</td>
-                        <td>{booking.date}</td>
-                        <td>{booking.eventType}</td>
-                        <td>{booking.eventSession}</td>
-                        <td>{booking.numberOfGuests}</td>
-                        <td>
-                          {
-                            booking.status==true?(<span className="badge bg-label-success me-1">Accepted</span>):(<span className="badge bg-label-warning me-1">Pending</span>)
-                          }
-                          </td>
+                  {bookings.length > 0 ? (bookings.map((booking) => (
+                    <tr>
+                      <td>
+                        <button type="button" className="btn btn-icon btn-outline-danger mx-1">
+                          <i className="bx bx-trash-alt" />
+                        </button>
+                      </td>
+                      <td><strong>{booking.userName}</strong></td>
+                      <td>{booking.userContact}</td>
+                      <td>{booking.venueName}</td>
+                      <td>{booking.date}</td>
+                      <td>{booking.eventType}</td>
+                      <td>{booking.eventSession}</td>
+                      <td>{booking.numberOfGuests}</td>
+                      <td>
+                        {
+                          booking.status ? (<span className="badge bg-label-success me-1">Accepted</span>) : (<span className="badge bg-label-warning me-1">Pending</span>)
+                        }
+                      </td>
 
-                      </tr>
-                    ))
-                  }
+                    </tr>
+                  ))
+                  ) : (
+                    <td colSpan='9' className='text-secondary text-center  fw-semibold'>No Any Booking Data</td>
+                  )}
+
 
 
 

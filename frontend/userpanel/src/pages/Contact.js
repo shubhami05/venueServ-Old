@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom';
 
 function Contact() {
-
-
   const [isLoading, setLoading] = useState(false);
   const [contactData, setContactData] = useState({
     name: '',
@@ -12,36 +11,31 @@ function Contact() {
     email: '',
     message: ''
   })
-
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
-
     const { name, value } = e.target;
     setContactData((prevData) => ({
       ...prevData,
       [name]: value,
     }))
-
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-
       await axios.post("http://localhost:8000/session");
-
       const response = await axios.post("http://localhost:8000/contactSend", contactData);
       if (response.data) {
         toast.success(response.data.message)
-      
+        navigate('/')
       }
-
     }
     catch (error) {
       if (error.response.status === 499) {
-        toast.error("Please Login first")
+        toast.error("Please Login first");
+        navigate('/Login')
       }
       else {
         toast.error("Something went wrong!");

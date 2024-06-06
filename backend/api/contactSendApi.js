@@ -8,6 +8,7 @@ async function ContactSendApi(req, res) {
         const db = await connectDB();
         const collection = db.collection("contactData");
         const { name, mobile, email, message } = req.body;
+        const date = new Date()
 
         const userId = req.session.user.session._id;
         await collection.insertOne({
@@ -15,13 +16,14 @@ async function ContactSendApi(req, res) {
             name,
             mobile,
             email,
-            message
+            message,
+            date
         })
         return res.status(200).json({ message: "Details sent successfully" });
 
     }
     catch (error) {
-        return res.status(500).json("Contact api error:", { message: error.message });
+        return res.status(500).json({ message: "Contact api error:" + error.message });
     }
 }
 

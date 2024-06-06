@@ -92,15 +92,15 @@ function Contactdata() {
                     <td>{contact.email}</td>
                     <td>{formatDate(contact.date)}</td>
                     <td>
-                      <button type="button" class="btn btn-icon btn-outline-primary mx-1"
+                      <button type="button" class="btn btn-outline-primary mx-1"
                         onClick={() => {
                           setContactMessage(contact.message)
                           setContactUser(contact.name)
                         }
                         } data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <i className="bx bx-show-alt" />
+                        <i className="bx bx-book-reader" /> Read
                       </button>
-
+ 
                       <button type="button" className="btn btn-icon btn-outline-danger mx-1"
                         onClick={() => {
                           setContactToDelete(contact._id)

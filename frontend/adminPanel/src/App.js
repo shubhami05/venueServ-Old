@@ -72,9 +72,7 @@ export default function App() {
                 },
               }}
             />
-            <div className='layout-sidebar bg-light'>
               <Sidebar />
-            </div>
             <div className='layout-page'>
               <Navbar />
               <div className='container-fluid flex-grow-1 d-flex flex-column overflow-auto'>

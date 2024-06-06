@@ -13,13 +13,13 @@ function Sidebar() {
     setSidebar(false)
   }
   useEffect(() => {
-    setSidebar(false)
+   closeSidebar()
   }, [location]);
 
 
 
   return (
-    <div onScroll={closeSidebar} onBlur={closeSidebar} className='d-md-block min-vh-100 w-auto' style={{ zIndex: 12 }}>
+    <div className={'position-relative'} style={{zIndex:12}}>
       <div className='menu-icon-container d-block d-xl-none position-absolute  mt-3 pt-1 ms-4 ps-2 '  >
 
           <span onClick={toggleSidebar} className="layout-menu-toggle menu-link text-large ms-auto mt-2 ">
@@ -33,7 +33,7 @@ function Sidebar() {
 
       </div>
 
-      <aside className={`menu-vertical menu bg-menu-theme min-vh-100 ${sidebar ? 'd-block position-absolute pt-3' : 'd-none d-xl-block position-relative '}`}>
+      <aside className={`menu-vertical d-block menu bg-menu-theme min-vh-100 ${sidebar ? 'd-block position-relative pt-3' : 'visually-hidden position-relative d-xl-block'}`}>
         <div className={`app-brand py-3 `}>
           <Link to='/'>
             <div className='ms-1'>

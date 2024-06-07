@@ -27,6 +27,7 @@ const { ReviewSendApi } = require("./api/reviewSendApi");
 const { ShowReviewsApi } = require("./api/reviewShowApi");
 const { ContactShowApi } = require("./api/contactShowApi");
 const { ContactDeleteApi } = require("./api/contactDelete");
+const { ShowReviewsOwnerApi } = require("./api/reviewOwnerShowApi");
 
 const app = express();
 const PORT = 8000;
@@ -74,6 +75,7 @@ app.post("/fetchSingleVenueData", fetchSingleVenueData);
 
 app.post("/reviewSend", ReviewSendApi);
 app.post("/showReview", ShowReviewsApi);
+app.post("/showReviewOwner", ShowReviewsOwnerApi);
 
 app.post("/contactSend", ContactSendApi);
 app.post("/contactShow", ContactShowApi);
